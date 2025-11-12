@@ -26,7 +26,7 @@ static CAN_message_t rxmsg;
 const int GLO_read_resolution_bits = 12;
 const int GLO_max_analog_write_pwm = 255;
 
-const int GLO_brakelight_teensy_pin = 4;
+const int GLO_brakelight_teensy_pin = 32;
 const int VCU_brakelight = 0;
 const int GLO_data_circuit_teensy_pin = 5;
 const int GLO_NeoPixel_teensy_pin = 2;
