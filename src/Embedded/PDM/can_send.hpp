@@ -217,15 +217,16 @@ void send_PDM_409(){
 
   PDM_fanLeftDutyCycle = fan_left.actual();
   PDM_fanRightDutyCycle = fan_right.actual();
-  PDM_wpDutyCycle = water_pump.actual();
+  PDM_wpDutyCycle1 = water_pump1.actual();
+  PDM_wpDutyCycle2 = water_pump2.actual();
   PDM_teensyTemp = tempmonGetTemp(); // built-in teensy function
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
   msg.buf[2] = PDM_fanLeftDutyCycle.can_value();
   msg.buf[3] = PDM_fanRightDutyCycle.can_value();
-  msg.buf[4] = PDM_wpDutyCycle.can_value();
-  msg.buf[5] = 0;
+  msg.buf[4] = PDM_wpDutyCycle1.can_value();
+  msg.buf[5] = PDM_wpDutyCycle2.can_value();
   msg.buf[6] = PDM_teensyTemp.can_value();
   msg.buf[7] = PDM_teensyTemp.can_value() >> 8;
 
@@ -321,15 +322,16 @@ void send_PDM_24(){
 
   PDM_fanLeftDutyCycle = fan_left.actual();
   PDM_fanRightDutyCycle = fan_right.actual();
-  PDM_wpDutyCycle = water_pump.actual();
+  PDM_wpDutyCycle1 = water_pump1.actual();
+  PDM_wpDutyCycle2 = water_pump2.actual();
   PDM_teensyTemp = tempmonGetTemp(); // built-in teensy function
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
   msg.buf[2] = PDM_fanLeftDutyCycle.can_value();
   msg.buf[3] = PDM_fanRightDutyCycle.can_value();
-  msg.buf[4] = PDM_wpDutyCycle.can_value();
-  msg.buf[5] = 0;
+  msg.buf[4] = PDM_wpDutyCycle1.can_value();
+  msg.buf[5] = PDM_wpDutyCycle2.can_value();
   msg.buf[6] = PDM_teensyTemp.can_value();
   msg.buf[7] = PDM_teensyTemp.can_value() >> 8;
 

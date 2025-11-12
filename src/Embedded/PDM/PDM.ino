@@ -72,7 +72,8 @@ const bool GLO_debug = false;
 // Global fan and wp Speed Signal (Controlled by CAN)
 int fan_signalL = 3; // Default value
 int fan_signalR = 3;
-int wp_signal = 3;
+int wp_signal1 = 3;
+int wp_signal2 = 3;
 void setup() { //high 18 low 26
 
   analogReadResolution(GLO_read_resolution_bits);
@@ -180,19 +181,21 @@ void loop() {
       } else if (testNum == 2) {
         fan_signalL = vcu_timeout ? 0 : VCU_radFanLDuty.can_value() / 10.0;
         fan_signalR = vcu_timeout ? 0 : VCU_radFanRDuty.can_value() / 10.0;
-        wp_signal   = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
+        wp_signal1   = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
+        wp_signal2   = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
         send_can2();
       }
     }
 
-    updateFanSpeed(fan_signalL, fan_signalR, wp_signal);
+    updateFanSpeed(fan_signalL, fan_signalR, wp_signal1, wp_signal2);
     sample_ADCs();
     if (board_temp_sample_timer.isup()) board_temp.sample();
     brakelight_run();
 
     fan_left_override = fan_signalL;
     fan_right_override = fan_signalR;
-    wp_override = wp_signal;
+    wp1_override = wp_signal1;
+    wp2_override = wp_signal2;
 
     fan_left.set_pwm(2);
     fan_right.set_pwm(2);

@@ -9,7 +9,8 @@
 
 extern int fan_signalL;
 extern int fan_signalR;
-extern int wp_signal;
+extern int wp_signal1;
+extern int wp_signal2;
 
 // **Left Fan Variables**
 int fanl_pin = 28; // pwm4 signal
@@ -77,20 +78,20 @@ PWMDevice water_pump1(wp1_pin, 12, 14, 10, 10000, wp1_row_signal, wp1_col_signal
                      wp1_min_pwm, wp1_max_pwm, wp1_ss_dur, wp1_update_freq, wp1_pwm_freq_norm, wp1_pwm_freq_ss);
 
 // water pump 2
-PWMDevice water_pump1(wp2_pin, 12, 14, 10, 10000, wp2_row_signal, wp2_col_signal, wp2_override,
+PWMDevice water_pump2(wp2_pin, 12, 14, 10, 10000, wp2_row_signal, wp2_col_signal, wp2_override,
                      wp2_min_pwm, wp2_max_pwm, wp2_ss_dur, wp2_update_freq, wp2_pwm_freq_norm, wp2_pwm_freq_ss);
 
 void updateFanSpeed(int canFanL, int canFanR, int canWp1, int canWp2) {
     fan_signalL = constrain(canFanL, 0, 100); // Ensure valid range (0-100%)
     fan_signalR = constrain(canFanR, 0, 100);
-    wp1_signal1 = constrain(canWp1, 0, 100);
-    wp1_signal2 = constrain(canWp2, 0, 100);
+    wp_signal1 = constrain(canWp1, 0, 100);
+    wp_signal2 = constrain(canWp2, 0, 100);
 
     // Use override to set PWM directly
     fan_left.set_pwm(0, 0, 2, fan_signalL);
     fan_right.set_pwm(0, 0, 2, fan_signalR);
-    water_pump1.set_pwm(0,0,2, wp1_signal);
-    water_pump2.set_pwm(0,0,2, wp2_signal);
+    water_pump1.set_pwm(0,0,2, wp_signal1);
+    water_pump2.set_pwm(0,0,2, wp_signal2);
 }
 
 #endif
