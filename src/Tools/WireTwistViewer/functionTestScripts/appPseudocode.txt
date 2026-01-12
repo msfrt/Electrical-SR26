@@ -1,0 +1,30 @@
+# whole app psuedocode
+global variables: circleCore, circleList, circlePrev, coreBuilt = False, distanceFromCenter, biggestAWGRadius
+function addButton:
+if coreBuilt == True & layer == 0:
+	return # prevents adding more wires to the core
+if coreBuilt == False:
+	grab awg
+	build the core, setup plot
+	coreBuit = True
+	circleCore radius = this radius
+	distanceFromCenter = radius
+else:
+	grab awg
+	if awg is biggest awg in the layer, store it radius in biggestAWGRadius
+	create trial wire
+	if success:
+		place wire
+	if fail:
+		dont place wire
+function enableAddButton:
+	enable the add button
+function resetLPbA:
+	reset circleList and circlePrev and biggestAWG
+function nextLayerButton:
+	if layer > 0:
+		distanceFromCenter += 2*biggestAWGRadius
+	increase layer display
+	resetLPbA
+	circleCore.rad = distanceFromCenter
+	
