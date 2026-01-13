@@ -38,7 +38,9 @@ for i = 1:length(wireRadii)
     end
 end
 
-
+% Uses circleCore and circlePrev to calculate circleCurrent, adding it to
+% circleList and also using circleList to validate if its a legal placement
+% circleColor is just what color the circle is
 function [circleCurrent, success] = addCircle(circleCore, circlePrev, circleCurrent, circleList, circleColor)
     % circleCore: struct with [x, y, r]
     % circlePrev: struct with [x, y, r] (or empty if first wire)
@@ -72,11 +74,12 @@ function [circleCurrent, success] = addCircle(circleCore, circlePrev, circleCurr
     end
 end
 
-% Placeholder for the 'pass' logic to prevent MATLAB errors
+% 'Pass' logic 
 function pass()
     % Do nothing
 end
 
+% Calculates the circle given the circleCore and the circlePrev
 function circleCurrent = calculateCircle(circleCore, circlePrev, circleCurrent)
     % 1. Extract dimensions
     r1 = circleCore.r;
@@ -140,6 +143,7 @@ function circleCurrent = calculateCircle(circleCore, circlePrev, circleCurrent)
 
 end
 
+% Builds the first circle around the core
 function circleCurrent = buildFirst(circleCore, circleCurrent)
     % 1. Calculate the North position
     % The x-coordinate stays the same as the Core
@@ -157,7 +161,7 @@ function circleCurrent = buildFirst(circleCore, circleCurrent)
     % Optional: Add a label to indicate it's the start of the chain
     text(circleCurrent.x, circleCurrent.y + circleCurrent.r, ' Start', 'FontSize', 8);
 end
-
+% Tells us if the circleCurrent is good or not
 function isValid = isFit(circleCurrent, circleList, circleCore)
     % Default to true
     isValid = true;
@@ -183,7 +187,7 @@ function isValid = isFit(circleCurrent, circleList, circleCore)
         end
     end
 end
-
+% Plots the Circle
 function plotCircle(circleCurrent, color)
     % Draw the perimeter
     viscircles([circleCurrent.x, circleCurrent.y], circleCurrent.r, 'EdgeColor', color);
