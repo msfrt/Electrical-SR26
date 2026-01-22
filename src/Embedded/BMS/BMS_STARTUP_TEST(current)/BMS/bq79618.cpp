@@ -63,16 +63,13 @@ void SpiWake79600(void) {
 
     digitalWrite(CS1, LOW); 
     delayMicroseconds(2); 
-
    
     digitalWrite(MOSI1, LOW);
     delayMicroseconds(2750); 
     digitalWrite(MOSI1, HIGH);
 
-
     delayMicroseconds(2);
     digitalWrite(CS1, HIGH);
-
 
     delayms(3.5);
     SPI1.setMOSI(MOSI1);
@@ -139,7 +136,7 @@ BMSErrorCode_t buildAndSendFrame(uint8_t deviceID, uint16_t regAddr, const uint8
         Serial.print(frame[i], HEX);
     }
     Serial.println();
-    return spiTransmitDataFSM(frame, frameIndex);
+    return spiTransmitData(frame, frameIndex);
 }
 
 void delayus(uint32_t us) {

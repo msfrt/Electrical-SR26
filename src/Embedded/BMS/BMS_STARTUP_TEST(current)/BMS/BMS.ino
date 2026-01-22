@@ -66,7 +66,7 @@ void loop() {
     lastBlink = millis();
     ledState = !ledState;
     digitalWrite(13, ledState);
-
+    //bqReadReg(0, OTP_ECC_DATAIN2, response_frame, 1, FRMWRT_STK_R, 10);
   }
 
 }
