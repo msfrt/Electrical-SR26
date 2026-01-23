@@ -28,7 +28,7 @@ const int GLO_max_analog_write_pwm = 255;
 
 const int GLO_brakelight_teensy_pin = 32;
 const int VCU_brakelight = 0;
-const int GLO_data_circuit_teensy_pin = 5;
+//const int GLO_data_circuit_teensy_pin = 5;
 const int GLO_NeoPixel_teensy_pin = 2;
 
 int GLO_NeoPixel_brightness_percent = 10;
@@ -37,9 +37,11 @@ Adafruit_NeoPixel GLO_obd_neopixel(1, GLO_NeoPixel_teensy_pin, NEO_GRB + NEO_KHZ
 BoardTempDiode board_temp(21, GLO_read_resolution_bits, 28.1, 594);
 EasyTimer board_temp_sample_timer(50);
 
+/*
 // EEPROM
 const int eeprom_cs_pin = 9;
 EEPROM_25LC128 eeprom(eeprom_cs_pin);
+*/
 
 // Timer Definitions
 EasyTimer engine_time_update_timer(1);
@@ -103,9 +105,9 @@ void setup() { //high 18 low 26
   SPI.begin();
 
   // initialize the data circuit pin
-  pinMode(GLO_data_circuit_teensy_pin, OUTPUT);
+  //pinMode(GLO_data_circuit_teensy_pin, OUTPUT);
   // turn the data circuit on
-  digitalWrite(GLO_data_circuit_teensy_pin, HIGH);
+  //digitalWrite(GLO_data_circuit_teensy_pin, HIGH);
   // initialize brakelight pin
   pinMode(GLO_brakelight_teensy_pin, OUTPUT);
 

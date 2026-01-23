@@ -21,9 +21,10 @@ void initialize_eeprom_variables(){
 
 
   // read the signals to fill their initial values
-  eeprom.read(eeprom_engine_hours);
+  /*eeprom.read(eeprom_engine_hours);
   eeprom.read(eeprom_engine_minutes);
   eeprom.read(eeprom_mileage);
+  */
 }
 
 #endif
