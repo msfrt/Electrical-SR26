@@ -1,6 +1,9 @@
 %This script runs when the model is opened.  It will add the model path
 %and the support directories to the path.
 
+%To create a data dictionary...
+%myDictionaryObj = Simulink.data.dictionary.create('myNewDictionary.sldd')
+
 if isempty(bdroot) || strcmp(bdroot, 'simulink'), return; end
 
 % This adds the current directory to the MATLAB path,
