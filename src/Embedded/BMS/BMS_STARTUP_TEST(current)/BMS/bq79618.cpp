@@ -6,20 +6,6 @@ int currentCell = 0;
 
 uint8_t autoaddr_response_frame[(1+6)*TOTALBOARDS];
 
-void clearAfterSend(){
-    int dummyBytes = 0;
-    Serial.println("Sending dummy bytes");
-    SPI1.beginTransaction(SPISettings(BRIDGE_FREQ, LSBFIRST, SPI_MODE0)); 
-    while(digitalRead(SPI_RDY)==0){
-        SPI1.transfer(0xFF);
-        dummyBytes++;
-    }
-    SPI1.endTransaction();
-    Serial.print("Dummy bytes sent clearing FIFO after write: ");
-    Serial.println(dummyBytes);
-}
-
-
 // Use PROGMEM to store the table in Flash instead of RAM                  
 const uint16_t crc16_table[256] PROGMEM = { 
    0x0000, 0xC0C1, 0xC181, 0x0140, 0xC301,
@@ -76,7 +62,6 @@ void SpiWake79600(void) {
     SPI1.setMISO(MISO1);
     SPI1.setSCK(27);
     SPI1.begin();
-    //SPI1.beginTransaction(SPISettings(BRIDGE_FREQ, LSBFIRST, SPI_MODE0));
 }
 
 
@@ -136,7 +121,7 @@ BMSErrorCode_t buildAndSendFrame(uint8_t deviceID, uint16_t regAddr, const uint8
         Serial.print(frame[i], HEX);
     }
     Serial.println();
-    return spiTransmitData(frame, frameIndex);
+    return spiTransmitDataFSM(frame, frameIndex);
 }
 
 void delayus(uint32_t us) {
@@ -159,28 +144,32 @@ BMSErrorCode_t bqWriteReg(uint8_t deviceID, uint16_t regAddr, uint64_t data, uin
 }
 
 BMSErrorCode_t receiveFrame(uint8_t *buffer, size_t expected_length, uint32_t timeout_ms) {
+    delayms(1);
     unsigned long startTime = millis();
     
     if (expected_length == 0) return BMS_OK;
 
-    while (digitalRead(SPI_RDY) == LOW) {
-        if ((millis() - startTime) > timeout_ms) {
-            Serial.println("SPI Receive Timeout: BQ never signaled READY for read");
-            return BMS_ERROR_COMM_TIMEOUT;
-        }
-        delayMicroseconds(10); // Prevent CPU hogging
-    }
+    // while (digitalRead(SPI_RDY) == LOW) {
+    //     if ((millis() - startTime) > timeout_ms) {
+    //         Serial.println("SPI Receive Timeout: BQ never signaled READY for read");
+    //         return BMS_ERROR_COMM_TIMEOUT;
+    //     }
+    //     delayMicroseconds(10); // Prevent CPU hogging
+    // }
 
-    SPI1.beginTransaction(SPISettings(BRIDGE_FREQ, LSBFIRST, SPI_MODE0)); 
+    SPI1.beginTransaction(SPISettings(BRIDGE_FREQ, MSBFIRST, SPI_MODE0)); 
     digitalWrite(CS1, LOW);
     
     for (size_t i = 0; i < expected_length; i++) {
         // Send dummy 0xFF, the BQ returns the actual data byte
         buffer[i] = SPI1.transfer(0xFF);
     }
+
     
     digitalWrite(CS1, HIGH);
     SPI1.endTransaction();
+
+
 
     return BMS_OK;
 }
@@ -207,8 +196,15 @@ BMSErrorCode_t bqReadReg(uint8_t deviceID, uint16_t regAddr, uint8_t *readBuffer
 
     uint16_t received_crc = (uint16_t)(responseFrame[expectedResponseLength - 1] << 8) | responseFrame[expectedResponseLength - 2];
     uint16_t calculated_crc = calculateCRC16(responseFrame, expectedResponseLength - 2);
+    for(int i = 0; i < expectedResponseLength; i++){
+        if(responseFrame[i] < 0x10) Serial.print("0");
+        Serial.print(responseFrame[i], HEX);
+        Serial.print(" ");
+    }
+    Serial.print("\n");
     if (received_crc != calculated_crc) {
         BMS_DEBUG_PRINTF("ReadReg CRC mismatch! Exp: 0x%04X, Got: 0x%04X for Dev %d, Reg 0x%04X\n", calculated_crc, received_crc, deviceID, regAddr);
+
         return BMS_ERROR_CRC;
     }
 
@@ -224,14 +220,12 @@ BMSErrorCode_t bqReadReg(uint8_t deviceID, uint16_t regAddr, uint8_t *readBuffer
     // Add more checks for REG_ADDR if needed
 
     memcpy(readBuffer, &responseFrame[4], numBytesToRead); 
+
     return BMS_OK;
 }
 
-uint8_t dummyReadBuf[MAX_READ_DATA_BYTES];
-uint8_t devIDFrame[MAX_READ_DATA_BYTES];
-
 void SpiAutoAddress(){
-    // 1. WAKE ping already 
+    // 1. Wake ping sent already 
     Serial.print("Starting autoaddress sequence\n");
     Serial.print("SPI_RDY ==");
     Serial.print(digitalRead(SPI_RDY));

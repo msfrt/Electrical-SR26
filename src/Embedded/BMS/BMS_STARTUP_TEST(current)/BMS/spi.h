@@ -12,7 +12,7 @@
 #define CS1 34
 #define SCK1 27
 #define SPI_RDY  32
-#define BRIDGE_FREQ 3000000
+#define BRIDGE_FREQ 2000000
 
 #define MOSI0 11
 #define MISO0 12
