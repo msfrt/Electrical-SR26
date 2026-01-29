@@ -1,43 +1,11 @@
 #include "spi.h"
 
-
-
-void SpiInit(){
-  SPI1.begin();
-    //SPI1.beginTransaction(SPISettings(BRIDGE_FREQ, MSBFIRST, SPI_MODE0));
-  SPI.begin();
-    //SPI.beginTransaction(SPISettings(ADC_FREQ, MSBFIRST, SPI_MODE0));
-    //pinMode(CS1, OUTPUT);
-    //digitalWrite(CS1, HIGH);
-
-}
-
-uint32_t spiReceiveData(uint16_t * destbuff, uint32_t blocksize)
-{
-
-  SPI1.beginTransaction(SPISettings(BRIDGE_FREQ, LSBFIRST, SPI_MODE0)); // set transaction settings
-    
-  digitalWrite(CS1, LOW); // set CS low
-
-  // recieve data into destbuff[]
-  for (uint32_t i = 0; i < blocksize; i++) 
-  {
-    
-    destbuff[i] = SPI1.transfer16(0xFFFF); 
-  }
-
-  digitalWrite(CS1, HIGH); // release CS
-  SPI1.endTransaction(); // end SPI transaction
-    
-  return 0;
-}
-
 uint8_t spiTransmitData(uint8_t* srcbuff, uint32_t blocksize) {
 
   Serial.print("Sending ");
   Serial.print(blocksize);
   Serial.print(" Bytes\n");
-  SPI1.beginTransaction(SPISettings(BRIDGE_FREQ, LSBFIRST, SPI_MODE0)); // set transaction settings
+  SPI1.beginTransaction(SPISettings(BRIDGE_FREQ, MSBFIRST, SPI_MODE0)); // set transaction settings
     
   digitalWrite(CS1, LOW); // set CS low
 
@@ -46,6 +14,9 @@ uint8_t spiTransmitData(uint8_t* srcbuff, uint32_t blocksize) {
   for (uint32_t i = 0; i < blocksize; i++) {
     SPI1.transfer(srcbuff[i]); 
   }
+  // for (uint32_t i = blocksize - 1; i > 0; i--){
+  //   SPI1.transfer(srcbuff[i]);
+  // }
   Serial.println();
   digitalWrite(CS1, HIGH); // release CS
   SPI1.endTransaction(); // end SPI transaction
@@ -53,30 +24,11 @@ uint8_t spiTransmitData(uint8_t* srcbuff, uint32_t blocksize) {
   return 0;
 }
 
-uint32_t spiTransmitAndReceive16(uint32_t blocksize, uint16_t* srcbuff, uint16_t* destbuff) {
-    
-  SPI1.beginTransaction(SPISettings(BRIDGE_FREQ, LSBFIRST, SPI_MODE0)); // set transaction settings
-    
-  digitalWrite(CS1, LOW); // set CS low
-
-  // sends data in srcbuff[] and recieves data into destbuff[] at the same time
-  for (uint32_t i = 0; i < blocksize; i++) {
-
-      destbuff[i] = SPI1.transfer16(srcbuff[i]);
-  }
-
-  digitalWrite(CS1, HIGH); // release CS
-    
-  SPI1.endTransaction(); // end SPI transaction
-
-  return 0;
-}
-
 void commClear() {
 
   digitalWrite(CS1, LOW);
-  SPI1.beginTransaction(SPISettings(BRIDGE_FREQ, LSBFIRST, SPI_MODE0));
-  pinMode(MOSI1, OUTPUT_OPENDRAIN);
+  SPI1.beginTransaction(SPISettings(BRIDGE_FREQ, LSBFIRST, SPI_MODE1));
+  pinMode(MOSI1, OUTPUT);
   delayNanoseconds(480); 
   digitalWrite(MOSI1, LOW);
   delayNanoseconds(20); 
@@ -87,6 +39,12 @@ void commClear() {
   delayNanoseconds(480);
   digitalWrite(CS1, HIGH);
   SPI1.setMOSI(MOSI1);
+
+  //reset spi pins
+  SPI1.end();
+  SPI1.begin();
+
+
   Serial.print("commClear executed\n");
 }
 
@@ -99,6 +57,12 @@ int send = 1;
 uint8_t spiTransmitDataFSM(uint8_t* srcbuff, uint32_t blocksize) {
   int state = 0;
   unsigned long waitTime = 0;
+  Serial.print("Attempting to send frame: ");
+  for(int i =0; i < blocksize; i++){
+    if(srcbuff[i] < 0x10) Serial.print("0");
+    Serial.print(srcbuff[i], HEX);
+  }
+  Serial.print("\n");
   while(1){
 
     switch(state){
@@ -107,7 +71,7 @@ uint8_t spiTransmitDataFSM(uint8_t* srcbuff, uint32_t blocksize) {
 
           if ((micros() - waitTime) > timeout_write) {
             waitTime = micros();
-            Serial.println("SPI Receive Timeout: BQ never signaled READY for read");
+            Serial.println("SPI transmit Timeout: BQ never signaled READY for read");
             commClear();
             break;
           }  
@@ -120,6 +84,7 @@ uint8_t spiTransmitDataFSM(uint8_t* srcbuff, uint32_t blocksize) {
         break;
 
       case 1:
+        Serial.print("Transmit case = 1\n");
         return spiTransmitData(srcbuff, blocksize);
       
     }

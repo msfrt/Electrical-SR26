@@ -23,7 +23,6 @@
 // ***Register defines, choose one of the following***
 // ***based on your device silicon revision:       ***
 //****************************************************
-//#include "A0_reg.h"
 #include "B0_reg.h"
 #include"BMS_typedefs.h"
 
