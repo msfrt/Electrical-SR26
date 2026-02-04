@@ -27,9 +27,6 @@ void setup() {
   if(digitalRead(FAULT_PIN) == 0){
     Serial.print("Fault detected\n");
   }
-  Serial.print("SPI_RDY ==");
-  Serial.print(digitalRead(SPI_RDY));
-  Serial.print("\n");
 
   //commClear();
 
@@ -38,18 +35,15 @@ void setup() {
   //spiTransmitData(readBuff, buffSize);
 
   //INITIALIZE BQ79718-Q1 STACK
-  //bqWriteReg(0, CONTROL1, 0x20, 1, FRMWRT_SGL_W); //[SEND_WAKE] tone to stack devices
+  bqWriteReg(0, CONTROL1, 0x20, 1, FRMWRT_SGL_W); //[SEND_WAKE] tone to stack devices
 
   //Serial.print("wake tone sent to stack devices\n");
   delayms(11.6*TOTALBOARDS); //wake tone duration is ~1.6ms per board + 10ms per board for each device to wake up from shutdown = 11.6ms per 616 board.
 
-  Serial.print("SPI_RDY ==");
-  Serial.print(digitalRead(SPI_RDY));
-  Serial.print("\n");
+  bqWriteReg(0, Bridge_FAULT_RST, 0x22, 1, FRMWRT_SGL_W); //Reset FAULT_COMM and FAULT_SYS on bridge
 
-  //bqReadReg(0, 0x2120, response_frame, 1, FRMWRT_SGL_R, 10);
   //AUTO-ADDRESS
-  //SpiAutoAddress(); //auto address sequence
+  SpiAutoAddress(); //auto address sequence
   //Serial.print("autoaddress sequence sent\n");
 
   
@@ -65,11 +59,14 @@ int point = 0;
 void loop() {
   // put your main code here, to run repeatedly:
 
-  if (millis() - lastBlink > 500) { // Blink every 500ms
+  if (millis() - lastBlink > 200) { // Blink every 500ms
     lastBlink = millis();
     ledState = !ledState;
     digitalWrite(13, ledState);
-    bqReadReg(0, 0x2120, response_frame, 1, FRMWRT_SGL_R, 10);
+    //bqReadReg(0, 0x2120, response_frame, 1, FRMWRT_SGL_R, 10);
+    //bqWriteReg(0, CONTROL1, 0x20, 1, FRMWRT_SGL_W);
+    bqReadReg(0, VCELL18_HI, response_frame, 2, FRMWRT_STK_R, 10);
+    //commClear();
   }
 
 }

@@ -1,7 +1,9 @@
 #include "spi.h"
+#include "bq79618.h"
 
 uint8_t spiTransmitData(uint8_t* srcbuff, uint32_t blocksize) {
 
+  delayms(10);
   Serial.print("Sending ");
   Serial.print(blocksize);
   Serial.print(" Bytes\n");

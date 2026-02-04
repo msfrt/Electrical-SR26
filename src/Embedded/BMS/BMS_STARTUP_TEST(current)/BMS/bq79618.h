@@ -24,7 +24,8 @@
 // ***based on your device silicon revision:       ***
 //****************************************************
 #include "B0_reg.h"
-#include"BMS_typedefs.h"
+#include "BMS_typedefs.h"
+#include "bq79600.h"
 
 //USER DEFINES
 #define TOTALBOARDS 2       //boards in stack, including base device

@@ -115,12 +115,12 @@ BMSErrorCode_t buildAndSendFrame(uint8_t deviceID, uint16_t regAddr, const uint8
     uint16_t crc = calculateCRC16(frame, frameIndex);
     frame[frameIndex++] = crc & 0xFF;        
     frame[frameIndex++] = (crc >> 8) & 0xFF; 
-    Serial.print("buildAndSendFrame frame:");
-    for(int i = 0; i< frameIndex; i++) {
-        if(frame[i] < 0x10) Serial.print("0");
-        Serial.print(frame[i], HEX);
-    }
-    Serial.println();
+    // Serial.print("buildAndSendFrame frame:");
+    // for(int i = 0; i< frameIndex; i++) {
+    //     if(frame[i] < 0x10) Serial.print("0");
+    //     Serial.print(frame[i], HEX);
+    // }
+    // Serial.println();
     return spiTransmitDataFSM(frame, frameIndex);
 }
 
@@ -144,7 +144,7 @@ BMSErrorCode_t bqWriteReg(uint8_t deviceID, uint16_t regAddr, uint64_t data, uin
 }
 
 BMSErrorCode_t receiveFrame(uint8_t *buffer, size_t expected_length, uint32_t timeout_ms) {
-    delayms(1);
+    delayms(10);
     unsigned long startTime = millis();
     
     if (expected_length == 0) return BMS_OK;
@@ -156,6 +156,9 @@ BMSErrorCode_t receiveFrame(uint8_t *buffer, size_t expected_length, uint32_t ti
     //     }
     //     delayMicroseconds(10); // Prevent CPU hogging
     // }
+    Serial.println("Waiting for SPI_RDY");
+    //while(digitalRead(SPI_RDY) == 0);
+
 
     SPI1.beginTransaction(SPISettings(BRIDGE_FREQ, MSBFIRST, SPI_MODE0)); 
     digitalWrite(CS1, LOW);
@@ -196,6 +199,7 @@ BMSErrorCode_t bqReadReg(uint8_t deviceID, uint16_t regAddr, uint8_t *readBuffer
 
     uint16_t received_crc = (uint16_t)(responseFrame[expectedResponseLength - 1] << 8) | responseFrame[expectedResponseLength - 2];
     uint16_t calculated_crc = calculateCRC16(responseFrame, expectedResponseLength - 2);
+    Serial.print("Response frame:\n");
     for(int i = 0; i < expectedResponseLength; i++){
         if(responseFrame[i] < 0x10) Serial.print("0");
         Serial.print(responseFrame[i], HEX);
@@ -227,16 +231,8 @@ BMSErrorCode_t bqReadReg(uint8_t deviceID, uint16_t regAddr, uint8_t *readBuffer
 void SpiAutoAddress(){
     // 1. Wake ping sent already 
     Serial.print("Starting autoaddress sequence\n");
-    Serial.print("SPI_RDY ==");
-    Serial.print(digitalRead(SPI_RDY));
-    Serial.print("\n");
 
     bqWriteReg(0, CONTROL1, 0X80, 1, FRMWRT_SGL_W); // 2. DIR_SEL = 1 (change BQ79600-Q1 direction)
-    
-    Serial.println();
-    Serial.print("SPI_RDY ==");
-    Serial.print(digitalRead(SPI_RDY));
-    Serial.print("\n");
 
     bqWriteReg(0, CONTROL1, 0x20, 1, FRMWRT_SGL_W); // 3. [SEND_WAKE] = 1 (wake up stack devices)
 
@@ -271,14 +267,29 @@ void SpiAutoAddress(){
     for(currentBoard=0; currentBoard < TOTALBOARDS; currentBoard++)
     {
         bqWriteReg(0, DIR1_ADDR, currentBoard, 1, FRMWRT_ALL_W);
+        delayms(10);
     }
 
     bqWriteReg(TOTALBOARDS-1, COMM_CTRL, 0x01, 1, FRMWRT_SGL_W); // 9.  set highest addr board as top of stack
 
+    Serial.println("Reading fault summary register");
+    bqReadReg(0, Bridge_FAULT_SUMMARY, autoaddr_response_frame, 1, FRMWRT_SGL_R, 10);
+    Serial.println("Reading FAULT_SYS register");
+    bqReadReg(0, Bridge_FAULT_SYS, autoaddr_response_frame, 1, FRMWRT_SGL_R, 10);
+
     // 10. dummy stack read (sync up internal DLL)
     Serial.print("about to read registers in SpiAutoAddress\n");
-    bqReadReg(0, OTP_ECC_DATAIN1, autoaddr_response_frame, 2, FRMWRT_STK_R, 10);
+    bqReadReg(0, OTP_ECC_DATAIN1, autoaddr_response_frame, 2, FRMWRT_STK_R, 10); // trying to read this but FIFO doesnt fill up - 797 doesnt send back?
     Serial.print("registers read: 1\n");
+    commClear();
+    Serial.println("Reading fault summary register");
+    bqReadReg(0, Bridge_FAULT_SUMMARY, autoaddr_response_frame, 1, FRMWRT_SGL_R, 10);
+    Serial.println("Reading FAULT_COMM1");
+    bqReadReg(0, Bridge_FAULT_COMM1, autoaddr_response_frame, 1, FRMWRT_SGL_R, 10);
+    Serial.println("Reading FAULT_COMM2");
+    bqReadReg(0, Bridge_FAULT_COMM2, autoaddr_response_frame, 1, FRMWRT_SGL_R, 10);
+    Serial.println("Reading DEBUG_SPI_PHY");
+    bqReadReg(0, Bridge_DEBUG_SPI_PHY, autoaddr_response_frame, 1, FRMWRT_SGL_R, 10);
     bqReadReg(0, OTP_ECC_DATAIN2, autoaddr_response_frame, 1, FRMWRT_STK_R, 10);
     Serial.print("registers read: 2\n");
     bqReadReg(0, OTP_ECC_DATAIN3, autoaddr_response_frame, 1, FRMWRT_STK_R, 10);
