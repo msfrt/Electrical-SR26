@@ -33,7 +33,7 @@ Adafruit_NeoPixel GLO_neopixel(1, GLO_NeoPixel_teensy_pin, NEO_GRB + NEO_KHZ800)
 //Cycle ID logic
 // #include "cyclic_id.hpp"
 
-unsigned long currentMillis;
+unsigned long currentMicros;
 
 void setup() {
 
@@ -44,7 +44,7 @@ void setup() {
   GLO_neopixel.show();
 
   // Initialize serial communication
-  Serial.begin(112500);
+  Serial.begin(1000000);
 
   // initialize SPI communication
   SPI.begin();
@@ -60,16 +60,16 @@ void setup() {
 
 void loop() {
 
-  currentMillis = millis(); // Get the current time in milliseconds
+  currentMicros = micros(); // Get the current time in microseconds
   // Serial.println(currentMillis); // Print the time since the program started
 
   rainbow_pixels(GLO_neopixel);
   sample_ADCs_1();
   
-  static EasyTimer sample_timer(1000); //1000 Hz
+  static EasyTimer sample_timer(1000); //3000 Hz
     if(sample_timer.isup()) {
       
-      Serial.print(currentMillis);
+      Serial.print(currentMicros);
       Serial.print(',');
       Serial.print(voltage_to_g(ax_raw.avg()));
       Serial.print(',');
