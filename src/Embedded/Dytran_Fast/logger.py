@@ -16,7 +16,7 @@ def crc8(data):
         c ^= b
     return c
 
-with open('logs/test7.csv', 'w', newline='') as f:
+with open('logs/762rpm.csv', 'w', newline='') as f:
     writer = csv.writer(f)
     writer.writerow(['time_us', 'ax_g', 'ay_g', 'az_g', 'gx_g', 'gy_g', 'gz_g'])
 

@@ -30,14 +30,11 @@ const int GLO_NeoPixel_teensy_pin = 0;
       int GLO_NeoPixel_brightness_percent = 10; // 0 - 100 %
 Adafruit_NeoPixel GLO_neopixel(1, GLO_NeoPixel_teensy_pin, NEO_GRB + NEO_KHZ800);
 
-//Cycle ID logic
-// #include "cyclic_id.hpp"
-
 #include "fast.hpp"
 
 unsigned long currentMicros;
 
-static EasyTimer sample_timer(3000);  // 4 kHz
+static EasyTimer sample_timer(2000);  // 4 kHz
 
 IMUPacket pkt;
 
