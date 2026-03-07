@@ -1,0 +1,14 @@
+motor:
+  name: "EMRAX228MVLC"
+
+  limits:
+    max_speed_rpm: 6500 ## absolute maximum, unlikely to achieve
+    max_torque_Nm: 230
+    max_power_kW: 109 ## comp has 80kW limit, motor can do up to 109kW
+  
+  constants:
+    torque_constant_Nm_per_A: 0.75 ## rms 
+    phase_resistance_mOhm: 7 ## at 25degC
+  
+  efficiency:
+    constant: 0.92

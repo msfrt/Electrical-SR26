@@ -1,0 +1,14 @@
+motor_controller:
+  name: "PM100DX"
+
+  limits:
+    max_dc_voltage_V: 420 ## hardware trip
+    max_dc_current_A: 350 ## peak -> continuous at this value for 30secs
+    max_power_kW: 120 ## peak -> continuous at this value for 30secs
+
+  regen:
+    # enabled: false
+    max_regen_power_kW: -40 ## revisit this -> start from desired regen torque then move to what that means for power
+
+  efficiency:
+    constant: 0.97 ## assuming constant, it isn't in practice -> varies based on load

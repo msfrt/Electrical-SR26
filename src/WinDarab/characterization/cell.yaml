@@ -1,0 +1,8 @@
+cell:
+  name: "P45A"
+
+  nominal_capacity_Ah: 4.2
+  nominal_voltage_V: 3.6
+  max_voltage_V: 4.2
+  min_voltage_V: 2.5
+  internal_impedance_mOhm: 10.9 ## impedance per cell 

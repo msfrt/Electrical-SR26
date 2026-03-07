@@ -1,0 +1,16 @@
+pack:
+  configuration:
+    series_cells: 90
+    parallel_cells: 4
+  
+  nominal:
+    nominal_energy_kWh: 5.4432 ## 324*16.8
+    nominal_capacity_Ah: 16.8
+    nominal_voltage_V: 324
+    internal_impedance_mOhm: 245.25 ## (series/parallel)*cell impedance -> (90/4)*10.9
+  
+  limits:
+    max_voltage_V: 378
+    min_voltage_V: 225
+    max_current_A: 180
+    min_SOC: 0.1

@@ -1,0 +1,15 @@
+vehicle:
+  overview:
+    mass_kg: 281
+    friction_coefficient: 1.6
+    gear_ratio: 3.636364 ## 40/11
+    wheel_radius_m: 0.2032 ## 8in
+  
+  aerodynamics:
+    frontal_area_m2: 1.21 ## A
+    drag_coefficient: 1.47 ## Cd 
+    lift_coefficient: 4.46 ## Cl
+  
+  efficiency:
+    drivetrain_efficiency: 0.9
+    rolling_resistance_coefficient: 0.015
