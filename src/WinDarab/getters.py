@@ -124,6 +124,7 @@ class Track:
         self.air_density = track["overview"]["p_kg/m3"]
         self.total_length = track["overview"]["total_length_m"]
         self.segments = track["segments"]
+        self.power_limit = track["overview"]["power_limit"]
 
 class Simulation:
     def __init__(self, vehicle, motor, pack, track):
@@ -142,6 +143,7 @@ class Simulation:
         for seg in self.track.segments:
             steps = int(seg["length_m"]/self.dx)
             t = seg["throttle"]
+            
             if seg["type"] == "corner":
                 r = seg["radius_m"]
             else:
@@ -150,7 +152,10 @@ class Simulation:
             for _ in range(steps):
                 radius.append(r)
                 throttle.append(t)
-        
+                # print(t)
+                
+        # print(np.array(throttle))
+
         return np.array(radius), np.array(throttle)
 
     def calculate_corner_limits(self, radius):  
@@ -158,30 +163,34 @@ class Simulation:
         
         return v_corner
 
-    def calculate_drive_force(self, v):
+    def calculate_drive_force(self, v, throttle):
         wheel_rpm = (v / (2*np.pi*self.vehicle.wheel_radius)) * 60
         motor_rpm = wheel_rpm * self.vehicle.gear_ratio
-        ## actually put in the right relationship pls
-        torque = self.motor.torque(motor_rpm)
-        # print(torque, motor_rpm)
+        # print(motor_rpm)## actually put in the right relationship pls
+        
+        torque = throttle * self.motor.torque(motor_rpm)
+       
         F = torque * self.vehicle.gear_ratio / self.vehicle.wheel_radius
+
+        # print(torque)
 
         return F
     
     def calculate_drag_force(self, v):
-        # return 0.5 * self.track.air_density * (self.vehicle.Cd * self.vehicle.frontal_area) * v**2
-        return 0.5 * self.track.air_density * (0.9) * v**2
+        return 0.5 * self.track.air_density * (self.vehicle.Cd * self.vehicle.frontal_area) * v**2
+        #return 0.5 * self.track.air_density * (0.8) * v**2
 
     def calculate_rolling_force(self):
         return self.vehicle.Crr * self.vehicle.mass * 9.81
     
-    def forward_pass(self, v_corner):
+    def forward_pass(self, v_corner, throttle):
         N = len(v_corner)
         v = np.zeros(N)
+        # tr = np.zeros(N)
 
         for i in range(N-1):
-
-            F_drive = self.calculate_drive_force(v[i]) ## throttle to scale the drive torque
+            F_drive = self.calculate_drive_force(v[i], throttle[i]) ## throttle to scale the drive torque
+            # print(v[i], throttle[i], F_drive)
             F_drag = self.calculate_drag_force(v[i])
             # print(F_drag)
             F_roll = self.calculate_rolling_force()
@@ -209,7 +218,7 @@ class Simulation:
 
         return v
     
-    def compute_energy(self, v):
+    def compute_energy(self, v, throttle):
 
         energy = 0
         time = 0
@@ -223,11 +232,18 @@ class Simulation:
 
             dt = self.dx / v_avg
 
-            F_drive = self.calculate_drive_force(v_avg)
+            # print(dt)
 
-            power = F_drive * v_avg
+            F_drive = self.calculate_drive_force(v_avg, throttle[i])
 
-            energy += power * dt
+            power_mech = F_drive * v_avg
+
+            power_elec = power_mech / self.motor.efficiency
+
+            energy += power_elec * dt
+
+            # print(power_elec)
+
             time += dt
 
         return energy, time
@@ -237,10 +253,10 @@ class Simulation:
 
         v_corner = self.calculate_corner_limits(radius)
 
-        v = self.forward_pass(v_corner)
+        v = self.forward_pass(v_corner, throttle)
 
         v = self.reverse_pass(v)
 
-        energy, lap_time = self.compute_energy(v)
+        energy, lap_time = self.compute_energy(v, throttle)
 
         return v, energy, lap_time

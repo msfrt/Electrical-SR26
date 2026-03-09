@@ -1,6 +1,6 @@
 vehicle:
   overview:
-    mass_kg: 281
+    mass_kg: 290 ## assumed SR26 w/ driver
     friction_coefficient: 1.6
     gear_ratio: 3.636364 ## 40/11
     wheel_radius_m: 0.2032 ## 8in
@@ -11,5 +11,5 @@ vehicle:
     lift_coefficient: 4.46 ## Cl
   
   efficiency:
-    drivetrain_efficiency: 0.9
-    rolling_resistance_coefficient: 0.015
+    drivetrain_efficiency: 0.92
+    rolling_resistance_coefficient: 0.010
