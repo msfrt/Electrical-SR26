@@ -12,4 +12,4 @@ vehicle:
   
   efficiency:
     drivetrain_efficiency: 0.92
-    rolling_resistance_coefficient: 0.010
+    rolling_resistance_coefficient: 0.009

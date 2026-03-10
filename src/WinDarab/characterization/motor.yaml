@@ -3,9 +3,9 @@ motor:
 
   limits:
     max_speed_rpm: 5500 ## absolute maximum, unlikely to achieve
-    max_torque_Nm: 150
-    max_power_kW: 28.04 
-  
+    max_torque_Nm: 231
+    max_power_kW: 50
+
   constants:
     torque_constant_Nm_per_A: 0.75 ## rms 
     phase_resistance_mOhm: 7 ## at 25degC

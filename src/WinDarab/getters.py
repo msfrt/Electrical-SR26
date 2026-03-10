@@ -218,10 +218,49 @@ class Simulation:
 
         return v
     
+    # def compute_energy(self, v, throttle):
+
+    #     energy = 0
+    #     time = 0
+
+    #     time_hist = []
+    #     energy_hist = []
+    #     power_hist = []
+
+    #     for i in range(len(v)-1):
+
+    #         v_avg = (v[i] + v[i+1]) / 2
+
+    #         if v_avg < 0.1:
+    #             continue
+
+    #         dt = self.dx / v_avg
+
+    #         F_drive = self.calculate_drive_force(v_avg, throttle[i])
+
+    #         power_mech = F_drive * v_avg
+    #         power_elec = power_mech / self.motor.efficiency
+
+    #         energy += power_elec * dt
+    #         time += dt
+
+    #         time_hist.append(time)
+    #         energy_hist.append(energy)
+    #         power_hist.append(power_elec)
+
+    #     return energy, time, np.array(time_hist), np.array(energy_hist), np.array(power_hist)
+    
     def compute_energy(self, v, throttle):
 
         energy = 0
         time = 0
+
+        time_hist = []
+        energy_hist = []
+        power_hist = []
+
+        regen_eff = 0.4
+        regen_limit = self.track.power_limit * 1000
 
         for i in range(len(v)-1):
 
@@ -232,22 +271,37 @@ class Simulation:
 
             dt = self.dx / v_avg
 
-            # print(dt)
+            a = (v[i+1] - v[i]) / dt
 
-            F_drive = self.calculate_drive_force(v_avg, throttle[i])
+            if a >= 0:
+                # ACCELERATION
 
-            power_mech = F_drive * v_avg
+                F_drive = self.calculate_drive_force(v_avg, throttle[i])
 
-            power_elec = power_mech / self.motor.efficiency
+                power_mech = F_drive * v_avg
+                power_elec = power_mech / self.motor.efficiency
+
+            else:
+                # BRAKING / REGEN
+
+                F_brake = self.vehicle.mass * abs(a)
+
+                power_mech = F_brake * v_avg
+
+                power_elec = -regen_eff * power_mech
+
+                # limit regen power
+                power_elec = max(power_elec, -regen_limit)
 
             energy += power_elec * dt
-
-            # print(power_elec)
-
             time += dt
 
-        return energy, time
-    
+            time_hist.append(time)
+            energy_hist.append(energy)
+            power_hist.append(power_elec)
+
+        return energy, time, np.array(time_hist), np.array(energy_hist), np.array(power_hist)
+
     def run(self):
         radius, throttle = self.build_track() ## eventually use throttle to scale drive force
 
@@ -257,6 +311,8 @@ class Simulation:
 
         v = self.reverse_pass(v)
 
-        energy, lap_time = self.compute_energy(v, throttle)
+        # energy, lap_time = self.compute_energy(v, throttle)
 
-        return v, energy, lap_time
+        energy, lap_time, time_hist, energy_hist, power_hist = self.compute_energy(v, throttle)
+
+        return v, energy, lap_time, time_hist, energy_hist, power_hist
