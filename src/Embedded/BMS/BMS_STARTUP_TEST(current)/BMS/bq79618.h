@@ -68,7 +68,9 @@
 #define BMS_DEBUG_PRINTF(...) Serial.printf(__VA_ARGS__)
 
 //FUNCTION PROTOTYPES
-void SpiAutoAddress();
+void SpiRingAutoAddress();
+
+void SpiChainAutoAddress();
 
 void SpiWake79600(void);
 

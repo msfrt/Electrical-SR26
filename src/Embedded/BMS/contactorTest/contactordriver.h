@@ -22,6 +22,9 @@ void enableAirPlus();
 void disableAirPlus();
 void enableAirMinus();
 void disableAirMinus();
+void runDischarge();
+void runPrecharge();
+void runOperational();
 
 
 #endif

@@ -3,7 +3,7 @@
 
 uint8_t spiTransmitData(uint8_t* srcbuff, uint32_t blocksize) {
 
-  delayms(10);
+  delayms(5);
   Serial.print("Sending ");
   Serial.print(blocksize);
   Serial.print(" Bytes\n");

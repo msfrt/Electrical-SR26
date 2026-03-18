@@ -133,6 +133,7 @@ void delayms(uint32_t ms) {
 }
 
 BMSErrorCode_t bqWriteReg(uint8_t deviceID, uint16_t regAddr, uint64_t data, uint8_t numBytes, uint8_t frameType) {
+    // while(digitalRead(SPI_RDY) == 0);
     if (numBytes == 0 || numBytes > MAX_WRITE_DATA_BYTES) {
         return BMS_ERROR_INVALID_RESPONSE; 
     }
@@ -144,7 +145,7 @@ BMSErrorCode_t bqWriteReg(uint8_t deviceID, uint16_t regAddr, uint64_t data, uin
 }
 
 BMSErrorCode_t receiveFrame(uint8_t *buffer, size_t expected_length, uint32_t timeout_ms) {
-    delayms(10);
+    delayms(1);
     unsigned long startTime = millis();
     
     if (expected_length == 0) return BMS_OK;
@@ -156,8 +157,8 @@ BMSErrorCode_t receiveFrame(uint8_t *buffer, size_t expected_length, uint32_t ti
     //     }
     //     delayMicroseconds(10); // Prevent CPU hogging
     // }
-    Serial.println("Waiting for SPI_RDY");
-    //while(digitalRead(SPI_RDY) == 0);
+    // Serial.println("Waiting for SPI_RDY");
+    // while(digitalRead(SPI_RDY) == 0);
 
 
     SPI1.beginTransaction(SPISettings(BRIDGE_FREQ, MSBFIRST, SPI_MODE0)); 
@@ -228,13 +229,57 @@ BMSErrorCode_t bqReadReg(uint8_t deviceID, uint16_t regAddr, uint8_t *readBuffer
     return BMS_OK;
 }
 
-void SpiAutoAddress(){
-    // 1. Wake ping sent already 
+void SpiChainAutoAddress(){
+    //1. wake ping already sent
+    //2. wake tone already sent
+
+    bqWriteReg(0, OTP_ECC_DATAIN1, 0X00, 1, FRMWRT_STK_W); // 3. sync up internal DLL
+    bqWriteReg(0, OTP_ECC_DATAIN2, 0X00, 1, FRMWRT_STK_W);
+    bqWriteReg(0, OTP_ECC_DATAIN3, 0X00, 1, FRMWRT_STK_W);
+    bqWriteReg(0, OTP_ECC_DATAIN4, 0X00, 1, FRMWRT_STK_W);
+    bqWriteReg(0, OTP_ECC_DATAIN5, 0X00, 1, FRMWRT_STK_W);
+    bqWriteReg(0, OTP_ECC_DATAIN6, 0X00, 1, FRMWRT_STK_W);
+    bqWriteReg(0, OTP_ECC_DATAIN7, 0X00, 1, FRMWRT_STK_W);
+    bqWriteReg(0, OTP_ECC_DATAIN8, 0X00, 1, FRMWRT_STK_W);
+
+    bqWriteReg(0, CONTROL1, 0X01, 1, FRMWRT_ALL_W); // 4. Brdcast write 0x01 to address 0x309 (enable auto addressing)
+
+    // for(currentBoard=0; currentBoard < TOTALBOARDS; currentBoard++) // 5.Brdcast write consecutively to 0x306 = 0,1,2,3 (address 1 to 3 assigned to stack sequentially, 0 assigned to base)
+    // {
+    //     bqWriteReg(0, DIR0_ADDR, currentBoard, 1, FRMWRT_ALL_W);
+    //     delayms(10);
+    //     Serial.print("address ");
+    //     Serial.print(currentBoard);
+    //     Serial.print(" sent\n");
+    // }
+    bqWriteReg(0, DIR0_ADDR, 0x01, 1, FRMWRT_ALL_W);
+
+    bqWriteReg(TOTALBOARDS-1, COMM_CTRL, 0x01, 1, FRMWRT_SGL_W); // 6.  set highest addr board as top of stack
+
+    // 7. dummy stack read (sync up internal DLL)
+    bqReadReg(0, OTP_ECC_DATAIN1, autoaddr_response_frame, 2, FRMWRT_STK_R, 10); 
+    bqReadReg(0, OTP_ECC_DATAIN2, autoaddr_response_frame, 1, FRMWRT_STK_R, 10);
+    bqReadReg(0, OTP_ECC_DATAIN3, autoaddr_response_frame, 1, FRMWRT_STK_R, 10);
+    bqReadReg(0, OTP_ECC_DATAIN4, autoaddr_response_frame, 1, FRMWRT_STK_R, 10);
+    bqReadReg(0, OTP_ECC_DATAIN5, autoaddr_response_frame, 1, FRMWRT_STK_R, 10);
+    bqReadReg(0, OTP_ECC_DATAIN6, autoaddr_response_frame, 1, FRMWRT_STK_R, 10);
+    bqReadReg(0, OTP_ECC_DATAIN7, autoaddr_response_frame, 1, FRMWRT_STK_R, 10);
+    bqReadReg(0, OTP_ECC_DATAIN8, autoaddr_response_frame, 1, FRMWRT_STK_R, 10);
+
+    bqReadReg(0, DIR0_ADDR, autoaddr_response_frame, 1, FRMWRT_STK_R, 10); // 8. stack read addresses
+
+}
+
+void SpiRingAutoAddress(){
+    // 1. BQ79600 Wake ping was sent already 
     Serial.print("Starting autoaddress sequence\n");
 
     bqWriteReg(0, CONTROL1, 0X80, 1, FRMWRT_SGL_W); // 2. DIR_SEL = 1 (change BQ79600-Q1 direction)
 
-    bqWriteReg(0, CONTROL1, 0x20, 1, FRMWRT_SGL_W); // 3. [SEND_WAKE] = 1 (wake up stack devices)
+    bqWriteReg(0, COMM_CTRL, 0X00, 1, FRMWRT_STK_W); // 6. (clear [TOP_STACK] information after communication direction is changed.)
+
+    bqWriteReg(0, CONTROL1, 0x20, 1, FRMWRT_SGL_W); // 3. [SEND_WAKE] = 1 (wake up stack devices);
+    delayms(11.6*TOTALBOARDS); // delay
 
     bqWriteReg(0, OTP_ECC_DATAIN1, 0X00, 1, FRMWRT_STK_W); // 4. sync up internal DLL
     bqWriteReg(0, OTP_ECC_DATAIN2, 0X00, 1, FRMWRT_STK_W);
@@ -253,21 +298,31 @@ void SpiAutoAddress(){
 
     Serial.print("broadcast write reverse executed\n");
 
-    bqWriteReg(0, COMM_CTRL, 0X00, 1, FRMWRT_ALL_W); // 6. (clear [TOP_STACK] information after communication direction is changed.)
+    bqWriteReg(0, COMM_CTRL, 0X00, 1, FRMWRT_STK_W); // 6. (clear [TOP_STACK] information after communication direction is changed.)
 
-    bqWriteReg(0, CONTROL1, 0X81, 1, FRMWRT_ALL_W); // 7. (enable stack device auto addressing)
+    bqWriteReg(0, CONTROL1, 0X80, 1, FRMWRT_ALL_W); // 7. (DIR_SEL = 1)
+
+    bqWriteReg(0, CONTROL1, 0X01, 1, FRMWRT_ALL_W); // 7. (enable stack device auto addressing, also DIR_SEL = 1)
     
     Serial.print("Autoaddresing enabled\n");
     
     Serial.print("SPI_RDY ==");
     Serial.print(digitalRead(SPI_RDY));
     Serial.print("\n");
+    
+    //bqWriteReg(0, Bridge_FAULT_RST, 0x01, 1, FRMWRT_SGL_W);
 
+    // Serial.print("reading CONTROL1 register:\n");
+    //bqReadReg(0, CONTROL1, autoaddr_response_frame, 1, FRMWRT_SGL_R, 10);
+    // bqWriteReg(0, DIR1_ADDR, 0, 1, FRMWRT_SGL_W);
     // 8. brdcast Write consecutively to address
     for(currentBoard=0; currentBoard < TOTALBOARDS; currentBoard++)
     {
         bqWriteReg(0, DIR1_ADDR, currentBoard, 1, FRMWRT_ALL_W);
         delayms(10);
+        Serial.print("address ");
+        Serial.print(currentBoard);
+        Serial.print(" sent\n");
     }
 
     bqWriteReg(TOTALBOARDS-1, COMM_CTRL, 0x01, 1, FRMWRT_SGL_W); // 9.  set highest addr board as top of stack
@@ -290,6 +345,8 @@ void SpiAutoAddress(){
     bqReadReg(0, Bridge_FAULT_COMM2, autoaddr_response_frame, 1, FRMWRT_SGL_R, 10);
     Serial.println("Reading DEBUG_SPI_PHY");
     bqReadReg(0, Bridge_DEBUG_SPI_PHY, autoaddr_response_frame, 1, FRMWRT_SGL_R, 10);
+    // Serial.println("FAULT_RST");
+    // bqReadReg(0, Bridge_FAULT_RST, autoaddr_response_frame, 1, FRMWRT_SGL_R, 10);
     bqReadReg(0, OTP_ECC_DATAIN2, autoaddr_response_frame, 1, FRMWRT_STK_R, 10);
     Serial.print("registers read: 2\n");
     bqReadReg(0, OTP_ECC_DATAIN3, autoaddr_response_frame, 1, FRMWRT_STK_R, 10);
