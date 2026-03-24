@@ -302,6 +302,142 @@ class Simulation:
 
         return energy, time, np.array(time_hist), np.array(energy_hist), np.array(power_hist)
 
+    def build_xy_track(self):
+
+        x = [0.0]
+        y = [0.0]
+
+        heading = 0.0  # radians (0 = along +x)
+
+        for seg in self.track.segments:
+
+            length = seg["length_m"]
+            steps = int(length / self.dx)
+
+            if seg["type"] == "corner":
+
+                R = seg["radius_m"]
+
+                # default to left turn if not specified
+                direction = seg.get("direction", "left")
+
+                dtheta = self.dx / R  # curvature
+
+                for _ in range(steps):
+
+                    if direction == "left":
+                        heading += dtheta
+                    else:
+                        heading -= dtheta
+
+                    x.append(x[-1] + self.dx * np.cos(heading))
+                    y.append(y[-1] + self.dx * np.sin(heading))
+
+            else:  # straight
+
+                for _ in range(steps):
+                    x.append(x[-1] + self.dx * np.cos(heading))
+                    y.append(y[-1] + self.dx * np.sin(heading))
+
+        return np.array(x), np.array(y)
+
+    def plot_track_speed(self, v):
+
+        import matplotlib.pyplot as plt
+
+        x, y = self.build_xy_track()
+
+        # match lengths
+        N = min(len(x), len(v))
+        x = x[:N]
+        y = y[:N]
+        v = v[:N]
+
+        plt.figure(figsize=(8,8))
+
+        sc = plt.scatter(x, y, c=v, s=6)
+
+        plt.colorbar(sc, label="Speed (m/s)")
+
+        plt.title("Track Map Colored by Speed")
+        plt.xlabel("X (m)")
+        plt.ylabel("Y (m)")
+
+        plt.axis("equal")
+        plt.grid()
+
+        plt.show()
+
+    def plot_track_power(self, power_hist):
+
+        import matplotlib.pyplot as plt
+
+        x, y = self.build_xy_track()
+
+        # match lengths
+        N = min(len(x), len(power_hist))
+        x = x[:N]
+        y = y[:N]
+        power = power_hist[:N] / 1000  # convert to kW
+
+        plt.figure(figsize=(8,8))
+
+        sc = plt.scatter(x, y, c=power, s=6)
+
+        plt.colorbar(sc, label="Electrical Power (kW)")
+
+        plt.title("Track Map Colored by Power")
+        plt.xlabel("X (m)")
+        plt.ylabel("Y (m)")
+
+        plt.axis("equal")
+        plt.grid()
+
+        plt.show()
+
+    def plot_track_speed_power(self, v, power_hist):
+
+        import matplotlib.pyplot as plt
+        import matplotlib.colors as mcolors
+        import numpy as np
+
+        x, y = self.build_xy_track()
+
+        N = min(len(x), len(v), len(power_hist))
+        x = x[:N]
+        y = y[:N]
+        v = v[:N]
+        power = power_hist[:N] / 1000  # kW
+
+        fig, axs = plt.subplots(1, 2, figsize=(14,6))
+
+        # --- Speed ---
+        sc1 = axs[0].scatter(x, y, c=v, s=6)
+        axs[0].set_title("Speed (m/s)")
+        axs[0].axis("equal")
+        axs[0].grid()
+        fig.colorbar(sc1, ax=axs[0])
+
+        # --- Power ---
+        pmin = np.min(power)
+        pmax = np.max(power)
+
+        if pmin < 0 and pmax > 0:
+            norm = mcolors.TwoSlopeNorm(vmin=pmin, vcenter=0, vmax=pmax)
+            cmap = "coolwarm"
+        else:
+            norm = None
+            cmap = "viridis"
+
+        sc2 = axs[1].scatter(x, y, c=power, s=6, cmap=cmap, norm=norm)
+        axs[1].set_title("Power (kW)")
+        axs[1].axis("equal")
+        axs[1].grid()
+        fig.colorbar(sc2, ax=axs[1])
+
+        plt.tight_layout()
+        plt.show()
+
     def run(self):
         radius, throttle = self.build_track() ## eventually use throttle to scale drive force
 

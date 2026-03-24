@@ -22,6 +22,13 @@ v, energy, lap_time, time_hist, energy_hist, power_hist = sim.run()
 
 print("Lap Time:", lap_time)
 print("Lap Energy (kWh):", energy/3.6e6)
+print("Total Energy (kWh) over 23 laps:", (energy/3.6e6)*23)
+print("Total Endurance Time (22 laps):", lap_time*22)
+
+# sim.plot_track_speed(v) ## experimental 
+# sim.plot_track_power(power_hist)
+
+sim.plot_track_speed_power(v, power_hist)
 
 # plt.figure()
 # plt.plot(v)
@@ -75,39 +82,43 @@ print("Lap Energy (kWh):", energy/3.6e6)
 # plt.tight_layout()
 # plt.show()
 
-fig, axs = plt.subplots(2, 2, figsize=(6,6))
 
-distance_v = np.arange(len(v)) * sim.dx
-distance_e = np.arange(len(energy_hist)) * sim.dx
-energy_kwh = energy_hist / 3.6e6
 
-# Speed
-axs[0,0].plot(distance_v, v)
-axs[0,0].set_title("Speed Profile")
-axs[0,0].set_xlabel("Distance (m)")
-axs[0,0].set_ylabel("Speed (m/s)")
-axs[0,0].grid()
+################################################
 
-# # Energy vs time
-# axs[0,1].plot(distance_e, energy_kwh)
-# axs[0,1].set_title("Energy vs Time")
-# axs[0,1].set_xlabel("Distance (m)")
-# axs[0,1].set_ylabel("Energy (kWh)")
-# axs[0,1].grid()
+# fig, axs = plt.subplots(2, 2, figsize=(6,6))
 
-# Power vs time
-axs[1,0].plot(distance_e, power_hist/1000)
-axs[1,0].set_title("Power Draw")
-axs[1,0].set_xlabel("Distance (m)")
-axs[1,0].set_ylabel("Power (kW)")
-axs[1,0].grid()
+# distance_v = np.arange(len(v)) * sim.dx
+# distance_e = np.arange(len(energy_hist)) * sim.dx
+# energy_kwh = energy_hist / 3.6e6
 
-# Energy vs distance
-axs[1,1].plot(distance_e, energy_kwh)
-axs[1,1].set_title("Energy vs Distance")
-axs[1,1].set_xlabel("Distance (m)")
-axs[1,1].set_ylabel("Energy (kWh)")
-axs[1,1].grid()
+# # Speed
+# axs[0,0].plot(distance_v, v)
+# axs[0,0].set_title("Speed Profile")
+# axs[0,0].set_xlabel("Distance (m)")
+# axs[0,0].set_ylabel("Speed (m/s)")
+# axs[0,0].grid()
 
-plt.tight_layout()
-plt.show()
+# # # Energy vs time
+# # axs[0,1].plot(distance_e, energy_kwh)
+# # axs[0,1].set_title("Energy vs Time")
+# # axs[0,1].set_xlabel("Distance (m)")
+# # axs[0,1].set_ylabel("Energy (kWh)")
+# # axs[0,1].grid()
+
+# # Power vs time
+# axs[1,0].plot(distance_e, power_hist/1000)
+# axs[1,0].set_title("Power Draw")
+# axs[1,0].set_xlabel("Distance (m)")
+# axs[1,0].set_ylabel("Power (kW)")
+# axs[1,0].grid()
+
+# # Energy vs distance
+# axs[1,1].plot(distance_e, energy_kwh)
+# axs[1,1].set_title("Energy vs Distance")
+# axs[1,1].set_xlabel("Distance (m)")
+# axs[1,1].set_ylabel("Energy (kWh)")
+# axs[1,1].grid()
+
+# plt.tight_layout()
+# plt.show()
