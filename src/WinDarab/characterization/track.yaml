@@ -10,33 +10,38 @@ track:
 
   - name: "0-30"
     type: "straight"
-    length_m: 9.144
+    length_m: 6
     # target_speed_mps: 20
     throttle: 0.24
 
   - name: "30-90"
     type: "corner"
-    length_m: 18.288
+    # length_m: 18.288
+    length_m: 15
     # radius_m: 13.716
-    radius_m: 150
+    radius_m: 18
     direction: "left"
     throttle: 0.24
 
   - name: "90-120"
     type: "corner"
-    length_m: 18.288
-    radius_m: 9.144
+    # length_m: 18.288
+    length_m: 15
+    # radius_m: 9.144
+    radius_m: 12
     direction: "left"
     throttle: 0.24
 
   - name: "120-180"
     type: "straight"
-    length_m: 9.144
+    # length_m: 9.144
+    length_m: 6
     throttle: 0 
 
   - name: "180-240"
     type: "corner"
-    length_m: 18.288
+    # length_m: 18.288
+    length_m: 16
     radius_m: 9.144
     direction: "right"
     throttle: 0
@@ -370,7 +375,7 @@ track:
     type: "corner"
     length_m: 9.144
     # radius_m: 13.716
-    radius_m: 12
+    radius_m: 11
     direction: "left"
     throttle: 0.35
 
@@ -396,104 +401,113 @@ track:
     type: "corner"
     length_m: 4.572
     # radius_m: 4.572
-    radius_m: 6
+    radius_m: 4
     direction: "right"
     throttle: 0.1
 
   - name: "3465-3495"
     type: "corner"
-    length_m: 9.144
+    # length_m: 9.144
+    length_m: 7
     # radius_m: 4.572
-    radius_m: 8
+    radius_m: 5
     direction: "left"
     throttle: 0.1
 
   - name: "3495-3500"
     type: "straight"
-    length_m: 1.524
+    # length_m: 1.524
+    length_m: 2
     throttle: 0.2
 
   - name: "3500-3510"
     type: "corner"
     length_m: 3.048
     # radius_m: 4.572
-    radius_m: 4.5
+    radius_m: 3.5
     direction: "right"
     throttle: 0.2
 
   - name: "3510-3555"
     type: "straight"
-    length_m: 13.716
+    # length_m: 13.716
+    length_m: 14
     throttle: 0.24
 
   - name: "3555-3570"
     type: "corner"
     length_m: 4.572
     radius_m: 4.572
+    # radius_m: 4.5
     direction: "left"
     throttle: 0.15
 
   - name: "3570-3630"
     type: "straight"
-    length_m: 18.288
+    # length_m: 18.288
+    length_m: 16
     throttle: 0.3
 
   - name: "3630-3645"
     type: "corner"
     length_m: 4.572
-    radius_m: 4.572
+    # radius_m: 4.572
+    radius_m: 3.5
     direction: "right"
     throttle: 0.18
 
   - name: "3645-3690"
     type: "straight"
-    length_m: 13.716
+    # length_m: 13.716
+    length_m: 7
     throttle: 0.2
 
   - name: "3690-3720"
     type: "straight"
-    length_m: 9.144
+    # length_m: 9.144
+    length_m: 10
     throttle: 0.24
 
   - name: "3720-3735"
     type: "corner"
     length_m: 4.572
     # radius_m: 4.572
-    radius_m: 5
+    radius_m: 3.5
     direction: "left"
     throttle: 0.24
 
   - name: "ayo"
     type: "straight"
-    length_m: 9
+    length_m: 17
     throttle: 0.24
 
   - name: "3735-3750"
     type: "corner"
     length_m: 4.572
-    radius_m: 4.572
+    # radius_m: 4.572
+    radius_m: 3.5
     direction: "right"
     throttle: 0.2
 
   - name: "3750-3810"
     type: "straight"
     # length_m: 18.288
-    length_m: 28.5
+    length_m: 10
     throttle: 0.18
 
   - name: "3810-3825"
     type: "corner"
     # length_m: 4.572
-    length_m: 15
+    length_m: 12
     # radius_m: 4.572
-    radius_m: 6
+    radius_m: 5.45
     direction: "left"
     throttle: 0
 
   - name: "3825-3870"
     type: "straight"
     # length_m: 13.716
-    length_m: 18
+    length_m: 32
     throttle: 0.2
 
   ## each individual segment is indexed via an integer

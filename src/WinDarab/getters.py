@@ -259,7 +259,7 @@ class Simulation:
         energy_hist = []
         power_hist = []
 
-        regen_eff = 0.4
+        regen_eff = 0.97 ## efficiency of motor controller assumed
         regen_limit = self.track.power_limit * 1000
 
         for i in range(len(v)-1):
@@ -282,15 +282,33 @@ class Simulation:
                 power_elec = power_mech / self.motor.efficiency
 
             else:
+                # # BRAKING / REGEN
+
+                # F_brake = self.vehicle.mass * abs(a)
+
+                # power_mech = F_brake * v_avg
+
+                # power_elec = -regen_eff * power_mech
+
+                # # limit regen power
+                # power_elec = max(power_elec, -regen_limit)
+                
                 # BRAKING / REGEN
+                F_total_brake = self.vehicle.mass * abs(a)
 
-                F_brake = self.vehicle.mass * abs(a)
+                # Split forces based on 60/40 bias
+                F_front_friction = F_total_brake * 0.60
+                F_rear_total = F_total_brake * 0.40
 
-                power_mech = F_brake * v_avg
+                # Mechanical power at the rear axle (where the motor is)
+                power_mech_rear = F_rear_total * v_avg
 
-                power_elec = -regen_eff * power_mech
+                ## RWD single motor things
+                # Apply regen efficiency only to the rear mechanical power
+                power_elec = -regen_eff * power_mech_rear
 
-                # limit regen power
+                # Limit regen power (battery/motor constraint)
+                # Note: This limits electrical recovery, not the physical braking force
                 power_elec = max(power_elec, -regen_limit)
 
             energy += power_elec * dt
@@ -307,7 +325,7 @@ class Simulation:
         x = [0.0]
         y = [0.0]
 
-        heading = 0.0  # radians (0 = along +x)
+        heading = -1  # radians (0 = along +x)
 
         for seg in self.track.segments:
 
@@ -409,7 +427,7 @@ class Simulation:
         v = v[:N]
         power = power_hist[:N] / 1000  # kW
 
-        fig, axs = plt.subplots(1, 2, figsize=(14,6))
+        fig, axs = plt.subplots(1, 2, figsize=(10,4))
 
         # --- Speed ---
         sc1 = axs[0].scatter(x, y, c=v, s=6)
