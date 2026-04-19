@@ -67,9 +67,6 @@ BO_ 201 VCU_201: 8 VCU
  SG_ VCU_radFanLDuty : 16|16@1- (0.1,0) [0|100] "%" Vector__XXX
  SG_ VCU_counterMsg201 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
-BO_ 202 VCU_202: 8 VCU
- SG_ VCU_contactorFault : 0|16@1+ (1,0) [0|10] "en" Vector__XXX
-
 BO_ 160 PM_160: 8 PM
  SG_ PM_gateDriverBoardTemp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ PM_moduleCTemp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
@@ -330,7 +327,6 @@ BO_ 402772111 DCDC_1801D08F: 8 DCDC
 
 
 
-
 CM_ SG_ 402690000 VCU_dcdcProtect "Protect command - once commanded, converter won't work until restart (decimal); 1: protection confirmed";
 CM_ SG_ 402690000 VCU_dcdcEnable "Enable command (decimal); 1: enable, 2: disable ";
 CM_ SG_ 192 VCU_torqueLimitCommand "Torque Limit - set to 0 to keep default";
@@ -352,7 +348,6 @@ CM_ SG_ 201 VCU_waterPumpDuty "Water pump duty";
 CM_ SG_ 201 VCU_radFanRDuty "Right radiator fan duty";
 CM_ SG_ 201 VCU_radFanLDuty "Left radiator fan duty";
 CM_ SG_ 201 VCU_counterMsg201 "Counter Message 201";
-CM_ SG_ 202 VCU_contactorFault "Fault States";
 CM_ SG_ 160 PM_gateDriverBoardTemp "Gate Driver Board Temperature";
 CM_ SG_ 160 PM_moduleCTemp "IGBT Module C Temperature";
 CM_ SG_ 160 PM_moduleBTemp "IGBT Module B Temperature";

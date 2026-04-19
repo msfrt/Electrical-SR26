@@ -49,11 +49,10 @@ BO_ 151 VCU_151: 8 VCU
  SG_ VCU_counterMsg151 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 152 VCU_152: 8 VCU
- SG_ VCU_rtmSound : 48|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ VCU_mainMinusContactorState : 40|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ VCU_mainPlusContactorState : 32|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ VCU_prechargeContactorState : 24|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ VCU_dischargeContactorState : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_rtmSound : 40|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_torqueCurve : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_torqueProfile : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_tCDial : 16|8@1+ (1,0) [0|255] "" Vector__XXX
  SG_ VCU_vehicleState : 8|8@1+ (1,0) [0|255] "" Vector__XXX
  SG_ VCU_counterMsg152 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
@@ -65,64 +64,20 @@ BO_ 153 VCU_153: 8 VCU
  SG_ VCU_counterMsg153 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 154 VCU_154: 8 VCU
- SG_ VCU_rotorTempFR : 32|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
- SG_ VCU_rotorTempFL : 16|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
+ SG_ VCU_regenEnable : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_tCEnable : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_tCActive : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_tCSensitivity : 16|16@1+ (1,0) [-20|3276.7] "" Vector__XXX
  SG_ VCU_counterMsg154 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 155 VCU_155: 8 VCU
- SG_ VCU_rotorTempRR : 32|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
- SG_ VCU_rotorTempRL : 16|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
+ SG_ VCU_contactorFault : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_assistedTorque : 32|16@1- (0.1,0) [-300|300] "Nm" Vector__XXX
+ SG_ VCU_driveSpeed : 16|16@1- (0.1,0) [-20|3276.7] "mph" Vector__XXX
  SG_ VCU_counterMsg155 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 156 VCU_156: 8 VCU
- SG_ VCU_tireTempFLO : 48|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
- SG_ VCU_tireTempFLM : 32|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
- SG_ VCU_tireTempFLI : 16|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
  SG_ VCU_counterMsg156 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
-
-BO_ 157 VCU_157: 8 VCU
- SG_ VCU_tireTempFRO : 48|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
- SG_ VCU_tireTempFRM : 32|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
- SG_ VCU_tireTempFRI : 16|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
- SG_ VCU_counterMsg157 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
-
-BO_ 158 VCU_158: 8 VCU
- SG_ VCU_tireTempRLO : 48|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
- SG_ VCU_tireTempRLM : 32|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
- SG_ VCU_tireTempRLI : 16|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
- SG_ VCU_counterMsg158 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
-
-BO_ 159 VCU_159: 8 VCU
- SG_ VCU_tireTempRRO : 48|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
- SG_ VCU_tireTempRRM : 32|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
- SG_ VCU_tireTempRRI : 16|16@1- (0.1,0) [-20|3276.7] "degC" Vector__XXX
- SG_ VCU_counterMsg159 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
-
-BO_ 160 VCU_160: 8 VCU
- SG_ VCU_driveSpeed : 16|16@1- (0.1,0) [-20|3276.7] "mph" Vector__XXX
- SG_ VCU_counterMsg160 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
-
-BO_ 161 VCU_161: 8 VCU
- SG_ VCU_flowRateMotorOut : 48|16@1- (0.1,0) [-10|30] "lpm" Vector__XXX
- SG_ VCU_flowRateMotorIn : 32|16@1- (0.1,0) [-10|30] "lpm" Vector__XXX
- SG_ VCU_flowRateInverterOut : 16|16@1- (0.1,0) [-10|30] "lpm" Vector__XXX
- SG_ VCU_counterMsg161 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
-
-BO_ 162 VCU_162: 8 VCU
- SG_ VCU_az : 48|16@1- (0.001,0) [-5|5] "g" Vector__XXX
- SG_ VCU_ay : 32|16@1- (0.001,0) [-5|5] "g" Vector__XXX
- SG_ VCU_ax : 16|16@1- (0.001,0) [-5|5] "g" Vector__XXX
- SG_ VCU_counterMsg162 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
-
-BO_ 163 VCU_163: 8 VCU
- SG_ VCU_susTravelRL : 48|16@1+ (0.001,0) [-100|100] "" Vector__XXX
- SG_ VCU_susTravelRR : 32|16@1+ (0.001,0) [-100|100] "" Vector__XXX
- SG_ VCU_susTravelFL : 16|16@1+ (0.001,0) [-100|100] "" Vector__XXX
- SG_ VCU_susTravelFR : 0|16@1+ (0.001,0) [-100|100] "" Vector__XXX
-
-BO_ 164 VCU_164: 8 VCU
- SG_ VCU_torqueProfile : 16|16@1+ (1,0) [0|10] "en" Vector__XXX
- SG_ VCU_assistedTorque : 0|16@1- (0.1,0) [-230|230] "Nm" Vector__XXX
 
 BO_ 200 BMS_200: 8 BMS
  SG_ BMS_packSOC : 48|8@1- (0.5,0) [0|100] "%" Vector__XXX
@@ -235,9 +190,6 @@ BO_ 216 BMS_216: 8 BMS
  SG_ BMS_j1772ACCurrLim : 16|16@1- (1,0) [-32768|32767] "Amp AC" Vector__XXX
  SG_ BMS_j1772PlugState : 8|8@1+ (1,0) [0|4] "" Vector__XXX
  SG_ BMS_rollingCounter216 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
-
-BO_ 217 BMS_217: 8 BMS
- SG_ BMS_contactorState : 0|3@1+ (1,0) [0|7] "enumeration" Vector__XXX
 
 BO_ 250 DD_250: 8 DD
  SG_ DD_teensyTemp : 32|16@1- (0.1,0) [0|150] "degC" Vector__XXX
@@ -842,10 +794,8 @@ CM_ SG_ 151 VCU_brakePressureF "Front brake pressure";
 CM_ SG_ 151 VCU_brakeBias "Brake bias";
 CM_ SG_ 151 VCU_counterMsg151 "Counter Message 151";
 CM_ SG_ 152 VCU_rtmSound "Ready to move sound";
-CM_ SG_ 152 VCU_mainMinusContactorState "Main minus contactor state (enumerated in DBC value table)";
-CM_ SG_ 152 VCU_mainPlusContactorState "Main plus contactor state (enumerated in DBC value table)";
-CM_ SG_ 152 VCU_prechargeContactorState "Precharge contactor state (enumerated in DBC value table)";
-CM_ SG_ 152 VCU_dischargeContactorState "Discharge contactor state (enumerated in DBC value table)";
+CM_ SG_ 152 VCU_torqueCurve "Torque curve (enumerated in DBC value table)";
+CM_ SG_ 152 VCU_torqueProfile "Torque profile (enumerated in DBC value table)";
 CM_ SG_ 152 VCU_vehicleState "Vehicle state (enumerated in DBC value table)";
 CM_ SG_ 152 VCU_counterMsg152 "Counter Message 152";
 CM_ SG_ 153 VCU_coolSwitch "Cool switch signal";
@@ -853,39 +803,15 @@ CM_ SG_ 153 VCU_pwrDownSwitch "Power down switch signal";
 CM_ SG_ 153 VCU_pwrUpSwitch "Power up switch signal";
 CM_ SG_ 153 VCU_startSwitch "Start switch signal";
 CM_ SG_ 153 VCU_counterMsg153 "Counter Message 153";
-CM_ SG_ 154 VCU_rotorTempFR "FR rotor temperature";
-CM_ SG_ 154 VCU_rotorTempFL "FL rotor temperature";
+CM_ SG_ 154 VCU_regenEnable "Enumeration";
+CM_ SG_ 154 VCU_tCEnable "Enumeration";
+CM_ SG_ 154 VCU_tCActive "0 = off, 1 = on Enumeration";
 CM_ SG_ 154 VCU_counterMsg154 "Counter Message 154";
-CM_ SG_ 155 VCU_rotorTempRR "RR rotor temperature";
-CM_ SG_ 155 VCU_rotorTempRL "RL rotor temperature";
+CM_ SG_ 155 VCU_contactorFault "Signal to fire contactors to BMS (enumerated)";
+CM_ SG_ 155 VCU_assistedTorque "Torque after brake regen and TC";
+CM_ SG_ 155 VCU_driveSpeed "Front wheel speed";
 CM_ SG_ 155 VCU_counterMsg155 "Counter Message 155";
-CM_ SG_ 156 VCU_tireTempFLO "FLO tire temperature";
-CM_ SG_ 156 VCU_tireTempFLM "FLM tire temperature";
-CM_ SG_ 156 VCU_tireTempFLI "FLI tire temperature";
 CM_ SG_ 156 VCU_counterMsg156 "Counter Message 156";
-CM_ SG_ 157 VCU_tireTempFRO "FRO tire temperature";
-CM_ SG_ 157 VCU_tireTempFRM "FRM tire temperature";
-CM_ SG_ 157 VCU_tireTempFRI "FRI tire temperature";
-CM_ SG_ 157 VCU_counterMsg157 "Counter Message 157";
-CM_ SG_ 158 VCU_tireTempRLO "RLO tire temperature";
-CM_ SG_ 158 VCU_tireTempRLM "RLM tire temperature";
-CM_ SG_ 158 VCU_tireTempRLI "RLI tire temperature";
-CM_ SG_ 158 VCU_counterMsg158 "Counter Message 158";
-CM_ SG_ 159 VCU_tireTempRRO "RLO tire temperature";
-CM_ SG_ 159 VCU_tireTempRRM "RLM tire temperature";
-CM_ SG_ 159 VCU_tireTempRRI "RLI tire temperature";
-CM_ SG_ 159 VCU_counterMsg159 "Counter Message 159";
-CM_ SG_ 160 VCU_driveSpeed "Front wheel speed";
-CM_ SG_ 160 VCU_counterMsg160 "Counter Message 160";
-CM_ SG_ 161 VCU_flowRateMotorOut "Motor out flow rate";
-CM_ SG_ 161 VCU_flowRateMotorIn "Motor in flow rate";
-CM_ SG_ 161 VCU_flowRateInverterOut "Inverter out flow rate";
-CM_ SG_ 161 VCU_counterMsg161 "Counter Message 161";
-CM_ SG_ 162 VCU_az "Estimated vertical acceleration at CG";
-CM_ SG_ 162 VCU_ay "Estimated lateral acceleration at CG";
-CM_ SG_ 162 VCU_ax "Estimated longitudinal acceleration at CG";
-CM_ SG_ 162 VCU_counterMsg162 "Counter Message 162";
-CM_ SG_ 164 VCU_assistedTorque "Torque after brake regen";
 CM_ SG_ 200 BMS_packSOC "This is the pack State of Charge";
 CM_ SG_ 200 BMS_packVolt "This is the instantaneous total pack voltage value";
 CM_ SG_ 200 BMS_packCurr "This is the current pack amperage value for the battery pack. This will report a constant 0 if no current sensor is selected";
@@ -1166,8 +1092,4 @@ BA_DEF_  "MultiplexExtEnabled" ENUM  "No","Yes";
 BA_DEF_  "BusType" STRING ;
 BA_DEF_DEF_  "MultiplexExtEnabled" "No";
 BA_DEF_DEF_  "BusType" "CAN";
-VAL_ 152 VCU_mainMinusContactorState 2 "Open" 1 "Close" 0 "Faulted" ;
-VAL_ 152 VCU_mainPlusContactorState 2 "Open" 1 "Close" 0 "Faulted" ;
-VAL_ 152 VCU_prechargeContactorState 2 "Open" 1 "Close" 0 "Faulted" ;
-VAL_ 152 VCU_dischargeContactorState 2 "Open" 1 "Close" 0 "Faulted" ;
-VAL_ 152 VCU_vehicleState 8 "Faulted" 7 "ReadyToMove" 6 "Standby" 5 "PrechargeComplete" 4 "PrechargeTimeout" 3 "Precharge" 2 "PrechargeReady" 1 "StartDelay" 0 "Off" ;
+
