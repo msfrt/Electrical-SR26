@@ -34,6 +34,7 @@ NS_ :
 BS_:
 
 BU_: VCU BMS DD STMM MM5 PDM MM52 RAND
+VAL_TABLE_ VCU_vehicleState 6 "ReadyToMoveFault" 5 "WeldedContactor" 4 "PrechargeFault" 3 "ReadyToMove" 2 "PrechargeComplete" 1 "Precharge" 0 "Default" ;
 
 
 BO_ 150 VCU_150: 8 VCU
