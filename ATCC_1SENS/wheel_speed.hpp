@@ -7,12 +7,12 @@
 #include <Adafruit_NeoPixel.h>
 #include <FreqMeasureMulti.h>
 
-#include "CAN/raptor_CAN1.hpp"
-#include "CAN/raptor_CAN2.hpp"
+#include "CAN/SR26_CAN1.hpp"
+#include "CAN/SR26_CAN2.hpp"
 #include "can_send.hpp"
 
 // ATCC Module Select - 0 front, 1 back
-const int ATCCMS = 1;
+const int ATCCMS = 0;
 
 FreqMeasureMulti freq1;
 FreqMeasureMulti freq2;
