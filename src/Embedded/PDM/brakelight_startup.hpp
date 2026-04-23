@@ -41,7 +41,7 @@ struct MorseStartup {
         analogWrite(GLO_brakelight_teensy_pin, 0);
         led_on = false;
         current_duration = gap;
-        Serial.println("OFF");
+        //Serial.println("OFF");
 
         index++;
         if (index >= length) {

@@ -37,9 +37,9 @@ ADCSensor             Imon_ch6(7, 2500, 40);
 
 // ADC3
 ADCSensor        Imon_ch7(0, 0, 313);
-ADCSensor        Imon_ch8(1, 2500, 40);
-ADCSensor        Imon_pdm(2, 2500, 40);
-ADCSensor Imon_brakelight(3, 2500, 40);
+ADCSensor        Imon_ch8(1, 0, 1000);
+ADCSensor        Imon_pdm(2, 0, 1000); // log this
+ADCSensor Imon_brakelight(3, 0, 1000); // log this
 
 // this function uses the local timers to determine when to call the ADCSensor sample function
 void sample_ADCs(){
