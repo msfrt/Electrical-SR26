@@ -11,6 +11,15 @@
 
 static CAN_message_t msg;
 
+// accounts for 50% of rotor being slots
+float voltage_to_rotor_temp(float voltage){
+    return pow((0.5*pow((25+273),4)+0.5*pow((voltage+273),4)), (1/4));
+}
+
+float voltage_to_sus_pot_val(float voltage){
+  return voltage;
+}
+
 void log_test1() {
   Serial.print("1-0: ");
   Serial.print(test10.avg());
@@ -83,7 +92,7 @@ void log_test4() {
   Serial.print("4-4: ");
   Serial.print(test44.avg());
   Serial.print(" | 4-5: ");
-  Serial.println(test45.avg());
+  Serial.println(SusPotFL.avg());
   Serial.print("4-6: ");
   Serial.print(test46.avg());
   Serial.print(" | 4-7: ");
@@ -97,7 +106,7 @@ void log_test5() {
   Serial.print(" | 5-1: ");
   Serial.println(test51.avg());
   Serial.print("5-2: ");
-  Serial.print(test52.avg());
+  Serial.print(RotorTempFR.avg());
   Serial.print(" | 5-3: ");
   Serial.println(test53.avg());
   Serial.print("5-4: ");
@@ -105,9 +114,9 @@ void log_test5() {
   Serial.print(" | 5-5: ");
   Serial.println(test55.avg());
   Serial.print("5-6: ");
-  Serial.print(test56.avg());
+  Serial.print(RotorTempFL.avg());
   Serial.print(" | 5-7: ");
-  Serial.println(test57.avg());
+  Serial.println(SusPotFR.avg());
   Serial.println("");
 }
 
@@ -188,7 +197,7 @@ void send_ATCC_300(){
   can1.write(msg);
 } // can1 */
 
-void send_ATCC_351(){
+void send_ATCC_301(){
   static StateCounter ctr;
 
   msg.id = 301;
@@ -231,29 +240,49 @@ void send_ATCC_302(){
   can1.write(msg);
 } // can1 */
 
-/*
-void send_ATCC_303(){
+void send_ATCC_304(){
   static StateCounter ctr;
   Serial.println("sendingATCC303");
 
-  msg.id = 302;
+  msg.id = 305;
   msg.len = 8;
 
-  ATCC_coolantTempMotorIn = 0; //voltage_to_NTC_M12_H_temp(ATCC_coolantTempMotorIn.avg());
-  ATCC_coolantTempInverterIn = 0; //voltage_to_NTC_M12_H_temp(ATCC_coolantTempInverterIn.avg());
-  ATCC_coolantTempInverterOut = 0; //voltage_to_NTC_M12_H_temp(ATCC_coolantTempInverterOut.avg());
-
+  ATCCF_rotTemp_FL = voltage_to_rotor_temp(RotorTempFL.avg()); //voltage_to_NTC_M12_H_temp(ATCC_coolantTempMotorIn.avg());
+  ATCCF_rotTemp_FR = voltage_to_rotor_temp(RotorTempFR.avg()); //voltage_to_NTC_M12_H_temp(ATCC_coolantTempInverterIn.avg());
+  
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = ATCC_coolantTempMotorIn.can_value();
-  msg.buf[3] = ATCC_coolantTempMotorIn.can_value() >> 8;
-  msg.buf[4] = ATCC_coolantTempInverterIn.can_value();
-  msg.buf[5] = ATCC_coolantTempInverterIn.can_value() >> 8;
-  msg.buf[6] = ATCC_coolantTempInverterIn.can_value();
-  msg.buf[7] = ATCC_coolantTempInverterIn.can_value() >> 8;
+  msg.buf[2] = ATCCF_rotTemp_FL.can_value();
+  msg.buf[3] = ATCCF_rotTemp_FL.can_value() >> 8;
+  msg.buf[4] = ATCCF_rotTemp_FR.can_value();
+  msg.buf[5] = ATCCF_rotTemp_FR.can_value() >> 8;
+  msg.buf[6] = 0;
+  msg.buf[7] = 0;
 
   can1.write(msg);
-} */
+}
+
+void send_ATCC_305(){
+  static StateCounter ctr;
+  Serial.println("sendingATCC303");
+
+  msg.id = 305;
+  msg.len = 8;
+
+  ATCCF_susPot_FR = voltage_to_sus_pot_val(SusPotFL.avg()); //voltage_to_NTC_M12_H_temp(ATCC_coolantTempMotorIn.avg());
+  ATCCF_susPot_FL = voltage_to_sus_pot_val(SusPotFR.avg()); //voltage_to_NTC_M12_H_temp(ATCC_coolantTempInverterIn.avg());
+  
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = ATCCF_susPot_FR.can_value();
+  msg.buf[3] = ATCCF_susPot_FR.can_value() >> 8;
+  msg.buf[4] = ATCCF_susPot_FL.can_value();
+  msg.buf[5] = ATCCF_susPot_FL.can_value() >> 8;
+  msg.buf[6] = 0;
+  msg.buf[7] = 0;
+
+  can1.write(msg);
+}
 
 void send_can1(){
 
@@ -265,14 +294,14 @@ void send_can1(){
 
   static EasyTimer ATCC_301_timer(1); // 200Hz
   if (ATCC_301_timer.isup()){
-    send_ATCC_351();
+    send_ATCC_301();
   }
 
-  /*
-  static EasyTimer ATCC_302_timer(1); // 200Hz
-  if (ATCC_302_timer.isup()){
-    send_ATCC_302();
-  } */
+  
+  static EasyTimer ATCC_304_timer(1); // 200Hz
+  if (ATCC_304_timer.isup()){
+    send_ATCC_304();
+  }
 
 }
 

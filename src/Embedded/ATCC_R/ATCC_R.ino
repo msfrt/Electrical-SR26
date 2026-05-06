@@ -95,13 +95,13 @@ void setup() {
   // print results every half second
   if (timeout > 500) {
     if (countRR > 0) {
-      Serial.print(freqRR.countToFrequency(sumRR / countRR));
+      ATCCR_wheelSpeedRR = freqRR.countToFrequency(sumRR / countRR);
     } else {
       Serial.print("(no pulses)");
     }
     Serial.print(",  ");
     if (countRL > 0) {
-      Serial.print(freqRL.countToFrequency(sumRL / countRL));
+     ATCCR_wheelSpeedRL = freqRL.countToFrequency(sumRL / countRL);
     } else {
       Serial.print("(no pulses)");
     }

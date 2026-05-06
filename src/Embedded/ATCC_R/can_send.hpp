@@ -191,7 +191,7 @@ void send_ATCC_300(){
 void send_ATCC_351(){
   static StateCounter ctr;
 
-  msg.id = 301;
+  msg.id = 351;
   msg.len = 8;
 
   ATCCR_wheelSpeedRR = ATCCR_wheelSpeedRR.value();
@@ -263,8 +263,8 @@ void send_can1(){
     send_ATCC_300();
   } */
 
-  static EasyTimer ATCC_301_timer(1); // 200Hz
-  if (ATCC_301_timer.isup()){
+  static EasyTimer ATCC_351_timer(1); // 200Hz
+  if (ATCC_351_timer.isup()){
     send_ATCC_351();
   }
 

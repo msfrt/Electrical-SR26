@@ -26,6 +26,11 @@ FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
 
 // rotor temp calculation for ATCC
 #include "rotor_temp_calc.hpp"
+// FL rotor is pin 2 on j2 ain71 channel 6 adc 5
+// fr rotor is pin 3 on j2 ain61 channel 2 adc 5
+
+// suspot fr is pin 4 on j2 ain101 channel 7 on adc5
+// suspot fl is pin 5 on j2 ain161 channel 5 on adc 4
 
 // rainbow RGB
 #include "rainbow_pixels.hpp"
@@ -95,13 +100,13 @@ void setup() {
   // print results every half second
   if (timeout > 500) {
     if (countFR > 0) {
-      Serial.print(freqFR.countToFrequency(sumFR / countFR));
+      ATCCF_wheelSpeedFR = freqFR.countToFrequency(sumFR / countFR);
     } else {
       Serial.print("(no pulses)");
     }
     Serial.print(",  ");
     if (countRL > 0) {
-      Serial.print(freqRL.countToFrequency(sumRL / countRL));
+      ATCCF_wheelSpeedFL = freqRL.countToFrequency(sumRL / countRL);
     } else {
       Serial.print("(no pulses)");
     }
