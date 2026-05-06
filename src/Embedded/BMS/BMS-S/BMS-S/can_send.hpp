@@ -1,1286 +1,1504 @@
-#ifndef CAN_SEND_HPP
-#define CAN_SEND_HPP
+#ifndef CAN_MESSAGES_HPP
+#define CAN_MESSAGES_HPP
 
-// #include <FlexCAN_T4.h>
-// #include <EasyTimer.h>
-// #include <BoardTemp.h>
-// #include "CAN/raptor_CAN1.hpp"
-// #include "CAN/raptor_CAN2.hpp"
-// #include "sensors.hpp"
-// #include "cyclic_id.hpp"
+#include <FlexCAN_T4.h>
+#include <EasyTimer.h>
+#include <BoardTemp.h>
+#include "CAN/SR26_CAN2.hpp"
 
-// /*
-// ///////////////////////////////////////////////////////////////////
-// / BELOW ARE THE MESSAGES THAT ARE UNICASTED ON THE BUS TO THE BMS /
-// ///////////////////////////////////////////////////////////////////
-// */
 
-// void send_STMM_1839F380(const int &seg) {
+// Module1Module1Module1Module1Module1Module1Module1Module1
 
-//     msg.id = 406451072;
-//     msg.flags.extended = 1;
-//     msg.len = 8;
+static CAN_message_t msg;
 
-//     vector<pair<int, float>> module_temps = get_mod_temps(seg);
-//     vector<pair<int, float>> sorted_module_temps = sort_mod_temps(module_temps);
+void send_BMS_500() {
+  static StateCounter ctr;
+  msg.id = 500;
+  msg.len = 8;
+
+  BMS_PackVoltage = 0;
+  BMS_PackCurrent = 0;
+  BMS_PackSOC = 0;
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_PackVoltage.can_value();
+  msg.buf[3] = BMS_PackVoltage.can_value() >> 8;
+  msg.buf[4] = BMS_PackCurrent.can_value();
+  msg.buf[5] = BMS_PackCurrent.can_value() >> 8;
+  msg.buf[6] = BMS_PackSOC.can_value();
+  msg.buf[7] = BMS_PackSOC.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_501() {
+  static StateCounter ctr;
+  msg.id = 501;
+  msg.len = 8;
+
+  BMS_Module1V = 0;
+  BMS_Module2V = 0;
+  BMS_Module3V = 0;
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module1V.can_value();
+  msg.buf[3] = BMS_Module1V.can_value() >> 8;
+  msg.buf[4] = BMS_Module2V.can_value();
+  msg.buf[5] = BMS_Module2V.can_value() >> 8;
+  msg.buf[6] = BMS_Module3V.can_value();
+  msg.buf[7] = BMS_Module3V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_502() {
+  static StateCounter ctr;
+  msg.id = 502;
+  msg.len = 8;
+
+  BMS_Module4V = 0;
+  BMS_Module5V = 0;
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module4V.can_value();
+  msg.buf[3] = BMS_Module4V.can_value() >> 8;
+  msg.buf[4] = BMS_Module5V.can_value();
+  msg.buf[5] = BMS_Module5V.can_value() >> 8;
+  msg.buf[6] = 0;
+  msg.buf[7] = 0;
+
+  can2.write(msg);
+}
+
+void send_BMS_503() {
+  static StateCounter ctr;
+  msg.id = 503;
+  msg.len = 8;
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module1seg1V.can_value();
+  msg.buf[3] = BMS_Module1seg1V.can_value() >> 8;
+  msg.buf[4] = BMS_Module1seg1V.can_value();
+  msg.buf[5] = BMS_Module1seg1V.can_value() >> 8;
+  msg.buf[6] = BMS_Module1seg1V.can_value();
+  msg.buf[7] = BMS_Module1seg1V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_504() {
+  static StateCounter ctr;
+  msg.id = 504;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module1seg4V.can_value();
+  msg.buf[3] = BMS_Module1seg4V.can_value() >> 8;
+  msg.buf[4] = BMS_Module1seg5V.can_value();
+  msg.buf[5] = BMS_Module1seg5V.can_value() >> 8;
+  msg.buf[6] = BMS_Module1seg6V.can_value();
+  msg.buf[7] = BMS_Module1seg6V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_505() {
+  static StateCounter ctr;
+  msg.id = 505;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module1seg7V.can_value();
+  msg.buf[3] = BMS_Module1seg7V.can_value() >> 8;
+  msg.buf[4] = BMS_Module1seg8V.can_value();
+  msg.buf[5] = BMS_Module1seg8V.can_value() >> 8;
+  msg.buf[6] = BMS_Module1seg9V.can_value();
+  msg.buf[7] = BMS_Module1seg9V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_506() {
+  static StateCounter ctr;
+  msg.id = 506;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module1seg10V.can_value();
+  msg.buf[3] = BMS_Module1seg10V.can_value() >> 8;
+  msg.buf[4] = BMS_Module1seg11V.can_value();
+  msg.buf[5] = BMS_Module1seg11V.can_value() >> 8;
+  msg.buf[6] = BMS_Module1seg12V.can_value();
+  msg.buf[7] = BMS_Module1seg12V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_507() {
+  static StateCounter ctr;
+  msg.id = 507;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module1seg13V.can_value();
+  msg.buf[3] = BMS_Module1seg13V.can_value() >> 8;
+  msg.buf[4] = BMS_Module1seg14V.can_value();
+  msg.buf[5] = BMS_Module1seg14V.can_value() >> 8;
+  msg.buf[6] = BMS_Module1seg15V.can_value();
+  msg.buf[7] = BMS_Module1seg15V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_508() {
+  static StateCounter ctr;
+  msg.id = 508;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module1seg16V.can_value();
+  msg.buf[3] = BMS_Module1seg16V.can_value() >> 8;
+  msg.buf[4] = BMS_Module1seg17V.can_value();
+  msg.buf[5] = BMS_Module1seg17V.can_value() >> 8;
+  msg.buf[6] = BMS_Module1seg18V.can_value();
+  msg.buf[7] = BMS_Module1seg18V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_509() {
+  static StateCounter ctr;
+  msg.id = 509;
+  msg.len = 8;
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module1seg1Temp.can_value();
+  msg.buf[3] = BMS_Module1seg1Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module1seg1Temp.can_value();
+  msg.buf[5] = BMS_Module1seg1Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module1seg1Temp.can_value();
+  msg.buf[7] = BMS_Module1seg1Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_510() {
+  static StateCounter ctr;
+  msg.id = 510;
+  msg.len = 8;
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module1seg4Temp.can_value();
+  msg.buf[3] = BMS_Module1seg4Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module1seg5Temp.can_value();
+  msg.buf[5] = BMS_Module1seg5Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module1seg6Temp.can_value();
+  msg.buf[7] = BMS_Module1seg6Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_511() {
+  static StateCounter ctr;
+  msg.id = 511;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module1seg7Temp.can_value();
+  msg.buf[3] = BMS_Module1seg7Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module1seg8Temp.can_value();
+  msg.buf[5] = BMS_Module1seg8Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module1seg9Temp.can_value();
+  msg.buf[7] = BMS_Module1seg9Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_512() {
+  static StateCounter ctr;
+  msg.id = 512;
+  msg.len = 8;
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module1seg10Temp.can_value();
+  msg.buf[3] = BMS_Module1seg10Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module1seg11Temp.can_value();
+  msg.buf[5] = BMS_Module1seg11Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module1seg12Temp.can_value();
+  msg.buf[7] = BMS_Module1seg12Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_513() {
+  static StateCounter ctr;
+  msg.id = 513;
+  msg.len = 8;
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module1seg13Temp.can_value();
+  msg.buf[3] = BMS_Module1seg13Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module1seg14Temp.can_value();
+  msg.buf[5] = BMS_Module1seg14Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module1seg15Temp.can_value();
+  msg.buf[7] = BMS_Module1seg15Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_514() {
+  static StateCounter ctr;
+  msg.id = 514;
+  msg.len = 8;
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module1seg16Temp.can_value();
+  msg.buf[3] = BMS_Module1seg16Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module1seg17Temp.can_value();
+  msg.buf[5] = BMS_Module1seg17Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module1seg18Temp.can_value();
+  msg.buf[7] = BMS_Module1seg18Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_515() {
+  static StateCounter ctr;
+  msg.id = 515;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module2seg1V.can_value();
+  msg.buf[3] = BMS_Module2seg1V.can_value() >> 8;
+  msg.buf[4] = BMS_Module2seg1V.can_value();
+  msg.buf[5] = BMS_Module2seg1V.can_value() >> 8;
+  msg.buf[6] = BMS_Module2seg1V.can_value();
+  msg.buf[7] = BMS_Module2seg1V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_516() {
+  static StateCounter ctr;
+  msg.id = 516;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module2seg4V.can_value();
+  msg.buf[3] = BMS_Module2seg4V.can_value() >> 8;
+  msg.buf[4] = BMS_Module2seg5V.can_value();
+  msg.buf[5] = BMS_Module2seg5V.can_value() >> 8;
+  msg.buf[6] = BMS_Module2seg6V.can_value();
+  msg.buf[7] = BMS_Module2seg6V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_517() {
+  static StateCounter ctr;
+  msg.id = 517;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module2seg7V.can_value();
+  msg.buf[3] = BMS_Module2seg7V.can_value() >> 8;
+  msg.buf[4] = BMS_Module2seg8V.can_value();
+  msg.buf[5] = BMS_Module2seg8V.can_value() >> 8;
+  msg.buf[6] = BMS_Module2seg9V.can_value();
+  msg.buf[7] = BMS_Module2seg9V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_518() {
+  static StateCounter ctr;
+  msg.id = 518;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module2seg10V.can_value();
+  msg.buf[3] = BMS_Module2seg10V.can_value() >> 8;
+  msg.buf[4] = BMS_Module2seg11V.can_value();
+  msg.buf[5] = BMS_Module2seg11V.can_value() >> 8;
+  msg.buf[6] = BMS_Module2seg12V.can_value();
+  msg.buf[7] = BMS_Module2seg12V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_519() {
+  static StateCounter ctr;
+  msg.id = 519;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module2seg13V.can_value();
+  msg.buf[3] = BMS_Module2seg13V.can_value() >> 8;
+  msg.buf[4] = BMS_Module2seg14V.can_value();
+  msg.buf[5] = BMS_Module2seg14V.can_value() >> 8;
+  msg.buf[6] = BMS_Module2seg15V.can_value();
+  msg.buf[7] = BMS_Module2seg15V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_520() {
+  static StateCounter ctr;
+  Serial.println("Send_BMS_520");
+  msg.id = 520;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module2seg16V.can_value();
+  msg.buf[3] = BMS_Module2seg16V.can_value() >> 8;
+  msg.buf[4] = BMS_Module2seg17V.can_value();
+  msg.buf[5] = BMS_Module2seg17V.can_value() >> 8;
+  msg.buf[6] = BMS_Module2seg18V.can_value();
+  msg.buf[7] = BMS_Module2seg18V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_521() {
+  static StateCounter ctr;
+  msg.id = 521;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module2seg1Temp.can_value();
+  msg.buf[3] = BMS_Module2seg1Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module2seg1Temp.can_value();
+  msg.buf[5] = BMS_Module2seg1Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module2seg1Temp.can_value();
+  msg.buf[7] = BMS_Module2seg1Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_522() {
+  static StateCounter ctr;
+  msg.id = 522;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module2seg4Temp.can_value();
+  msg.buf[3] = BMS_Module2seg4Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module2seg5Temp.can_value();
+  msg.buf[5] = BMS_Module2seg5Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module2seg6Temp.can_value();
+  msg.buf[7] = BMS_Module2seg6Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_523() {
+  static StateCounter ctr;
+  msg.id = 523;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module2seg7Temp.can_value();
+  msg.buf[3] = BMS_Module2seg7Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module2seg8Temp.can_value();
+  msg.buf[5] = BMS_Module2seg8Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module2seg9Temp.can_value();
+  msg.buf[7] = BMS_Module2seg9Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_524() {
+  static StateCounter ctr;
+  msg.id = 524;
+  msg.len = 8;
+
+  
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module2seg10Temp.can_value();
+  msg.buf[3] = BMS_Module2seg10Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module2seg11Temp.can_value();
+  msg.buf[5] = BMS_Module2seg11Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module2seg12Temp.can_value();
+  msg.buf[7] = BMS_Module2seg12Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_525() {
+  static StateCounter ctr;
+  msg.id = 525;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module2seg13Temp.can_value();
+  msg.buf[3] = BMS_Module2seg13Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module2seg14Temp.can_value();
+  msg.buf[5] = BMS_Module2seg14Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module2seg15Temp.can_value();
+  msg.buf[7] = BMS_Module2seg15Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_526() {
+  static StateCounter ctr;
+  msg.id = 526;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module2seg16Temp.can_value();
+  msg.buf[3] = BMS_Module2seg16Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module2seg17Temp.can_value();
+  msg.buf[5] = BMS_Module2seg17Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module2seg18Temp.can_value();
+  msg.buf[7] = BMS_Module2seg18Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_527() {
+  static StateCounter ctr;
+  msg.id = 527;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module3seg1V.can_value();
+  msg.buf[3] = BMS_Module3seg1V.can_value() >> 8;
+  msg.buf[4] = BMS_Module3seg1V.can_value();
+  msg.buf[5] = BMS_Module3seg1V.can_value() >> 8;
+  msg.buf[6] = BMS_Module3seg1V.can_value();
+  msg.buf[7] = BMS_Module3seg1V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_528() {
+  static StateCounter ctr;
+  msg.id = 528;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module3seg4V.can_value();
+  msg.buf[3] = BMS_Module3seg4V.can_value() >> 8;
+  msg.buf[4] = BMS_Module3seg5V.can_value();
+  msg.buf[5] = BMS_Module3seg5V.can_value() >> 8;
+  msg.buf[6] = BMS_Module3seg6V.can_value();
+  msg.buf[7] = BMS_Module3seg6V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_529() {
+  static StateCounter ctr;
+  msg.id = 529;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module3seg7V.can_value();
+  msg.buf[3] = BMS_Module3seg7V.can_value() >> 8;
+  msg.buf[4] = BMS_Module3seg8V.can_value();
+  msg.buf[5] = BMS_Module3seg8V.can_value() >> 8;
+  msg.buf[6] = BMS_Module3seg9V.can_value();
+  msg.buf[7] = BMS_Module3seg9V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_530() {
+  static StateCounter ctr;
+  msg.id = 530;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module3seg10V.can_value();
+  msg.buf[3] = BMS_Module3seg10V.can_value() >> 8;
+  msg.buf[4] = BMS_Module3seg11V.can_value();
+  msg.buf[5] = BMS_Module3seg11V.can_value() >> 8;
+  msg.buf[6] = BMS_Module3seg12V.can_value();
+  msg.buf[7] = BMS_Module3seg12V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_531() {
+  static StateCounter ctr;
+  msg.id = 531;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module3seg13V.can_value();
+  msg.buf[3] = BMS_Module3seg13V.can_value() >> 8;
+  msg.buf[4] = BMS_Module3seg14V.can_value();
+  msg.buf[5] = BMS_Module3seg14V.can_value() >> 8;
+  msg.buf[6] = BMS_Module3seg15V.can_value();
+  msg.buf[7] = BMS_Module3seg15V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_532() {
+  static StateCounter ctr;
+  msg.id = 532;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module3seg16V.can_value();
+  msg.buf[3] = BMS_Module3seg16V.can_value() >> 8;
+  msg.buf[4] = BMS_Module3seg17V.can_value();
+  msg.buf[5] = BMS_Module3seg17V.can_value() >> 8;
+  msg.buf[6] = BMS_Module3seg18V.can_value();
+  msg.buf[7] = BMS_Module3seg18V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_533() {
+  static StateCounter ctr;
+  msg.id = 533;
+  msg.len = 8;
+
+ 
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module3seg1Temp.can_value();
+  msg.buf[3] = BMS_Module3seg1Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module3seg1Temp.can_value();
+  msg.buf[5] = BMS_Module3seg1Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module3seg1Temp.can_value();
+  msg.buf[7] = BMS_Module3seg1Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_534() {
+  static StateCounter ctr;
+  msg.id = 534;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module3seg4Temp.can_value();
+  msg.buf[3] = BMS_Module3seg4Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module3seg5Temp.can_value();
+  msg.buf[5] = BMS_Module3seg5Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module3seg6Temp.can_value();
+  msg.buf[7] = BMS_Module3seg6Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_535() {
+  static StateCounter ctr;
+  msg.id = 535;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module3seg7Temp.can_value();
+  msg.buf[3] = BMS_Module3seg7Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module3seg8Temp.can_value();
+  msg.buf[5] = BMS_Module3seg8Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module3seg9Temp.can_value();
+  msg.buf[7] = BMS_Module3seg9Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_536() {
+  static StateCounter ctr;
+  msg.id = 536;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module3seg10Temp.can_value();
+  msg.buf[3] = BMS_Module3seg10Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module3seg11Temp.can_value();
+  msg.buf[5] = BMS_Module3seg11Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module3seg12Temp.can_value();
+  msg.buf[7] = BMS_Module3seg12Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_537() {
+  static StateCounter ctr;
+  msg.id = 537;
+  msg.len = 8;
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module3seg13Temp.can_value();
+  msg.buf[3] = BMS_Module3seg13Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module3seg14Temp.can_value();
+  msg.buf[5] = BMS_Module3seg14Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module3seg15Temp.can_value();
+  msg.buf[7] = BMS_Module3seg15Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_538() {
+  static StateCounter ctr;
+  msg.id = 538;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module3seg16Temp.can_value();
+  msg.buf[3] = BMS_Module3seg16Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module3seg17Temp.can_value();
+  msg.buf[5] = BMS_Module3seg17Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module3seg18Temp.can_value();
+  msg.buf[7] = BMS_Module3seg18Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_539() {
+  static StateCounter ctr;
+  msg.id = 539;
+  msg.len = 8;
+
+  
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module4seg1V.can_value();
+  msg.buf[3] = BMS_Module4seg1V.can_value() >> 8;
+  msg.buf[4] = BMS_Module4seg1V.can_value();
+  msg.buf[5] = BMS_Module4seg1V.can_value() >> 8;
+  msg.buf[6] = BMS_Module4seg1V.can_value();
+  msg.buf[7] = BMS_Module4seg1V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_540() {
+  static StateCounter ctr;
+  msg.id = 540;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module4seg4V.can_value();
+  msg.buf[3] = BMS_Module4seg4V.can_value() >> 8;
+  msg.buf[4] = BMS_Module4seg5V.can_value();
+  msg.buf[5] = BMS_Module4seg5V.can_value() >> 8;
+  msg.buf[6] = BMS_Module4seg6V.can_value();
+  msg.buf[7] = BMS_Module4seg6V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_541() {
+  static StateCounter ctr;
+  msg.id = 541;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module4seg7V.can_value();
+  msg.buf[3] = BMS_Module4seg7V.can_value() >> 8;
+  msg.buf[4] = BMS_Module4seg8V.can_value();
+  msg.buf[5] = BMS_Module4seg8V.can_value() >> 8;
+  msg.buf[6] = BMS_Module4seg9V.can_value();
+  msg.buf[7] = BMS_Module4seg9V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_542() {
+  static StateCounter ctr;
+  msg.id = 542;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module4seg10V.can_value();
+  msg.buf[3] = BMS_Module4seg10V.can_value() >> 8;
+  msg.buf[4] = BMS_Module4seg11V.can_value();
+  msg.buf[5] = BMS_Module4seg11V.can_value() >> 8;
+  msg.buf[6] = BMS_Module4seg12V.can_value();
+  msg.buf[7] = BMS_Module4seg12V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_543() {
+  static StateCounter ctr;
+  msg.id = 543;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module4seg13V.can_value();
+  msg.buf[3] = BMS_Module4seg13V.can_value() >> 8;
+  msg.buf[4] = BMS_Module4seg14V.can_value();
+  msg.buf[5] = BMS_Module4seg14V.can_value() >> 8;
+  msg.buf[6] = BMS_Module4seg15V.can_value();
+  msg.buf[7] = BMS_Module4seg15V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_544() {
+  static StateCounter ctr;
+  msg.id = 544;
+  msg.len = 8;
+
+  
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module4seg16V.can_value();
+  msg.buf[3] = BMS_Module4seg16V.can_value() >> 8;
+  msg.buf[4] = BMS_Module4seg17V.can_value();
+  msg.buf[5] = BMS_Module4seg17V.can_value() >> 8;
+  msg.buf[6] = BMS_Module4seg18V.can_value();
+  msg.buf[7] = BMS_Module4seg18V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_545() {
+  static StateCounter ctr;
+  msg.id = 545;
+  msg.len = 8;
+
+ 
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module4seg1Temp.can_value();
+  msg.buf[3] = BMS_Module4seg1Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module4seg1Temp.can_value();
+  msg.buf[5] = BMS_Module4seg1Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module4seg1Temp.can_value();
+  msg.buf[7] = BMS_Module4seg1Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_546() {
+  static StateCounter ctr;
+  msg.id = 546;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module4seg4Temp.can_value();
+  msg.buf[3] = BMS_Module4seg4Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module4seg5Temp.can_value();
+  msg.buf[5] = BMS_Module4seg5Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module4seg6Temp.can_value();
+  msg.buf[7] = BMS_Module4seg6Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_547() {
+  static StateCounter ctr;
+  msg.id = 547;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module4seg7Temp.can_value();
+  msg.buf[3] = BMS_Module4seg7Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module4seg8Temp.can_value();
+  msg.buf[5] = BMS_Module4seg8Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module4seg9Temp.can_value();
+  msg.buf[7] = BMS_Module4seg9Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_548() {
+  static StateCounter ctr;
+  msg.id = 548;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module4seg10Temp.can_value();
+  msg.buf[3] = BMS_Module4seg10Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module4seg11Temp.can_value();
+  msg.buf[5] = BMS_Module4seg11Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module4seg12Temp.can_value();
+  msg.buf[7] = BMS_Module4seg12Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_549() {
+  static StateCounter ctr;
+  msg.id = 549;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module4seg13Temp.can_value();
+  msg.buf[3] = BMS_Module4seg13Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module4seg14Temp.can_value();
+  msg.buf[5] = BMS_Module4seg14Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module4seg15Temp.can_value();
+  msg.buf[7] = BMS_Module4seg15Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_550() {
+  static StateCounter ctr;
+  msg.id = 550;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module4seg16Temp.can_value();
+  msg.buf[3] = BMS_Module4seg16Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module4seg17Temp.can_value();
+  msg.buf[5] = BMS_Module4seg17Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module4seg18Temp.can_value();
+  msg.buf[7] = BMS_Module4seg18Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_551() {
+  static StateCounter ctr;
+  msg.id = 551;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module5seg1V.can_value();
+  msg.buf[3] = BMS_Module5seg1V.can_value() >> 8;
+  msg.buf[4] = BMS_Module5seg1V.can_value();
+  msg.buf[5] = BMS_Module5seg1V.can_value() >> 8;
+  msg.buf[6] = BMS_Module5seg1V.can_value();
+  msg.buf[7] = BMS_Module5seg1V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_552() {
+  static StateCounter ctr;
+  msg.id = 552;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module5seg4V.can_value();
+  msg.buf[3] = BMS_Module5seg4V.can_value() >> 8;
+  msg.buf[4] = BMS_Module5seg5V.can_value();
+  msg.buf[5] = BMS_Module5seg5V.can_value() >> 8;
+  msg.buf[6] = BMS_Module5seg6V.can_value();
+  msg.buf[7] = BMS_Module5seg6V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_553() {
+  static StateCounter ctr;
+  msg.id = 553;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module5seg7V.can_value();
+  msg.buf[3] = BMS_Module5seg7V.can_value() >> 8;
+  msg.buf[4] = BMS_Module5seg8V.can_value();
+  msg.buf[5] = BMS_Module5seg8V.can_value() >> 8;
+  msg.buf[6] = BMS_Module5seg9V.can_value();
+  msg.buf[7] = BMS_Module5seg9V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_554() {
+  static StateCounter ctr;
+  msg.id = 554;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module5seg10V.can_value();
+  msg.buf[3] = BMS_Module5seg10V.can_value() >> 8;
+  msg.buf[4] = BMS_Module5seg11V.can_value();
+  msg.buf[5] = BMS_Module5seg11V.can_value() >> 8;
+  msg.buf[6] = BMS_Module5seg12V.can_value();
+  msg.buf[7] = BMS_Module5seg12V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_555() {
+  static StateCounter ctr;
+  msg.id = 555;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module5seg13V.can_value();
+  msg.buf[3] = BMS_Module5seg13V.can_value() >> 8;
+  msg.buf[4] = BMS_Module5seg14V.can_value();
+  msg.buf[5] = BMS_Module5seg14V.can_value() >> 8;
+  msg.buf[6] = BMS_Module5seg15V.can_value();
+  msg.buf[7] = BMS_Module5seg15V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_556() {
+  static StateCounter ctr;
+  msg.id = 556;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module5seg16V.can_value();
+  msg.buf[3] = BMS_Module5seg16V.can_value() >> 8;
+  msg.buf[4] = BMS_Module5seg17V.can_value();
+  msg.buf[5] = BMS_Module5seg17V.can_value() >> 8;
+  msg.buf[6] = BMS_Module5seg18V.can_value();
+  msg.buf[7] = BMS_Module5seg18V.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_557() {
+  static StateCounter ctr;
+  msg.id = 557;
+  msg.len = 8;
+
+  
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module5seg1Temp.can_value();
+  msg.buf[3] = BMS_Module5seg1Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module5seg1Temp.can_value();
+  msg.buf[5] = BMS_Module5seg1Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module5seg1Temp.can_value();
+  msg.buf[7] = BMS_Module5seg1Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_558() {
+  static StateCounter ctr;
+  msg.id = 558;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module5seg4Temp.can_value();
+  msg.buf[3] = BMS_Module5seg4Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module5seg5Temp.can_value();
+  msg.buf[5] = BMS_Module5seg5Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module5seg6Temp.can_value();
+  msg.buf[7] = BMS_Module5seg6Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_559() {
+  static StateCounter ctr;
+  msg.id = 559;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module5seg7Temp.can_value();
+  msg.buf[3] = BMS_Module5seg7Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module5seg8Temp.can_value();
+  msg.buf[5] = BMS_Module5seg8Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module5seg9Temp.can_value();
+  msg.buf[7] = BMS_Module5seg9Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_560() {
+  static StateCounter ctr;
+  msg.id = 560;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module5seg10Temp.can_value();
+  msg.buf[3] = BMS_Module5seg10Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module5seg11Temp.can_value();
+  msg.buf[5] = BMS_Module5seg11Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module5seg12Temp.can_value();
+  msg.buf[7] = BMS_Module5seg12Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_561() {
+  static StateCounter ctr;
+  msg.id = 561;
+  msg.len = 8;
+
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module5seg13Temp.can_value();
+  msg.buf[3] = BMS_Module5seg13Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module5seg14Temp.can_value();
+  msg.buf[5] = BMS_Module5seg14Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module5seg15Temp.can_value();
+  msg.buf[7] = BMS_Module5seg15Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+void send_BMS_562() {
+  static StateCounter ctr;
+  msg.id = 562;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_Module5seg16Temp.can_value();
+  msg.buf[3] = BMS_Module5seg16Temp.can_value() >> 8;
+  msg.buf[4] = BMS_Module5seg17Temp.can_value();
+  msg.buf[5] = BMS_Module5seg17Temp.can_value() >> 8;
+  msg.buf[6] = BMS_Module5seg18Temp.can_value();
+  msg.buf[7] = BMS_Module5seg18Temp.can_value() >> 8;
+
+  can2.write(msg);
+}
+
+const int MODULE_2 = 2; // BMS-S select, 1-5
+
+void send_can_2() {
+
+  static EasyTimer BMS_500_timer(10); // 10Hz for 100ms message interval
+  if (BMS_500_timer.isup()) {
+    send_BMS_500();
+  }
+
+  static EasyTimer BMS_501_timer(10); // 10Hz for 100ms message interval
+  if (BMS_501_timer.isup()) {
+    send_BMS_501();
+  }
+
+  static EasyTimer BMS_502_timer(10); // 10Hz for 100ms message interval
+  if (BMS_502_timer.isup()) {
+    send_BMS_502();
+  }
+
+  switch (MODULE_2) {
+    case 1: 
+      static EasyTimer BMS_503_timer(10); // 10Hz for 100ms message interval
+      if (BMS_503_timer.isup()) {
+        send_BMS_503();
+      }
+
+      static EasyTimer BMS_504_timer(10); // 10Hz for 100ms message interval
+      if (BMS_504_timer.isup()) {
+        send_BMS_504();
+      }
+      static EasyTimer BMS_505_timer(10); // 10Hz for 100ms message interval
+      if (BMS_505_timer.isup()) {
+        send_BMS_505();
+      }
+
+      static EasyTimer BMS_506_timer(10); // 10Hz for 100ms message interval
+      if (BMS_506_timer.isup()) {
+        send_BMS_506();
+      }
+
+      static EasyTimer BMS_507_timer(10); // 10Hz for 100ms message interval
+      if (BMS_507_timer.isup()) {
+        send_BMS_507();
+      }
+
+      static EasyTimer BMS_508_timer(10); // 10Hz for 100ms message interval
+      if (BMS_508_timer.isup()) {
+        send_BMS_508();
+      }
+
+      static EasyTimer BMS_509_timer(1); // 10Hz for 100ms message interval
+      if (BMS_509_timer.isup()) {
+        send_BMS_509();
+      }
+
+      static EasyTimer BMS_510_timer(1); // 10Hz for 100ms message interval
+      if (BMS_510_timer.isup()) {
+        send_BMS_510();
+      }
+
+      static EasyTimer BMS_511_timer(1); // 10Hz for 100ms message interval
+      if (BMS_511_timer.isup()) {
+        send_BMS_511();
+      }
+
+      static EasyTimer BMS_512_timer(1); // 10Hz for 100ms message interval
+      if (BMS_512_timer.isup()) {
+        send_BMS_512();
+      }
+
+      static EasyTimer BMS_513_timer(1); // 10Hz for 100ms message interval
+      if (BMS_513_timer.isup()) {
+        send_BMS_513();
+      }
+
+      static EasyTimer BMS_514_timer(1); // 10Hz for 100ms message interval
+      if (BMS_514_timer.isup()) {
+        send_BMS_514();
+      }
+      break;
+
+    case 2:
+      static EasyTimer BMS_515_timer(10); // 10Hz for 100ms message interval
+      if (BMS_515_timer.isup()) {
+        send_BMS_515();
+      }
+
+      static EasyTimer BMS_516_timer(10); // 10Hz for 100ms message interval
+      if (BMS_516_timer.isup()) {
+        send_BMS_516();
+      }
+
+      static EasyTimer BMS_517_timer(10); // 10Hz for 100ms message interval
+      if (BMS_517_timer.isup()) {
+        send_BMS_517();
+      }
+
+      static EasyTimer BMS_518_timer(10); // 10Hz for 100ms message interval
+      if (BMS_518_timer.isup()) {
+        send_BMS_518();
+      }
+
+      static EasyTimer BMS_519_timer(10); // 10Hz for 100ms message interval
+      if (BMS_519_timer.isup()) {
+        send_BMS_519();
+      }
+
+      static EasyTimer BMS_520_timer(10); // 10Hz for 100ms message interval
+      if (BMS_520_timer.isup()) {
+        send_BMS_520();
+      }
+
+      static EasyTimer BMS_521_timer(1); // 10Hz for 100ms message interval
+      if (BMS_521_timer.isup()) {
+        send_BMS_521();
+      }
+
+      static EasyTimer BMS_522_timer(1); // 10Hz for 100ms message interval
+      if (BMS_522_timer.isup()) {
+        send_BMS_522();
+      }
+
+      static EasyTimer BMS_523_timer(1); // 10Hz for 100ms message interval
+      if (BMS_523_timer.isup()) {
+        send_BMS_523();
+      }
+
+      static EasyTimer BMS_524_timer(1); // 10Hz for 100ms message interval
+      if (BMS_524_timer.isup()) {
+        send_BMS_524();
+      }
+      static EasyTimer BMS_525_timer(1); // 10Hz for 100ms message interval
+      if (BMS_525_timer.isup()) {
+        send_BMS_525();
+      }
+
+      static EasyTimer BMS_526_timer(1); // 10Hz for 100ms message interval
+      if (BMS_526_timer.isup()) {
+        send_BMS_526();
+      }
+      break;
     
-//     STMM_seg1ThermModNum = 0x00;
-//     STMM_seg1ThermValLow = clamp(get_min_temp(sorted_module_temps));
-//     STMM_seg1ThermValHigh = clamp(get_max_temp(sorted_module_temps));
-//     STMM_seg1ThermValAvg = clamp(get_avg_temp(module_temps));
-//     STMM_seg1ThermsEnabled = 0x0C;
-//     STMM_seg1ThermIDHigh = get_max_id(sorted_module_temps);
-//     STMM_seg1ThermIDLow = get_min_id(sorted_module_temps);
-    
-//     // // test message --- works
-//     // msg.buf[0] = 0x00; // thermistor module number
-//     // msg.buf[1] = 0x01; // lowest thermistor value
-//     // msg.buf[2] = 0x11; // highest thermistor value
-//     // msg.buf[3] = 0x01; // average thermistor value
-//     // msg.buf[4] = 0x01; // number of thermistors enabled
-//     // msg.buf[5] = 0x01; // ID of the module with the highest raw value
-//     // msg.buf[6] = 0x00; // ID of the module with the lowest raw value
-//     // msg.buf[7] = 0x56; // checksum
-
-//     msg.buf[0] = STMM_seg1ThermModNum.can_value(); // thermistor module number
-//     msg.buf[1] = STMM_seg1ThermValLow.can_value(); // lowest thermistor value
-//     msg.buf[2] = STMM_seg1ThermValHigh.can_value(); // highest thermistor value
-//     msg.buf[3] = STMM_seg1ThermValAvg.can_value(); // average thermistor value
-//     msg.buf[4] = STMM_seg1ThermsEnabled.can_value(); // number of thermistors enabled (12)
-//     msg.buf[5] = STMM_seg1ThermIDHigh.can_value(); // ID of the module with the highest raw value
-//     msg.buf[6] = STMM_seg1ThermIDLow.can_value(); // ID of the module with the lowest raw value
-//     msg.buf[7] = msg.buf[0] + msg.buf[1] + msg.buf[2] + msg.buf[3] +
-//                 msg.buf[4] + msg.buf[5] + msg.buf[6] + 0x39 + 0x08; // checksum
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_1839F381(const int &seg) {
-
-//     msg.id = 406451073;
-//     msg.flags.extended = 1;
-//     msg.len = 8;
-
-//     vector<pair<int, float>> module_temps = get_mod_temps(seg);
-//     vector<pair<int, float>> sorted_module_temps = sort_mod_temps(module_temps);
-    
-//     STMM_seg2ThermModNum = 0x01;
-//     STMM_seg2ThermValLow = clamp(get_min_temp(sorted_module_temps));
-//     STMM_seg2ThermValHigh = clamp(get_max_temp(sorted_module_temps));
-//     STMM_seg2ThermValAvg = clamp(get_avg_temp(module_temps));
-//     STMM_seg2ThermsEnabled = 0x0C;
-//     STMM_seg2ThermIDHigh = get_max_id(sorted_module_temps);
-//     STMM_seg2ThermIDLow = get_min_id(sorted_module_temps);
-
-//     msg.buf[0] = STMM_seg2ThermModNum.can_value(); // thermistor module number
-//     msg.buf[1] = STMM_seg2ThermValLow.can_value(); // lowest thermistor value
-//     msg.buf[2] = STMM_seg2ThermValHigh.can_value(); // highest thermistor value
-//     msg.buf[3] = STMM_seg2ThermValAvg.can_value(); // average thermistor value
-//     msg.buf[4] = STMM_seg2ThermsEnabled.can_value(); // number of thermistors enabled (12)
-//     msg.buf[5] = STMM_seg2ThermIDHigh.can_value(); // ID of the module with the highest raw value
-//     msg.buf[6] = STMM_seg2ThermIDLow.can_value(); // ID of the module with the lowest raw value
-//     msg.buf[7] = msg.buf[0] + msg.buf[1] + msg.buf[2] + msg.buf[3] +
-//                 msg.buf[4] + msg.buf[5] + msg.buf[6] + 0x39 + 0x08; // checksum
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_1839F382(const int &seg) {
-
-//     msg.id = 406451074;
-//     msg.flags.extended = 1;
-//     msg.len = 8;
-
-//     vector<pair<int, float>> module_temps = get_mod_temps(seg);
-//     vector<pair<int, float>> sorted_module_temps = sort_mod_temps(module_temps);
-    
-//     STMM_seg3ThermModNum = 0x02;
-//     STMM_seg3ThermValLow = clamp(get_min_temp(sorted_module_temps));
-//     STMM_seg3ThermValHigh = clamp(get_max_temp(sorted_module_temps));
-//     STMM_seg3ThermValAvg = clamp(get_avg_temp(module_temps));
-//     STMM_seg3ThermsEnabled = 0x0C;
-//     STMM_seg3ThermIDHigh = get_max_id(sorted_module_temps);
-//     STMM_seg3ThermIDLow = get_min_id(sorted_module_temps);
-
-//     msg.buf[0] = STMM_seg3ThermModNum.can_value(); // thermistor module number
-//     msg.buf[1] = STMM_seg3ThermValLow.can_value(); // lowest thermistor value
-//     msg.buf[2] = STMM_seg3ThermValHigh.can_value(); // highest thermistor value
-//     msg.buf[3] = STMM_seg3ThermValAvg.can_value(); // average thermistor value
-//     msg.buf[4] = STMM_seg3ThermsEnabled.can_value(); // number of thermistors enabled (12)
-//     msg.buf[5] = STMM_seg3ThermIDHigh.can_value(); // ID of the module with the highest raw value
-//     msg.buf[6] = STMM_seg3ThermIDLow.can_value(); // ID of the module with the lowest raw value
-//     msg.buf[7] = msg.buf[0] + msg.buf[1] + msg.buf[2] + msg.buf[3] +
-//                 msg.buf[4] + msg.buf[5] + msg.buf[6] + 0x39 + 0x08; // checksum
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_1839F383(const int &seg) {
-
-//     msg.id = 406451075;
-//     msg.flags.extended = 1;
-//     msg.len = 8;
-
-//     vector<pair<int, float>> module_temps = get_mod_temps(seg);
-//     vector<pair<int, float>> sorted_module_temps = sort_mod_temps(module_temps);
-    
-//     STMM_seg4ThermModNum = 0x03;
-//     STMM_seg4ThermValLow = clamp(get_min_temp(sorted_module_temps));
-//     STMM_seg4ThermValHigh = clamp(get_max_temp(sorted_module_temps));
-//     STMM_seg4ThermValAvg = clamp(get_avg_temp(module_temps));
-//     STMM_seg4ThermsEnabled = 0x0C;
-//     STMM_seg4ThermIDHigh = get_max_id(sorted_module_temps);
-//     STMM_seg4ThermIDLow = get_min_id(sorted_module_temps);
-
-//     msg.buf[0] = STMM_seg4ThermModNum.can_value(); // thermistor module number
-//     msg.buf[1] = STMM_seg4ThermValLow.can_value(); // lowest thermistor value
-//     msg.buf[2] = STMM_seg4ThermValHigh.can_value(); // highest thermistor value
-//     msg.buf[3] = STMM_seg4ThermValAvg.can_value(); // average thermistor value
-//     msg.buf[4] = STMM_seg4ThermsEnabled.can_value(); // number of thermistors enabled (12)
-//     msg.buf[5] = STMM_seg4ThermIDHigh.can_value(); // ID of the module with the highest raw value
-//     msg.buf[6] = STMM_seg4ThermIDLow.can_value(); // ID of the module with the lowest raw value
-//     msg.buf[7] = msg.buf[0] + msg.buf[1] + msg.buf[2] + msg.buf[3] +
-//                 msg.buf[4] + msg.buf[5] + msg.buf[6] + 0x39 + 0x08; // checksum
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_1839F384(const int &seg) {
-
-//     msg.id = 406451076;
-//     msg.flags.extended = 1;
-//     msg.len = 8;
-
-//     vector<pair<int, float>> module_temps = get_mod_temps(seg);
-//     vector<pair<int, float>> sorted_module_temps = sort_mod_temps(module_temps);
-    
-//     STMM_seg5ThermModNum = 0x04;
-//     STMM_seg5ThermValLow = clamp(get_min_temp(sorted_module_temps));
-//     STMM_seg5ThermValHigh = clamp(get_max_temp(sorted_module_temps));
-//     STMM_seg5ThermValAvg = clamp(get_avg_temp(module_temps));
-//     STMM_seg5ThermsEnabled = 0x0C;
-//     STMM_seg5ThermIDHigh = get_max_id(sorted_module_temps);
-//     STMM_seg5ThermIDLow = get_min_id(sorted_module_temps);
-
-//     msg.buf[0] = STMM_seg5ThermModNum.can_value(); // thermistor module number
-//     msg.buf[1] = STMM_seg5ThermValLow.can_value(); // lowest thermistor value
-//     msg.buf[2] = STMM_seg5ThermValHigh.can_value(); // highest thermistor value
-//     msg.buf[3] = STMM_seg5ThermValAvg.can_value(); // average thermistor value
-//     msg.buf[4] = STMM_seg5ThermsEnabled.can_value(); // number of thermistors enabled (12)
-//     msg.buf[5] = STMM_seg5ThermIDHigh.can_value(); // ID of the module with the highest raw value
-//     msg.buf[6] = STMM_seg5ThermIDLow.can_value(); // ID of the module with the lowest raw value
-//     msg.buf[7] = msg.buf[0] + msg.buf[1] + msg.buf[2] + msg.buf[3] +
-//                 msg.buf[4] + msg.buf[5] + msg.buf[6] + 0x39 + 0x08; // checksum
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_1839F385(const int &seg) {
-
-//     msg.id = 406451077;
-//     msg.flags.extended = 1;
-//     msg.len = 8;
-
-//     vector<pair<int, float>> module_temps = get_mod_temps(seg);
-//     vector<pair<int, float>> sorted_module_temps = sort_mod_temps(module_temps);
-    
-//     STMM_seg6ThermModNum = 0x05;
-//     STMM_seg6ThermValLow = clamp(get_min_temp(sorted_module_temps));
-//     STMM_seg6ThermValHigh = clamp(get_max_temp(sorted_module_temps));
-//     STMM_seg6ThermValAvg = clamp(get_avg_temp(module_temps));
-//     STMM_seg6ThermsEnabled = 0x0C;
-//     STMM_seg6ThermIDHigh = get_max_id(sorted_module_temps);
-//     STMM_seg6ThermIDLow = get_min_id(sorted_module_temps);
-
-//     msg.buf[0] = STMM_seg6ThermModNum.can_value(); // thermistor module number
-//     msg.buf[1] = STMM_seg6ThermValLow.can_value(); // lowest thermistor value
-//     msg.buf[2] = STMM_seg6ThermValHigh.can_value(); // highest thermistor value
-//     msg.buf[3] = STMM_seg6ThermValAvg.can_value(); // average thermistor value
-//     msg.buf[4] = STMM_seg6ThermsEnabled.can_value(); // number of thermistors enabled (12)
-//     msg.buf[5] = STMM_seg6ThermIDHigh.can_value(); // ID of the module with the highest raw value
-//     msg.buf[6] = STMM_seg6ThermIDLow.can_value(); // ID of the module with the lowest raw value
-//     msg.buf[7] = msg.buf[0] + msg.buf[1] + msg.buf[2] + msg.buf[3] +
-//                 msg.buf[4] + msg.buf[5] + msg.buf[6] + 0x39 + 0x08; // checksum
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_1839F386(const int &seg) {
-
-//     msg.id = 406451078;
-//     msg.flags.extended = 1;
-//     msg.len = 8;
-
-//     vector<pair<int, float>> module_temps = get_mod_temps(seg);
-//     vector<pair<int, float>> sorted_module_temps = sort_mod_temps(module_temps);
-    
-//     STMM_seg7ThermModNum = 0x06;
-//     STMM_seg7ThermValLow = clamp(get_min_temp(sorted_module_temps));
-//     STMM_seg7ThermValHigh = clamp(get_max_temp(sorted_module_temps));
-//     STMM_seg7ThermValAvg = clamp(get_avg_temp(module_temps));
-//     STMM_seg7ThermsEnabled = 0x0C;
-//     STMM_seg7ThermIDHigh = get_max_id(sorted_module_temps);
-//     STMM_seg7ThermIDLow = get_min_id(sorted_module_temps);
-
-//     msg.buf[0] = STMM_seg7ThermModNum.can_value(); // thermistor module number
-//     msg.buf[1] = STMM_seg7ThermValLow.can_value(); // lowest thermistor value
-//     msg.buf[2] = STMM_seg7ThermValHigh.can_value(); // highest thermistor value
-//     msg.buf[3] = STMM_seg7ThermValAvg.can_value(); // average thermistor value
-//     msg.buf[4] = STMM_seg7ThermsEnabled.can_value(); // number of thermistors enabled (12)
-//     msg.buf[5] = STMM_seg7ThermIDHigh.can_value(); // ID of the module with the highest raw value
-//     msg.buf[6] = STMM_seg7ThermIDLow.can_value(); // ID of the module with the lowest raw value
-//     msg.buf[7] = msg.buf[0] + msg.buf[1] + msg.buf[2] + msg.buf[3] +
-//                 msg.buf[4] + msg.buf[5] + msg.buf[6] + 0x39 + 0x08; // checksum
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_1839F387(const int &seg) {
-
-//     msg.id = 406451079;
-//     msg.flags.extended = 1;
-//     msg.len = 8;
-
-//     vector<pair<int, float>> module_temps = get_mod_temps(seg);
-//     vector<pair<int, float>> sorted_module_temps = sort_mod_temps(module_temps);
-    
-//     STMM_seg8ThermModNum = 0x07;
-//     STMM_seg8ThermValLow = clamp(get_min_temp(sorted_module_temps));
-//     STMM_seg8ThermValHigh = clamp(get_max_temp(sorted_module_temps));
-//     STMM_seg8ThermValAvg = clamp(get_avg_temp(module_temps));
-//     STMM_seg8ThermsEnabled = 0x0C;
-//     STMM_seg8ThermIDHigh = get_max_id(sorted_module_temps);
-//     STMM_seg8ThermIDLow = get_min_id(sorted_module_temps);
-
-//     msg.buf[0] = STMM_seg8ThermModNum.can_value(); // thermistor module number
-//     msg.buf[1] = STMM_seg8ThermValLow.can_value(); // lowest thermistor value
-//     msg.buf[2] = STMM_seg8ThermValHigh.can_value(); // highest thermistor value
-//     msg.buf[3] = STMM_seg8ThermValAvg.can_value(); // average thermistor value
-//     msg.buf[4] = STMM_seg8ThermsEnabled.can_value(); // number of thermistors enabled (12)
-//     msg.buf[5] = STMM_seg8ThermIDHigh.can_value(); // ID of the module with the highest raw value
-//     msg.buf[6] = STMM_seg8ThermIDLow.can_value(); // ID of the module with the lowest raw value
-//     msg.buf[7] = msg.buf[0] + msg.buf[1] + msg.buf[2] + msg.buf[3] +
-//                 msg.buf[4] + msg.buf[5] + msg.buf[6] + 0x39 + 0x08; // checksum
-
-//     cbus2.write(msg);
-// }
-
-// /*
-// ////////////////////////////////////////////////////////////////////////////////////////
-// / BELOW ARE THE MESSAGES THAT ARE BROADCASTED ON THE BUS TO MODULES OTHER THAN THE BMS /
-// ////////////////////////////////////////////////////////////////////////////////////////
-// */
-
-// void send_STMM_300(const int &seg) {
-//     // static definition - only defined once (like a global variable, but is local to this function only)
-//     static StateCounter ctr;
-
-//     // update per message
-//     msg.id = 300;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     // automatically does calcs
-//     STMM_segmentTemp100 = get_mod_temps(seg).at(0).second;
-//     STMM_segmentTemp101 = get_mod_temps(seg).at(1).second;
-//     STMM_segmentTemp102 = get_mod_temps(seg).at(2).second;
-
-//     // load up the message buffer
-//     // Each message contains a counter and 3 signals
-//     // Each signal is 16 bits, so they take up two spots in the message, hence the 8-bit shift
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp100.can_value();
-//     msg.buf[3] = STMM_segmentTemp100.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp101.can_value();
-//     msg.buf[5] = STMM_segmentTemp101.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp102.can_value();
-//     msg.buf[7] = STMM_segmentTemp102.can_value() >> 8;
-
-//     // Serial.println("Mod 0: ");
-//     // Serial.println(STMM_segmentTemp100.value());
-//     // Serial.println("Mod 1: ");
-//     // Serial.println(STMM_segmentTemp101.value());
-//     // Serial.println("Mod 2: ");
-//     // Serial.println(STMM_segmentTemp102.value());
-
-//     // send the message
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_301(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 301;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp103 = get_mod_temps(seg).at(3).second;
-//     STMM_segmentTemp104 = get_mod_temps(seg).at(4).second;
-//     STMM_segmentTemp105 = get_mod_temps(seg).at(5).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp103.can_value();
-//     msg.buf[3] = STMM_segmentTemp103.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp104.can_value();
-//     msg.buf[5] = STMM_segmentTemp104.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp105.can_value();
-//     msg.buf[7] = STMM_segmentTemp105.can_value() >> 8;
-
-    
-//     Serial.println("Mod 3 (CAN): ");
-//     Serial.println(STMM_segmentTemp103.value());
-//     Serial.println("Mod 4 (CAN): ");
-//     Serial.println(STMM_segmentTemp104.value());
-//     Serial.println("Mod 5 (CAN 2kHz): ");
-//     Serial.println(STMM_segmentTemp105.value());
-
-//     // Serial.println("Mod 3: ");
-//     // Serial.println(STMM_segmentTemp103.value());
-//     // Serial.println("Mod 4: ");
-//     // Serial.println(STMM_segmentTemp104.value());
-//     // Serial.println("Mod 5: ");
-//     // Serial.println(STMM_segmentTemp105.value());
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_302(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 302;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp106 = get_mod_temps(seg).at(6).second;
-//     STMM_segmentTemp107 = get_mod_temps(seg).at(7).second;
-//     STMM_segmentTemp108 = get_mod_temps(seg).at(8).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp106.can_value();
-//     msg.buf[3] = STMM_segmentTemp106.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp107.can_value();
-//     msg.buf[5] = STMM_segmentTemp107.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp108.can_value();
-//     msg.buf[7] = STMM_segmentTemp108.can_value() >> 8;
-
-    
-//     Serial.println("Mod 6 (CAN 20Hz): ");
-//     Serial.println(STMM_segmentTemp106.value());
-//     Serial.println("Mod 7 (CAN shielded): ");
-//     Serial.println(STMM_segmentTemp107.value());
-//     Serial.println("Mod 8 (CAN): ");
-//     Serial.println(STMM_segmentTemp108.value());
-
-//     // Serial.println("Mod 6: ");
-//     // Serial.println(STMM_segmentTemp106.value());
-//     // Serial.println("Mod 7: ");
-//     // Serial.println(STMM_segmentTemp107.value());
-//     // Serial.println("Mod 8: ");
-//     // Serial.println(STMM_segmentTemp108.value());
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_303(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 303;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp109 = get_mod_temps(seg).at(9).second;
-//     STMM_segmentTemp110 = get_mod_temps(seg).at(10).second;
-//     STMM_segmentTemp111 = get_mod_temps(seg).at(11).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp109.can_value();
-//     msg.buf[3] = STMM_segmentTemp109.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp110.can_value();
-//     msg.buf[5] = STMM_segmentTemp110.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp111.can_value();
-//     msg.buf[7] = STMM_segmentTemp111.can_value() >> 8;
-
-//     // Serial.println("Mod 9: ");
-//     // Serial.println(STMM_segmentTemp109.value());
-//     // Serial.println("Mod 10: ");
-//     // Serial.println(STMM_segmentTemp110.value());
-//     // Serial.println("Mod 11: ");
-//     // Serial.println(STMM_segmentTemp111.value());
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_304(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 304;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp200 = get_mod_temps(seg).at(0).second;
-//     STMM_segmentTemp201 = get_mod_temps(seg).at(1).second;
-//     STMM_segmentTemp202 = get_mod_temps(seg).at(2).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp200.can_value();
-//     msg.buf[3] = STMM_segmentTemp200.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp201.can_value();
-//     msg.buf[5] = STMM_segmentTemp201.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp202.can_value();
-//     msg.buf[7] = STMM_segmentTemp202.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_305(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 305;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp203 = get_mod_temps(seg).at(3).second;
-//     STMM_segmentTemp204 = get_mod_temps(seg).at(4).second;
-//     STMM_segmentTemp205 = get_mod_temps(seg).at(5).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp203.can_value();
-//     msg.buf[3] = STMM_segmentTemp203.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp204.can_value();
-//     msg.buf[5] = STMM_segmentTemp204.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp205.can_value();
-//     msg.buf[7] = STMM_segmentTemp205.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_306(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 306;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp206 = get_mod_temps(seg).at(6).second;
-//     STMM_segmentTemp207 = get_mod_temps(seg).at(7).second;
-//     STMM_segmentTemp208 = get_mod_temps(seg).at(8).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp206.can_value();
-//     msg.buf[3] = STMM_segmentTemp206.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp207.can_value();
-//     msg.buf[5] = STMM_segmentTemp207.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp208.can_value();
-//     msg.buf[7] = STMM_segmentTemp208.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_307(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 307;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp209 = get_mod_temps(seg).at(9).second;
-//     STMM_segmentTemp210 = get_mod_temps(seg).at(10).second;
-//     STMM_segmentTemp211 = get_mod_temps(seg).at(11).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp209.can_value();
-//     msg.buf[3] = STMM_segmentTemp209.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp210.can_value();
-//     msg.buf[5] = STMM_segmentTemp210.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp211.can_value();
-//     msg.buf[7] = STMM_segmentTemp211.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_308(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 308;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp300 = get_mod_temps(seg).at(0).second;
-//     STMM_segmentTemp301 = get_mod_temps(seg).at(1).second;
-//     STMM_segmentTemp302 = get_mod_temps(seg).at(2).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp300.can_value();
-//     msg.buf[3] = STMM_segmentTemp300.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp301.can_value();
-//     msg.buf[5] = STMM_segmentTemp301.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp302.can_value();
-//     msg.buf[7] = STMM_segmentTemp302.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_309(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 309;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp303 = get_mod_temps(seg).at(3).second;
-//     STMM_segmentTemp304 = get_mod_temps(seg).at(4).second;
-//     STMM_segmentTemp305 = get_mod_temps(seg).at(5).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp303.can_value();
-//     msg.buf[3] = STMM_segmentTemp303.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp304.can_value();
-//     msg.buf[5] = STMM_segmentTemp304.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp305.can_value();
-//     msg.buf[7] = STMM_segmentTemp305.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_310(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 310;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp306 = get_mod_temps(seg).at(6).second;
-//     STMM_segmentTemp307 = get_mod_temps(seg).at(7).second;
-//     STMM_segmentTemp308 = get_mod_temps(seg).at(8).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp306.can_value();
-//     msg.buf[3] = STMM_segmentTemp306.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp307.can_value();
-//     msg.buf[5] = STMM_segmentTemp307.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp308.can_value();
-//     msg.buf[7] = STMM_segmentTemp308.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_311(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 311;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp309 = get_mod_temps(seg).at(9).second;
-//     STMM_segmentTemp310 = get_mod_temps(seg).at(10).second;
-//     STMM_segmentTemp311 = get_mod_temps(seg).at(11).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp309.can_value();
-//     msg.buf[3] = STMM_segmentTemp309.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp310.can_value();
-//     msg.buf[5] = STMM_segmentTemp310.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp311.can_value();
-//     msg.buf[7] = STMM_segmentTemp311.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_312(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 312;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp400 = get_mod_temps(seg).at(0).second;
-//     STMM_segmentTemp401 = get_mod_temps(seg).at(1).second;
-//     STMM_segmentTemp402 = get_mod_temps(seg).at(2).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp400.can_value();
-//     msg.buf[3] = STMM_segmentTemp400.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp401.can_value();
-//     msg.buf[5] = STMM_segmentTemp401.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp402.can_value();
-//     msg.buf[7] = STMM_segmentTemp402.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_313(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 313;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp403 = get_mod_temps(seg).at(3).second;
-//     STMM_segmentTemp404 = get_mod_temps(seg).at(4).second;
-//     STMM_segmentTemp405 = get_mod_temps(seg).at(5).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp403.can_value();
-//     msg.buf[3] = STMM_segmentTemp403.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp404.can_value();
-//     msg.buf[5] = STMM_segmentTemp404.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp405.can_value();
-//     msg.buf[7] = STMM_segmentTemp405.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_314(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 314;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp406 = get_mod_temps(seg).at(6).second;
-//     STMM_segmentTemp407 = get_mod_temps(seg).at(7).second;
-//     STMM_segmentTemp408 = get_mod_temps(seg).at(8).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp406.can_value();
-//     msg.buf[3] = STMM_segmentTemp406.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp407.can_value();
-//     msg.buf[5] = STMM_segmentTemp407.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp408.can_value();
-//     msg.buf[7] = STMM_segmentTemp408.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_315(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 315;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp409 = get_mod_temps(seg).at(9).second;
-//     STMM_segmentTemp410 = get_mod_temps(seg).at(10).second;
-//     STMM_segmentTemp411 = get_mod_temps(seg).at(11).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp409.can_value();
-//     msg.buf[3] = STMM_segmentTemp409.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp410.can_value();
-//     msg.buf[5] = STMM_segmentTemp410.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp411.can_value();
-//     msg.buf[7] = STMM_segmentTemp411.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_316(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 316;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp500 = get_mod_temps(seg).at(0).second;
-//     STMM_segmentTemp501 = get_mod_temps(seg).at(1).second;
-//     STMM_segmentTemp502 = get_mod_temps(seg).at(2).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp500.can_value();
-//     msg.buf[3] = STMM_segmentTemp500.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp501.can_value();
-//     msg.buf[5] = STMM_segmentTemp501.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp502.can_value();
-//     msg.buf[7] = STMM_segmentTemp502.can_value() >> 8;
-
-//     // Serial.println("Mod 1 (CAN): ");
-//     // Serial.println(STMM_segmentTemp500.value());
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_317(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 317;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp503 = get_mod_temps(seg).at(3).second;
-//     STMM_segmentTemp504 = get_mod_temps(seg).at(4).second;
-//     STMM_segmentTemp505 = get_mod_temps(seg).at(5).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp503.can_value();
-//     msg.buf[3] = STMM_segmentTemp503.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp504.can_value();
-//     msg.buf[5] = STMM_segmentTemp504.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp505.can_value();
-//     msg.buf[7] = STMM_segmentTemp505.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_318(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 318;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp506 = get_mod_temps(seg).at(6).second;
-//     STMM_segmentTemp507 = get_mod_temps(seg).at(7).second;
-//     STMM_segmentTemp508 = get_mod_temps(seg).at(8).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp506.can_value();
-//     msg.buf[3] = STMM_segmentTemp506.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp507.can_value();
-//     msg.buf[5] = STMM_segmentTemp507.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp508.can_value();
-//     msg.buf[7] = STMM_segmentTemp508.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_319(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 319;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp509 = get_mod_temps(seg).at(9).second;
-//     STMM_segmentTemp510 = get_mod_temps(seg).at(10).second;
-//     STMM_segmentTemp511 = get_mod_temps(seg).at(11).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp509.can_value();
-//     msg.buf[3] = STMM_segmentTemp509.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp510.can_value();
-//     msg.buf[5] = STMM_segmentTemp510.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp511.can_value();
-//     msg.buf[7] = STMM_segmentTemp511.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_320(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 320;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp600 = get_mod_temps(seg).at(0).second;
-//     STMM_segmentTemp601 = get_mod_temps(seg).at(1).second;
-//     STMM_segmentTemp602 = get_mod_temps(seg).at(2).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp600.can_value();
-//     msg.buf[3] = STMM_segmentTemp600.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp601.can_value();
-//     msg.buf[5] = STMM_segmentTemp601.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp602.can_value();
-//     msg.buf[7] = STMM_segmentTemp602.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_321(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 321;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp603 = get_mod_temps(seg).at(3).second;
-//     STMM_segmentTemp604 = get_mod_temps(seg).at(4).second;
-//     STMM_segmentTemp605 = get_mod_temps(seg).at(5).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp603.can_value();
-//     msg.buf[3] = STMM_segmentTemp603.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp604.can_value();
-//     msg.buf[5] = STMM_segmentTemp604.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp605.can_value();
-//     msg.buf[7] = STMM_segmentTemp605.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_322(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 322;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp606 = get_mod_temps(seg).at(6).second;
-//     STMM_segmentTemp607 = get_mod_temps(seg).at(7).second;
-//     STMM_segmentTemp608 = get_mod_temps(seg).at(8).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp606.can_value();
-//     msg.buf[3] = STMM_segmentTemp606.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp607.can_value();
-//     msg.buf[5] = STMM_segmentTemp607.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp608.can_value();
-//     msg.buf[7] = STMM_segmentTemp608.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_323(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 323;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp609 = get_mod_temps(seg).at(9).second;
-//     STMM_segmentTemp610 = get_mod_temps(seg).at(10).second;
-//     STMM_segmentTemp611 = get_mod_temps(seg).at(11).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp609.can_value();
-//     msg.buf[3] = STMM_segmentTemp609.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp610.can_value();
-//     msg.buf[5] = STMM_segmentTemp610.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp611.can_value();
-//     msg.buf[7] = STMM_segmentTemp611.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_324(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 324;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp700 = get_mod_temps(seg).at(0).second;
-//     STMM_segmentTemp701 = get_mod_temps(seg).at(1).second;
-//     STMM_segmentTemp702 = get_mod_temps(seg).at(2).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp700.can_value();
-//     msg.buf[3] = STMM_segmentTemp700.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp701.can_value();
-//     msg.buf[5] = STMM_segmentTemp701.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp702.can_value();
-//     msg.buf[7] = STMM_segmentTemp702.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_325(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 325;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp703 = get_mod_temps(seg).at(3).second;
-//     STMM_segmentTemp704 = get_mod_temps(seg).at(4).second;
-//     STMM_segmentTemp705 = get_mod_temps(seg).at(5).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp703.can_value();
-//     msg.buf[3] = STMM_segmentTemp703.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp704.can_value();
-//     msg.buf[5] = STMM_segmentTemp704.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp705.can_value();
-//     msg.buf[7] = STMM_segmentTemp705.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_326(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 326;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp706 = get_mod_temps(seg).at(6).second;
-//     STMM_segmentTemp707 = get_mod_temps(seg).at(7).second;
-//     STMM_segmentTemp708 = get_mod_temps(seg).at(8).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp706.can_value();
-//     msg.buf[3] = STMM_segmentTemp706.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp707.can_value();
-//     msg.buf[5] = STMM_segmentTemp707.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp708.can_value();
-//     msg.buf[7] = STMM_segmentTemp708.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_327(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 327;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp709 = get_mod_temps(seg).at(9).second;
-//     STMM_segmentTemp710 = get_mod_temps(seg).at(10).second;
-//     STMM_segmentTemp711 = get_mod_temps(seg).at(11).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp709.can_value();
-//     msg.buf[3] = STMM_segmentTemp709.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp710.can_value();
-//     msg.buf[5] = STMM_segmentTemp710.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp711.can_value();
-//     msg.buf[7] = STMM_segmentTemp711.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_328(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 328;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp800 = get_mod_temps(seg).at(0).second;
-//     STMM_segmentTemp801 = get_mod_temps(seg).at(1).second;
-//     STMM_segmentTemp802 = get_mod_temps(seg).at(2).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp800.can_value();
-//     msg.buf[3] = STMM_segmentTemp800.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp801.can_value();
-//     msg.buf[5] = STMM_segmentTemp801.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp802.can_value();
-//     msg.buf[7] = STMM_segmentTemp802.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_329(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 329;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp803 = get_mod_temps(seg).at(3).second;
-//     STMM_segmentTemp804 = get_mod_temps(seg).at(4).second;
-//     STMM_segmentTemp805 = get_mod_temps(seg).at(5).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp803.can_value();
-//     msg.buf[3] = STMM_segmentTemp803.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp804.can_value();
-//     msg.buf[5] = STMM_segmentTemp804.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp805.can_value();
-//     msg.buf[7] = STMM_segmentTemp805.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_330(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 330;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp806 = get_mod_temps(seg).at(6).second;
-//     STMM_segmentTemp807 = get_mod_temps(seg).at(7).second;
-//     STMM_segmentTemp808 = get_mod_temps(seg).at(8).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp806.can_value();
-//     msg.buf[3] = STMM_segmentTemp806.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp807.can_value();
-//     msg.buf[5] = STMM_segmentTemp807.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp808.can_value();
-//     msg.buf[7] = STMM_segmentTemp808.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// void send_STMM_331(const int &seg) {
-//     static StateCounter ctr;
-
-//     msg.id = 331;
-//     msg.flags.extended = 0;
-//     msg.len = 8;
-
-//     STMM_segmentTemp809 = get_mod_temps(seg).at(9).second;
-//     STMM_segmentTemp810 = get_mod_temps(seg).at(10).second;
-//     STMM_segmentTemp811 = get_mod_temps(seg).at(11).second;
-
-//     msg.buf[0] = ctr.value();
-//     msg.buf[1] = 0;
-//     msg.buf[2] = STMM_segmentTemp809.can_value();
-//     msg.buf[3] = STMM_segmentTemp809.can_value() >> 8;
-//     msg.buf[4] = STMM_segmentTemp810.can_value();
-//     msg.buf[5] = STMM_segmentTemp810.can_value() >> 8;
-//     msg.buf[6] = STMM_segmentTemp811.can_value();
-//     msg.buf[7] = STMM_segmentTemp811.can_value() >> 8;
-
-//     cbus2.write(msg);
-// }
-
-// /*
-// ////////////
-// / SEND IT! /
-// ////////////
-// */
-
-// void send_can_1(const int &seg) {
-//     static EasyTimer STMM_1839F380_timer(10); // 10 Hz (100ms)
-//     if(STMM_1839F380_timer.isup()) {
-//         send_STMM_1839F380(seg);
-//     }
-
-//     static EasyTimer STMM_300_timer(1); // 1Hz
-//     if(STMM_300_timer.isup()) {
-//         send_STMM_300(seg);
-//     }
-
-//     static EasyTimer STMM_301_timer(1);
-//     if(STMM_301_timer.isup()) {
-//         send_STMM_301(seg);
-//     }
-
-//     static EasyTimer STMM_302_timer(1);
-//     if(STMM_302_timer.isup()) {
-//         send_STMM_302(seg);
-//     }
-
-//     static EasyTimer STMM_303_timer(1);
-//     if(STMM_303_timer.isup()) {
-//         send_STMM_303(seg);
-//     }
-// }
-
-// void send_can_2(const int &seg) {
-//     static EasyTimer STMM_1839F381_timer(10); // 10 Hz (100ms)
-//     if(STMM_1839F381_timer.isup()) {
-//         send_STMM_1839F381(seg);
-//     }
-
-//     static EasyTimer STMM_304_timer(1); // 1Hz
-//     if(STMM_304_timer.isup()) {
-//         send_STMM_304(seg);
-//     }
-
-//     static EasyTimer STMM_305_timer(1);
-//     if(STMM_305_timer.isup()) {
-//         send_STMM_305(seg);
-//     }
-
-//     static EasyTimer STMM_306_timer(1);
-//     if(STMM_306_timer.isup()) {
-//         send_STMM_306(seg);
-//     }
-
-//     static EasyTimer STMM_307_timer(1);
-//     if(STMM_307_timer.isup()) {
-//         send_STMM_307(seg);
-//     }
-// }
-
-// void send_can_3(const int &seg) {
-//     static EasyTimer STMM_1839F382_timer(10); // 10 Hz (100ms)
-//     if(STMM_1839F382_timer.isup()) {
-//         send_STMM_1839F382(seg);
-//     }
-
-//     static EasyTimer STMM_308_timer(1); // 1Hz
-//     if(STMM_308_timer.isup()) {
-//         send_STMM_308(seg);
-//     }
-
-//     static EasyTimer STMM_309_timer(1);
-//     if(STMM_309_timer.isup()) {
-//         send_STMM_309(seg);
-//     }
-
-//     static EasyTimer STMM_310_timer(1);
-//     if(STMM_310_timer.isup()) {
-//         send_STMM_310(seg);
-//     }
-
-//     static EasyTimer STMM_311_timer(1);
-//     if(STMM_311_timer.isup()) {
-//         send_STMM_311(seg);
-//     }
-// }
-
-// void send_can_4(const int &seg) {
-//     static EasyTimer STMM_1839F383_timer(10); // 10 Hz (100ms)
-//     if(STMM_1839F383_timer.isup()) {
-//         send_STMM_1839F383(seg);
-//     }
-
-//     static EasyTimer STMM_312_timer(1); // 1Hz
-//     if(STMM_312_timer.isup()) {
-//         send_STMM_312(seg);
-//     }
-
-//     static EasyTimer STMM_313_timer(1);
-//     if(STMM_313_timer.isup()) {
-//         send_STMM_313(seg);
-//     }
-
-//     static EasyTimer STMM_314_timer(1);
-//     if(STMM_314_timer.isup()) {
-//         send_STMM_314(seg);
-//     }
-
-//     static EasyTimer STMM_315_timer(1);
-//     if(STMM_315_timer.isup()) {
-//         send_STMM_315(seg);
-//     }
-// }
-
-// void send_can_5(const int &seg) {
-//     static EasyTimer STMM_1839F384_timer(10); // 10 Hz (100ms)
-//     if(STMM_1839F384_timer.isup()) {
-//         send_STMM_1839F384(seg);
-//     }
-
-//     static EasyTimer STMM_316_timer(1); // 1Hz
-//     if(STMM_316_timer.isup()) {
-//         send_STMM_316(seg);
-//     }
-
-//     static EasyTimer STMM_317_timer(1);
-//     if(STMM_317_timer.isup()) {
-//         send_STMM_317(seg);
-//     }
-
-//     static EasyTimer STMM_318_timer(1);
-//     if(STMM_318_timer.isup()) {
-//         send_STMM_318(seg);
-//     }
-
-//     static EasyTimer STMM_319_timer(1);
-//     if(STMM_319_timer.isup()) {
-//         send_STMM_319(seg);
-//     }
-// }
-
-// void send_can_6(const int &seg) {
-//     static EasyTimer STMM_1839F385_timer(10); // 10 Hz (100ms)
-//     if(STMM_1839F385_timer.isup()) {
-//         send_STMM_1839F385(seg);
-//     }
-
-//     static EasyTimer STMM_320_timer(1); // 1Hz
-//     if(STMM_320_timer.isup()) {
-//         send_STMM_320(seg);
-//     }
-
-//     static EasyTimer STMM_321_timer(1);
-//     if(STMM_321_timer.isup()) {
-//         send_STMM_321(seg);
-//     }
-
-//     static EasyTimer STMM_322_timer(1);
-//     if(STMM_322_timer.isup()) {
-//         send_STMM_322(seg);
-//     }
-
-//     static EasyTimer STMM_323_timer(1);
-//     if(STMM_323_timer.isup()) {
-//         send_STMM_323(seg);
-//     }
-// }
-
-// void send_can_7(const int &seg) {
-//     static EasyTimer STMM_1839F386_timer(10); // 10 Hz (100ms)
-//     if(STMM_1839F386_timer.isup()) {
-//         send_STMM_1839F386(seg);
-//     }
-
-//     static EasyTimer STMM_324_timer(1); // 1Hz
-//     if(STMM_324_timer.isup()) {
-//         send_STMM_324(seg);
-//     }
-
-//     static EasyTimer STMM_325_timer(1);
-//     if(STMM_325_timer.isup()) {
-//         send_STMM_325(seg);
-//     }
-
-//     static EasyTimer STMM_326_timer(1);
-//     if(STMM_326_timer.isup()) {
-//         send_STMM_326(seg);
-//     }
-
-//     static EasyTimer STMM_327_timer(1);
-//     if(STMM_327_timer.isup()) {
-//         send_STMM_327(seg);
-//     }
-// }
-
-// void send_can_8(const int &seg) {
-//     static EasyTimer STMM_1839F387_timer(10); // 10 Hz (100ms)
-//     if(STMM_1839F387_timer.isup()) {
-//         send_STMM_1839F387(seg);
-//     }
-
-//     static EasyTimer STMM_328_timer(1); // 1Hz
-//     if(STMM_328_timer.isup()) {
-//         send_STMM_328(seg);
-//     }
-
-//     static EasyTimer STMM_329_timer(1);
-//     if(STMM_329_timer.isup()) {
-//         send_STMM_329(seg);
-//     }
-
-//     static EasyTimer STMM_330_timer(1);
-//     if(STMM_330_timer.isup()) {
-//         send_STMM_330(seg);
-//     }
-
-//     static EasyTimer STMM_331_timer(1);
-//     if(STMM_331_timer.isup()) {
-//         send_STMM_331(seg);
-//     }
-// }
-
-#endif
+    case 3: 
+      static EasyTimer BMS_527_timer(10); // 10Hz for 100ms message interval
+      if (BMS_527_timer.isup()) {
+        send_BMS_527();
+      }
+
+      static EasyTimer BMS_528_timer(10); // 10Hz for 100ms message interval
+      if (BMS_528_timer.isup()) {
+        send_BMS_528();
+      }
+
+      static EasyTimer BMS_529_timer(10); // 10Hz for 100ms message interval
+      if (BMS_529_timer.isup()) {
+        send_BMS_529();
+      }
+
+      static EasyTimer BMS_530_timer(10); // 10Hz for 100ms message interval
+      if (BMS_530_timer.isup()) {
+        send_BMS_530();
+      }
+
+      static EasyTimer BMS_531_timer(10); // 10Hz for 100ms message interval
+      if (BMS_531_timer.isup()) {
+        send_BMS_531();
+      }
+
+      static EasyTimer BMS_532_timer(10); // 10Hz for 100ms message interval
+      if (BMS_532_timer.isup()) {
+        send_BMS_532();
+      }
+
+      static EasyTimer BMS_533_timer(1); // 10Hz for 100ms message interval
+      if (BMS_533_timer.isup()) {
+        send_BMS_533();
+      }
+
+      static EasyTimer BMS_534_timer(1); // 10Hz for 100ms message interval
+      if (BMS_534_timer.isup()) {
+        send_BMS_534();
+      }
+      static EasyTimer BMS_535_timer(1); // 10Hz for 100ms message interval
+      if (BMS_535_timer.isup()) {
+        send_BMS_535();
+      }
+
+      static EasyTimer BMS_536_timer(1); // 10Hz for 100ms message interval
+      if (BMS_536_timer.isup()) {
+        send_BMS_536();
+      }
+
+      static EasyTimer BMS_537_timer(1); // 10Hz for 100ms message interval
+      if (BMS_537_timer.isup()) {
+        send_BMS_537();
+      }
+
+      static EasyTimer BMS_538_timer(1); // 10Hz for 100ms message interval
+      if (BMS_538_timer.isup()) {
+        send_BMS_538();
+      }
+      break;
+
+    case 4:
+      static EasyTimer BMS_539_timer(10); // 10Hz for 100ms message interval
+      if (BMS_539_timer.isup()) {
+        send_BMS_539();
+      }
+
+      static EasyTimer BMS_540_timer(10); // 10Hz for 100ms message interval
+      if (BMS_540_timer.isup()) {
+        send_BMS_540();
+      }
+
+      static EasyTimer BMS_541_timer(10); // 10Hz for 100ms message interval
+      if (BMS_541_timer.isup()) {
+        send_BMS_541();
+      }
+
+      static EasyTimer BMS_542_timer(10); // 10Hz for 100ms message interval
+      if (BMS_542_timer.isup()) {
+        send_BMS_542();
+      }
+
+      static EasyTimer BMS_543_timer(10); // 10Hz for 100ms message interval
+      if (BMS_543_timer.isup()) {
+        send_BMS_543();
+      }
+
+      static EasyTimer BMS_544_timer(10); // 10Hz for 100ms message interval
+      if (BMS_544_timer.isup()) {
+        send_BMS_544();
+      }
+      static EasyTimer BMS_545_timer(1); // 10Hz for 100ms message interval
+      if (BMS_545_timer.isup()) {
+        send_BMS_545();
+      }
+
+      static EasyTimer BMS_546_timer(1); // 10Hz for 100ms message interval
+      if (BMS_546_timer.isup()) {
+        send_BMS_546();
+      }
+
+      static EasyTimer BMS_547_timer(1); // 10Hz for 100ms message interval
+      if (BMS_547_timer.isup()) {
+        send_BMS_547();
+      }
+
+      static EasyTimer BMS_548_timer(1); // 10Hz for 100ms message interval
+      if (BMS_548_timer.isup()) {
+        send_BMS_548();
+      }
+
+      static EasyTimer BMS_549_timer(1); // 10Hz for 100ms message interval
+      if (BMS_549_timer.isup()) {
+        send_BMS_549();
+      }
+
+      static EasyTimer BMS_550_timer(1); // 10Hz for 100ms message interval
+      if (BMS_550_timer.isup()) {
+        send_BMS_550();
+      }
+      break;
+
+    case 5:
+      static EasyTimer BMS_551_timer(10); // 10Hz for 100ms message interval
+      if (BMS_551_timer.isup()) {
+        send_BMS_551();
+      }
+
+      static EasyTimer BMS_552_timer(10); // 10Hz for 100ms message interval
+      if (BMS_552_timer.isup()) {
+        send_BMS_552();
+      }
+
+      static EasyTimer BMS_553_timer(10); // 10Hz for 100ms message interval
+      if (BMS_553_timer.isup()) {
+        send_BMS_553();
+      }
+
+      static EasyTimer BMS_554_timer(10); // 10Hz for 100ms message interval
+      if (BMS_554_timer.isup()) {
+        send_BMS_554();
+      }
+      static EasyTimer BMS_555_timer(10); // 10Hz for 100ms message interval
+      if (BMS_555_timer.isup()) {
+        send_BMS_555();
+      }
+
+      static EasyTimer BMS_556_timer(10); // 10Hz for 100ms message interval
+      if (BMS_556_timer.isup()) {
+        send_BMS_556();
+      }
+
+      static EasyTimer BMS_557_timer(1); // 10Hz for 100ms message interval
+      if (BMS_557_timer.isup()) {
+        send_BMS_557();
+      }
+
+      static EasyTimer BMS_558_timer(1); // 10Hz for 100ms message interval
+      if (BMS_558_timer.isup()) {
+        send_BMS_558();
+      }
+
+      static EasyTimer BMS_559_timer(1); // 10Hz for 100ms message interval
+      if (BMS_559_timer.isup()) {
+        send_BMS_559();
+      }
+
+      static EasyTimer BMS_560_timer(1); // 10Hz for 100ms message interval
+      if (BMS_560_timer.isup()) {
+        send_BMS_560();
+      }
+
+      static EasyTimer BMS_561_timer(1); // 10Hz for 100ms message interval
+      if (BMS_561_timer.isup()) {
+        send_BMS_561();
+      }
+
+      static EasyTimer BMS_562_timer(1); // 10Hz for 100ms message interval
+      if (BMS_562_timer.isup()) {
+        send_BMS_562();
+      }
+      break;
+  }
+}
+
+#endif 

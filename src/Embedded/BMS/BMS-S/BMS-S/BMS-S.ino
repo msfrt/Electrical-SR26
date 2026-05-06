@@ -2,15 +2,21 @@
 #include "bq_data.h"
 #include"bms_data_types.h"
 #include <FlexCAN_T4.h>
-#include "can_send.hpp"
+#include <StateCAN.h>
+#include "CAN/SR26_CAN2.hpp"
 
-FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> cbus2;
-
-static CAN_message_t msg;
+FlexCAN_T4<CAN2, RX_SIZE_256, TX_SIZE_16> can2;
+static CAN_message_t rxmsg;
 #define CAN2_BAUDRATE 1000000
 
+#include "can_send.hpp"
+#include "testCan.hpp"
+
 // signal definitions
-#include "CAN/raptor_CAN2.hpp"
+#define NUM_RX_STD_MAILBOXES 32
+#define NUM_RX_EXT_MAILBOXES 2
+#define NUM_TX_MAILBOXES 30
+#define MAX_CAN_FRAME_READ_PER_CYCLE 5  // Limit per loop iteration
 
 const int MODULE = 2; // BMS-S select, 1-5
 
@@ -26,15 +32,20 @@ void setup() {
   bqWriteReg(0, ADC_CTRL2, 0x05, 1, FRMWRT_SGL_W); // turn on ADCs
   delay(5);
   //selectTemp18();
+
+  can2.begin();
+  can2.setBaudRate(1000000);
   
 }
 BMSOverallData_t *bmsData;
 
 uint8_t response_frame[(16)];
 uint16_t cellVoltages[CELLS_PER_SLAVE];
+float cellTemperatures[18];
 int point = 0;
 int expected_bytes = 1;
 float current_voltage = 0;
+float module_voltage = 0;
 void loop() {
 
   bqReadReg(0, DEV_STAT1, response_frame, expected_bytes, FRMWRT_SGL_R);
@@ -56,6 +67,36 @@ void loop() {
     Serial.print(" ");
   }
   Serial.println();
+
+  bqReadReg(0, FAULT_SUMMARY, response_frame, expected_bytes, FRMWRT_SGL_R);
+  delay(10);
+  Serial.print("FAULT_SUMMARY: ");
+  for(int i=0; i < expected_bytes ; i++){
+    if(response_frame[i] < 0x10) Serial.print("0");
+    Serial.print(response_frame[i],HEX);
+    Serial.print(" ");
+  }
+  Serial.println();
+  bqReadReg(0, FAULT_PWR1, response_frame, expected_bytes, FRMWRT_SGL_R);
+  delay(10);
+  Serial.print("FAULT_PWR1: ");
+  for(int i=0; i < expected_bytes ; i++){
+    if(response_frame[i] < 0x10) Serial.print("0");
+    Serial.print(response_frame[i],HEX);
+    Serial.print(" ");
+  }
+
+  Serial.println();
+  bqReadReg(0, FAULT_PWR2, response_frame, expected_bytes, FRMWRT_SGL_R);
+  delay(10);
+  Serial.print("FAULT_PWR2: ");
+  for(int i=0; i < expected_bytes ; i++){
+    if(response_frame[i] < 0x10) Serial.print("0");
+    Serial.print(response_frame[i],HEX);
+    Serial.print(" ");
+  }
+  Serial.println();
+
 
   bqReadReg(0, ADC_CTRL2, response_frame, expected_bytes, FRMWRT_SGL_R);
   delay(10);
@@ -79,8 +120,12 @@ void loop() {
   delay(10);
   bqUpdateVoltages();
   bqUpdateTemperatures();
+  module_voltage = getModuleVoltage();
+  Serial.print("Module voltage: ");
+  Serial.println(module_voltage);
   printCellTemperatures();
   printCellVoltages();
+  investigateFaults();
 
   bqReadReg(0, VCELL12_HI, response_frame, 2, FRMWRT_SGL_R);
   Serial.print("VCELL12_HI: ");
@@ -102,8 +147,210 @@ void loop() {
   }
   Serial.println();
 
+  //send_can_2();
+
+  test_can();
+
 }
 
+void setSegmetVoltages(int cell) {
+  switch (MODULE) {
+    case 1:
+      BMS_Module1seg1V = cellVoltages[0];
+      BMS_Module1seg2V = cellVoltages[1];
+      BMS_Module1seg3V = cellVoltages[2];
+      BMS_Module1seg4V = cellVoltages[3];
+      BMS_Module1seg5V = cellVoltages[4];
+      BMS_Module1seg6V = cellVoltages[5];
+      BMS_Module1seg7V = cellVoltages[6];
+      BMS_Module1seg8V = cellVoltages[7];
+      BMS_Module1seg9V = cellVoltages[8];
+      BMS_Module1seg10V = cellVoltages[9];
+      BMS_Module1seg11V = cellVoltages[10];
+      BMS_Module1seg12V = cellVoltages[11];
+      BMS_Module1seg13V = cellVoltages[12];
+      BMS_Module1seg14V = cellVoltages[13];
+      BMS_Module1seg15V = cellVoltages[14];
+      BMS_Module1seg16V = cellVoltages[15];
+      BMS_Module1seg17V = cellVoltages[16];
+      BMS_Module1seg18V = cellVoltages[17];
+      BMS_Module1seg1Temp =  cellTemperatures[0];
+      BMS_Module1seg2Temp =  cellTemperatures[1];
+      BMS_Module1seg3Temp =  cellTemperatures[2];
+      BMS_Module1seg4Temp =  cellTemperatures[3];
+      BMS_Module1seg5Temp =  cellTemperatures[4];
+      BMS_Module1seg6Temp =  cellTemperatures[5];
+      BMS_Module1seg7Temp =  cellTemperatures[6];
+      BMS_Module1seg8Temp =  cellTemperatures[7];
+      BMS_Module1seg9Temp =  cellTemperatures[8];
+      BMS_Module1seg10Temp =  cellTemperatures[9];
+      BMS_Module1seg11Temp =  cellTemperatures[10];
+      BMS_Module1seg12Temp =  cellTemperatures[11];
+      BMS_Module1seg13Temp =  cellTemperatures[12];
+      BMS_Module1seg14Temp =  cellTemperatures[13];
+      BMS_Module1seg15Temp =  cellTemperatures[14];
+      BMS_Module1seg16Temp =  cellTemperatures[15];
+      BMS_Module1seg17Temp =  cellTemperatures[16];
+      BMS_Module1seg18Temp =  cellTemperatures[17];
+      break;
+
+    case 2:
+      BMS_Module2seg1V = cellVoltages[0];
+      BMS_Module2seg2V = cellVoltages[1];
+      BMS_Module2seg3V = cellVoltages[2];
+      BMS_Module2seg4V = cellVoltages[3];
+      BMS_Module2seg5V = cellVoltages[4];
+      BMS_Module2seg6V = cellVoltages[5];
+      BMS_Module2seg7V = cellVoltages[6];
+      BMS_Module2seg8V = cellVoltages[7];
+      BMS_Module2seg9V = cellVoltages[8];
+      BMS_Module2seg10V = cellVoltages[9];
+      BMS_Module2seg11V = cellVoltages[10];
+      BMS_Module2seg12V = cellVoltages[11];
+      BMS_Module2seg13V = cellVoltages[12];
+      BMS_Module2seg14V = cellVoltages[13];
+      BMS_Module2seg15V = cellVoltages[14];
+      BMS_Module2seg16V = cellVoltages[15];
+      BMS_Module2seg17V = cellVoltages[16];
+      BMS_Module2seg18V = cellVoltages[17];
+      BMS_Module2seg1Temp =  cellTemperatures[0];
+      BMS_Module2seg2Temp =  cellTemperatures[1];
+      BMS_Module2seg3Temp =  cellTemperatures[2];
+      BMS_Module2seg4Temp =  cellTemperatures[3];
+      BMS_Module2seg5Temp =  cellTemperatures[4];
+      BMS_Module2seg6Temp =  cellTemperatures[5];
+      BMS_Module2seg7Temp =  cellTemperatures[6];
+      BMS_Module2seg8Temp =  cellTemperatures[7];
+      BMS_Module2seg9Temp =  cellTemperatures[8];
+      BMS_Module2seg10Temp =  cellTemperatures[9];
+      BMS_Module2seg11Temp =  cellTemperatures[10];
+      BMS_Module2seg12Temp =  cellTemperatures[11];
+      BMS_Module2seg13Temp =  cellTemperatures[12];
+      BMS_Module2seg14Temp =  cellTemperatures[13];
+      BMS_Module2seg15Temp =  cellTemperatures[14];
+      BMS_Module2seg16Temp =  cellTemperatures[15];
+      BMS_Module2seg17Temp =  cellTemperatures[16];
+      BMS_Module2seg18Temp =  cellTemperatures[17];
+      break;
+
+    case 3:
+      BMS_Module3seg1V = cellVoltages[0];
+      BMS_Module3seg2V = cellVoltages[1];
+      BMS_Module3seg3V = cellVoltages[2];
+      BMS_Module3seg4V = cellVoltages[3];
+      BMS_Module3seg5V = cellVoltages[4];
+      BMS_Module3seg6V = cellVoltages[5];
+      BMS_Module3seg7V = cellVoltages[6];
+      BMS_Module3seg8V = cellVoltages[7];
+      BMS_Module3seg9V = cellVoltages[8];
+      BMS_Module3seg10V = cellVoltages[9];
+      BMS_Module3seg11V = cellVoltages[10];
+      BMS_Module3seg12V = cellVoltages[11];
+      BMS_Module3seg13V = cellVoltages[12];
+      BMS_Module3seg14V = cellVoltages[13];
+      BMS_Module3seg15V = cellVoltages[14];
+      BMS_Module3seg16V = cellVoltages[15];
+      BMS_Module3seg17V = cellVoltages[16];
+      BMS_Module3seg18V = cellVoltages[17];
+      BMS_Module3seg1Temp =  cellTemperatures[0];
+      BMS_Module3seg2Temp =  cellTemperatures[1];
+      BMS_Module3seg3Temp =  cellTemperatures[2];
+      BMS_Module3seg4Temp =  cellTemperatures[3];
+      BMS_Module3seg5Temp =  cellTemperatures[4];
+      BMS_Module3seg6Temp =  cellTemperatures[5];
+      BMS_Module3seg7Temp =  cellTemperatures[6];
+      BMS_Module3seg8Temp =  cellTemperatures[7];
+      BMS_Module3seg9Temp =  cellTemperatures[8];
+      BMS_Module3seg10Temp =  cellTemperatures[9];
+      BMS_Module3seg11Temp =  cellTemperatures[10];
+      BMS_Module3seg12Temp =  cellTemperatures[11];
+      BMS_Module3seg13Temp =  cellTemperatures[12];
+      BMS_Module3seg14Temp =  cellTemperatures[13];
+      BMS_Module3seg15Temp =  cellTemperatures[14];
+      BMS_Module3seg16Temp =  cellTemperatures[15];
+      BMS_Module3seg17Temp =  cellTemperatures[16];
+      BMS_Module3seg18Temp =  cellTemperatures[17];
+      break;
+
+    case 4:
+      BMS_Module4seg1V = cellVoltages[0];
+      BMS_Module4seg2V = cellVoltages[1];
+      BMS_Module4seg3V = cellVoltages[2];
+      BMS_Module4seg4V = cellVoltages[3];
+      BMS_Module4seg5V = cellVoltages[4];
+      BMS_Module4seg6V = cellVoltages[5];
+      BMS_Module4seg7V = cellVoltages[6];
+      BMS_Module4seg8V = cellVoltages[7];
+      BMS_Module4seg9V = cellVoltages[8];
+      BMS_Module4seg10V = cellVoltages[9];
+      BMS_Module4seg11V = cellVoltages[10];
+      BMS_Module4seg12V = cellVoltages[11];
+      BMS_Module4seg13V = cellVoltages[12];
+      BMS_Module4seg14V = cellVoltages[13];
+      BMS_Module4seg15V = cellVoltages[14];
+      BMS_Module4seg16V = cellVoltages[15];
+      BMS_Module4seg17V = cellVoltages[16];
+      BMS_Module4seg18V = cellVoltages[17];
+      BMS_Module4seg1Temp =  cellTemperatures[0];
+      BMS_Module4seg2Temp =  cellTemperatures[1];
+      BMS_Module4seg3Temp =  cellTemperatures[2];
+      BMS_Module4seg4Temp =  cellTemperatures[3];
+      BMS_Module4seg5Temp =  cellTemperatures[4];
+      BMS_Module4seg6Temp =  cellTemperatures[5];
+      BMS_Module4seg7Temp =  cellTemperatures[6];
+      BMS_Module4seg8Temp =  cellTemperatures[7];
+      BMS_Module4seg9Temp =  cellTemperatures[8];
+      BMS_Module4seg10Temp =  cellTemperatures[9];
+      BMS_Module4seg11Temp =  cellTemperatures[10];
+      BMS_Module4seg12Temp =  cellTemperatures[11];
+      BMS_Module4seg13Temp =  cellTemperatures[12];
+      BMS_Module4seg14Temp =  cellTemperatures[13];
+      BMS_Module4seg15Temp =  cellTemperatures[14];
+      BMS_Module4seg16Temp =  cellTemperatures[15];
+      BMS_Module4seg17Temp =  cellTemperatures[16];
+      BMS_Module4seg18Temp =  cellTemperatures[17];
+      break;
+
+    case 5:
+      BMS_Module5seg1V = cellVoltages[0];
+      BMS_Module5seg2V = cellVoltages[1];
+      BMS_Module5seg3V = cellVoltages[2];
+      BMS_Module5seg4V = cellVoltages[3];
+      BMS_Module5seg5V = cellVoltages[4];
+      BMS_Module5seg6V = cellVoltages[5];
+      BMS_Module5seg7V = cellVoltages[6];
+      BMS_Module5seg8V = cellVoltages[7];
+      BMS_Module5seg9V = cellVoltages[8];
+      BMS_Module5seg10V = cellVoltages[9];
+      BMS_Module5seg11V = cellVoltages[10];
+      BMS_Module5seg12V = cellVoltages[11];
+      BMS_Module5seg13V = cellVoltages[12];
+      BMS_Module5seg14V = cellVoltages[13];
+      BMS_Module5seg15V = cellVoltages[14];
+      BMS_Module5seg16V = cellVoltages[15];
+      BMS_Module5seg17V = cellVoltages[16];
+      BMS_Module5seg18V = cellVoltages[17];
+      BMS_Module5seg1Temp =  cellTemperatures[0];
+      BMS_Module5seg2Temp =  cellTemperatures[1];
+      BMS_Module5seg3Temp =  cellTemperatures[2];
+      BMS_Module5seg4Temp =  cellTemperatures[3];
+      BMS_Module5seg5Temp =  cellTemperatures[4];
+      BMS_Module5seg6Temp =  cellTemperatures[5];
+      BMS_Module5seg7Temp =  cellTemperatures[6];
+      BMS_Module5seg8Temp =  cellTemperatures[7];
+      BMS_Module5seg9Temp =  cellTemperatures[8];
+      BMS_Module5seg10Temp =  cellTemperatures[9];
+      BMS_Module5seg11Temp =  cellTemperatures[10];
+      BMS_Module5seg12Temp =  cellTemperatures[11];
+      BMS_Module5seg13Temp =  cellTemperatures[12];
+      BMS_Module5seg14Temp =  cellTemperatures[13];
+      BMS_Module5seg15Temp =  cellTemperatures[14];
+      BMS_Module5seg16Temp =  cellTemperatures[15];
+      BMS_Module5seg17Temp =  cellTemperatures[16];
+      BMS_Module5seg18Temp =  cellTemperatures[17];
+      break;
+  }
+}
 
 BMSErrorCode_t bqUpdateVoltages() {
     // Starting address for VCELL18_HI on the BQ79718B is 0x574
@@ -265,8 +512,6 @@ void (*selectTempFunctions[18])() = {
   selectTemp13, selectTemp14, selectTemp15, selectTemp16, selectTemp17, selectTemp18
 };
 
-float cellTemperatures[18];
-
 BMSErrorCode_t bqUpdateTemperatures() {
     uint8_t tempBuf[2];
     BMSErrorCode_t status;
@@ -309,4 +554,116 @@ void printCellTemperatures() {
         Serial.print(cellTemperatures[i], 1);
         Serial.println(" C");
     }
+}
+
+int ModuleVoltagebuff[16];
+
+float getModuleVoltage() {
+    uint8_t buf[2];
+    // Read VCELL_ACT_SUM_HI (0x59A) and LO (0x59B)
+    BMSErrorCode_t status = bqReadReg(0, 0x059A, buf, 2, FRMWRT_SGL_R, 50);
+
+    if (status == BMS_OK) {
+        // Combine bytes (Big Endian)
+        uint16_t raw_val = (uint16_t)((buf[0] << 8) | buf[1]);
+
+        // Applying the 2mV conversion from the datasheet, add 90mV from IR drop at supply pin
+        float total_volts = ( (raw_val * 2.0f) / 1000.0f ) + 0.09;
+
+        return total_volts;
+    }
+    
+    return -1.0f; // Return error value
+}
+
+void investigateFaults() {
+    uint8_t summary;
+    // FAULT_SUMMARY is a 1-byte register
+    BMSErrorCode_t status = bqReadReg(0, FAULT_SUMMARY, &summary, 1, FRMWRT_SGL_R, 50);
+
+    if (status != BMS_OK) {
+        Serial.println("System Error: Could not read Fault Summary.");
+        return;
+    }
+
+    if (summary == 0) {
+        // No faults detected
+        return; 
+    }
+
+    Serial.print("!!! FAULT DETECTED (Summary: 0x");
+    Serial.println(summary, HEX);
+
+    // Bit 7: FAULT_OC
+    if (summary & (1 << 7)) {
+        Serial.println("FAULT_OC");
+        // Action: Check DEV_STAT registers or reset chip
+    }
+
+    // Bit 6: FAULT_ADC_CB 
+    if (summary & (1 << 6)) {
+        Serial.println("FAULT_ADC_CB");
+        // Action: Reset communication or check cable integrity
+    }
+
+    // Bit 5: FAULT_OTUT
+    if (summary & (1 << 5)) {
+        Serial.println("FAULT_OTUT");
+
+    }
+
+    // Bit 4: FAULT_OVUV
+    if (summary & (1 << 4)) {
+        Serial.println("FAULT_OVUV");
+
+    }
+
+    // Bit 3: FAULT_SYS 
+    if (summary & (1 << 3)) {
+      Serial.println("Investigating FAULT_SYS");
+      uint8_t fault_sys;
+      bqReadReg(0, FAULT_SYS, &fault_sys, 1, FRMWRT_SGL_R, 50);
+      if (fault_sys & (1 << 6)) {
+        Serial.println("AVDD_ON; AVDD shutdown fault");
+      }
+      if (fault_sys & (1 << 5)) {
+        Serial.println("I2C_LOW");
+      }
+      if (fault_sys & (1 << 4)) {
+        Serial.println("I2C_NACK");
+      }
+      if (fault_sys & (1 << 3)) {
+        Serial.println("LFO");
+      }
+      if (fault_sys & (1 << 2)) {
+        Serial.println("DRST");
+      }
+      if (fault_sys & (1 << 1)) {
+        Serial.println("TSHUT");
+      }
+      if (fault_sys & (1 << 0)) {
+        Serial.println("TWARN");
+      }
+      // Action: Check individual GPIO temperature array
+    }
+
+    // Bit 2: FAULT_OTP
+    if (summary & (1 << 2)) {
+        Serial.println("FAULT_OTP");
+    }
+
+    // Bit 1: FAULT_COMM
+    if (summary & (1 << 1)) {
+        Serial.println("FAULT_COMM");
+        // CRITICAL ACTION: Open Contactors
+    }
+
+    // Bit 0: FAULT_PWR
+    if (summary & (1 << 0)) {
+        Serial.println("FAULT_PWR");
+        // CRITICAL ACTION: Open Contactors
+    }
+
+    // Optional: Reset faults after investigation if they are transient
+    // bqWriteReg(0, FAULT_RST1, 0xFF, 1, FRMWRT_SGL_W);
 }
