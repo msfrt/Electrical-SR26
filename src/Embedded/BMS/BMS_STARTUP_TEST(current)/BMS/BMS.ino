@@ -27,6 +27,7 @@ void setup() {
   if(digitalRead(FAULT_PIN) == 0){
     Serial.print("Fault detected\n");
   }
+<<<<<<< HEAD
 
   //commClear();
 
@@ -40,6 +41,23 @@ void setup() {
   Serial.print("wake tone sent to stack devices\n");
   delayms(11.6*TOTALBOARDS); 
   // bqReadReg(0, CONTROL1, response_frame, 1, FRMWRT_SGL_R, 10);
+=======
+  Serial.print("SPI_RDY ==");
+  Serial.print(digitalRead(SPI_RDY));
+  Serial.print("\n");
+
+  //commClear();
+
+  bqReadReg(0, 0x2120, response_frame, 1, FRMWRT_SGL_R, 10);
+  
+  //spiTransmitData(readBuff, buffSize);
+
+  //INITIALIZE BQ79718-Q1 STACK
+  //bqWriteReg(0, CONTROL1, 0x20, 1, FRMWRT_SGL_W); //[SEND_WAKE] tone to stack devices
+
+  //Serial.print("wake tone sent to stack devices\n");
+  delayms(11.6*TOTALBOARDS); //wake tone duration is ~1.6ms per board + 10ms per board for each device to wake up from shutdown = 11.6ms per 616 board.
+>>>>>>> origin/BMS_dev
 
   // bqWriteReg(0, CONTROL2, 0x02, 1, FRMWRT_SGL_W); // send hardware reset ping second
   // delayms(11.6*TOTALBOARDS); 
@@ -53,11 +71,18 @@ void setup() {
   // bqWriteReg(TOTALBOARDS-1, COMM_CTRL, 0x01, 1, FRMWRT_SGL_W); // 9.  set highest addr board as top of stack
   // bqReadReg(1, FAULT_SUMMARY, response_frame, 1, FRMWRT_SGL_R, 10);
 
+<<<<<<< HEAD
   //AUTO-ADDRESS
   //SpiRingAutoAddress(); //auto address sequence
   SpiChainAutoAddress();
   //Serial.print("autoaddress sequence sent\n");
   commClear();
+=======
+  //bqReadReg(0, 0x2120, response_frame, 1, FRMWRT_SGL_R, 10);
+  //AUTO-ADDRESS
+  //SpiAutoAddress(); //auto address sequence
+  //Serial.print("autoaddress sequence sent\n");
+>>>>>>> origin/BMS_dev
 
   bqWriteReg(0, Bridge_FAULT_RST, 0xFF, 1, FRMWRT_SGL_W); //Reset FAULT_COMM and FAULT_SYS on bridge
 
@@ -75,6 +100,7 @@ int point = 0;
 void loop() {
   // put your main code here, to run repeatedly:
 
+<<<<<<< HEAD
   if (millis() - lastBlink > 300) { // Blink every 500ms
     lastBlink = millis();
     ledState = !ledState;
@@ -86,6 +112,13 @@ void loop() {
     //bqWriteReg(0, CONTROL1, 0x20, 1, FRMWRT_SGL_W);
     //commClear();
     //Serial.print("Within loop\n");
+=======
+  if (millis() - lastBlink > 500) { // Blink every 500ms
+    lastBlink = millis();
+    ledState = !ledState;
+    digitalWrite(13, ledState);
+    bqReadReg(0, 0x2120, response_frame, 1, FRMWRT_SGL_R, 10);
+>>>>>>> origin/BMS_dev
   }
 
 }

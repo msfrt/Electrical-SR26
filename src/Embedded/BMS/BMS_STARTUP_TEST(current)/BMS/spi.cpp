@@ -1,5 +1,8 @@
 #include "spi.h"
+<<<<<<< HEAD
 #include "bq79618.h"
+=======
+>>>>>>> origin/BMS_dev
 
 uint8_t spiTransmitData(uint8_t* srcbuff, uint32_t blocksize) {
 

@@ -4,6 +4,8 @@
 
 
 
+
+
 void contactorInit(){
   pinMode(DIA_EN1, OUTPUT);
   pinMode(DIA_EN2, OUTPUT);
@@ -43,10 +45,10 @@ void enablePrecharge(){
 }
 
 void runPrecharge(){
-  digitalWrite(EN2_1, HIGH);
-  digitalWrite(EN1_1, LOW);
-  digitalWrite(EN1_2, HIGH);
-  digitalWrite(EN2_2, HIGH);
+  digitalWrite(EN2_1, HIGH);// precharge
+  digitalWrite(EN1_1, LOW);//air+
+  digitalWrite(EN1_2, HIGH);//air-
+  digitalWrite(EN2_2, HIGH);//discharge
 }
 
 void runDischarge(){
@@ -62,6 +64,7 @@ void runOperational(){
   digitalWrite(EN2_1, LOW);
   digitalWrite(EN1_2, HIGH);
 }
+
 
 void disablePrecharge(){
   digitalWrite(EN2_1, LOW);

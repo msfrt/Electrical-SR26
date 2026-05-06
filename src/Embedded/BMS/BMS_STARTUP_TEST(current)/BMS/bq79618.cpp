@@ -115,12 +115,21 @@ BMSErrorCode_t buildAndSendFrame(uint8_t deviceID, uint16_t regAddr, const uint8
     uint16_t crc = calculateCRC16(frame, frameIndex);
     frame[frameIndex++] = crc & 0xFF;        
     frame[frameIndex++] = (crc >> 8) & 0xFF; 
+<<<<<<< HEAD
     // Serial.print("buildAndSendFrame frame:");
     // for(int i = 0; i< frameIndex; i++) {
     //     if(frame[i] < 0x10) Serial.print("0");
     //     Serial.print(frame[i], HEX);
     // }
     // Serial.println();
+=======
+    Serial.print("buildAndSendFrame frame:");
+    for(int i = 0; i< frameIndex; i++) {
+        if(frame[i] < 0x10) Serial.print("0");
+        Serial.print(frame[i], HEX);
+    }
+    Serial.println();
+>>>>>>> origin/BMS_dev
     return spiTransmitDataFSM(frame, frameIndex);
 }
 
@@ -157,10 +166,14 @@ BMSErrorCode_t receiveFrame(uint8_t *buffer, size_t expected_length, uint32_t ti
     //     }
     //     delayMicroseconds(10); // Prevent CPU hogging
     // }
+<<<<<<< HEAD
     // Serial.println("Waiting for SPI_RDY");
     // while(digitalRead(SPI_RDY) == 0);
 
 
+=======
+
+>>>>>>> origin/BMS_dev
     SPI1.beginTransaction(SPISettings(BRIDGE_FREQ, MSBFIRST, SPI_MODE0)); 
     digitalWrite(CS1, LOW);
     
@@ -200,7 +213,10 @@ BMSErrorCode_t bqReadReg(uint8_t deviceID, uint16_t regAddr, uint8_t *readBuffer
 
     uint16_t received_crc = (uint16_t)(responseFrame[expectedResponseLength - 1] << 8) | responseFrame[expectedResponseLength - 2];
     uint16_t calculated_crc = calculateCRC16(responseFrame, expectedResponseLength - 2);
+<<<<<<< HEAD
     Serial.print("Response frame:\n");
+=======
+>>>>>>> origin/BMS_dev
     for(int i = 0; i < expectedResponseLength; i++){
         if(responseFrame[i] < 0x10) Serial.print("0");
         Serial.print(responseFrame[i], HEX);
@@ -229,6 +245,7 @@ BMSErrorCode_t bqReadReg(uint8_t deviceID, uint16_t regAddr, uint8_t *readBuffer
     return BMS_OK;
 }
 
+<<<<<<< HEAD
 void SpiChainAutoAddress(){
     //1. wake ping already sent
     //2. wake tone already sent
@@ -272,6 +289,10 @@ void SpiChainAutoAddress(){
 
 void SpiRingAutoAddress(){
     // 1. BQ79600 Wake ping was sent already 
+=======
+void SpiAutoAddress(){
+    // 1. Wake ping sent already 
+>>>>>>> origin/BMS_dev
     Serial.print("Starting autoaddress sequence\n");
 
     bqWriteReg(0, CONTROL1, 0X80, 1, FRMWRT_SGL_W); // 2. DIR_SEL = 1 (change BQ79600-Q1 direction)

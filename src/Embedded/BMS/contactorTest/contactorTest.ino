@@ -1,4 +1,5 @@
 #include "contactordriver.h"
+
 #include <FlexCAN_T4.h>
 #include <EasyTimer.h>
 #include <BoardTemp.h>
@@ -10,6 +11,7 @@
 #define NUM_RX_EXT_MAILBOXES 2
 #define NUM_TX_MAILBOXES 30
 #define MAX_CAN_FRAME_READ_PER_CYCLE 5  // Limit per loop iteration
+#define BMS_STATUS_SWITCH 9  // Limit per loop iteration
 
 // CAN Bus Declaration
 FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
@@ -34,6 +36,7 @@ void setup(){
     can2.begin();
     can2.setBaudRate(1000000);
     set_mailboxes();
+    digitalWrite(BMS_STATUS_SWITCH, HIGH);
     //contactorInit();
     //runDischarge(); 
     //runPrecharge(); 
@@ -45,23 +48,36 @@ void setup(){
     //digitalWrite(29, HIGH);  
 }
 
+
 void loop(){
 
     read_CAN();
-    if (VCU_ShifterState.can_value() == 0) {
+    if (VCU_vehicleState.can_value() == 0) {
         printf("VCU-ShifterState = 0\n");
         runDischarge();
-    } else if(VCU_ShifterState.can_value() == 1){
+    } else if(VCU_vehicleState.can_value() == 1){
         printf("VCU-ShifterState = 1\n");
         runPrecharge();
-    } else if(VCU_ShifterState.can_value() == 2){
+    } else if(VCU_vehicleState.can_value() == 2){
         printf("VCU-ShifterState = 2\n");
         runOperational();
-    } else if(VCU_ShifterState.can_value() == 3){
-        //printf("VCU-ShifterState = 3\n");
-    } else if(VCU_ShifterState.can_value() == 4){
-        //printf("VCU-ShifterState = 4\n");
-    }
+    } else if(VCU_vehicleState.can_value() == 3){
+        printf("VCU-ShifterState = 3\n");
+        runOperational();
+    } else if(VCU_vehicleState.can_value() == 4){
+        printf("VCU-ShifterState = 4\n");
+        runDischarge();
+    } else if(VCU_vehicleState.can_value() == 5){
+        printf("VCU-ShifterState = 5\n");
+        runDischarge();
+    } else if(VCU_vehicleState.can_value() == 6){
+        printf("VCU-ShifterState = 6\n");
+        runDischarge();
+    } 
+    //Serial.println(VCU_vehicleState.can_value());
+    //else {
+    //     runDischarge();
+    // }
 
 }
 
