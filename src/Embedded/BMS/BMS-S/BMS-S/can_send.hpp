@@ -1,3 +1,5 @@
+
+
 #ifndef CAN_MESSAGES_HPP
 #define CAN_MESSAGES_HPP
 
@@ -323,8 +325,6 @@ void send_BMS_517() {
   static StateCounter ctr;
   msg.id = 517;
   msg.len = 8;
-
-
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
@@ -1174,10 +1174,11 @@ void send_BMS_562() {
   can2.write(msg);
 }
 
-const int MODULE_2 = 2; // BMS-S select, 1-5
+const int MODULE_2 = 5; // BMS-S select, 1-5
 
 void send_can_2() {
 
+  /*
   static EasyTimer BMS_500_timer(10); // 10Hz for 100ms message interval
   if (BMS_500_timer.isup()) {
     send_BMS_500();
@@ -1192,6 +1193,7 @@ void send_can_2() {
   if (BMS_502_timer.isup()) {
     send_BMS_502();
   }
+  */
 
   switch (MODULE_2) {
     case 1: 
