@@ -144,7 +144,7 @@ bool brakelight_run() {
 
     if (millis() > 5000) {
       analogWrite(GLO_brakelight_teensy_pin, 0);
-      Serial.println("brakelight off");
+      //Serial.println("brakelight off");
     }
 
     startup_sequence.update(); // non-blocking update

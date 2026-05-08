@@ -47,9 +47,9 @@ void send_PDM_401() {
   msg.id = 401;
   msg.len = 8;
 
-  PDM_pdmCurrentAvg = pdm_current_sens.avg();
-  PDM_pdmCurrentMax = pdm_current_sens.max();
-  PDM_pdmCurrentMin = pdm_current_sens.min();
+  PDM_pdmCurrentAvg = Imon_ch1.avg();
+  PDM_pdmCurrentMax = Imon_ch1.max();
+  PDM_pdmCurrentMin = Imon_ch1.min();
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
@@ -89,9 +89,9 @@ void send_PDM_403() {
   msg.id = 403;
   msg.len = 8;
   Serial.println("sendingPDM403");
-  PDM_fanRightCurrentAvg = fanr_current_sens.avg();
-  PDM_fanRightCurrentMax = fanr_current_sens.max();
-  PDM_fanRightCurrentMin = fanr_current_sens.min();
+  PDM_fanRightCurrentAvg = Imon_ch2.avg();
+  PDM_fanRightCurrentMax = Imon_ch2.max();
+  PDM_fanRightCurrentMin = Imon_ch2.min();
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
@@ -110,9 +110,9 @@ void send_PDM_404(){
   msg.id = 404;
   msg.len = 8;
 
-  PDM_fanRightVoltAvg = fanr_volt_sens.avg();
-  PDM_fanRightVoltMax = fanr_volt_sens.max();
-  PDM_fanRightVoltMin = fanr_volt_sens.min();
+  PDM_fanRightVoltAvg = volt_ch1.avg();
+  PDM_fanRightVoltMax = volt_ch1.max();
+  PDM_fanRightVoltMin = volt_ch1.min();
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
@@ -131,9 +131,9 @@ void send_PDM_405(){
   msg.id = 405;
   msg.len = 8;
 
-  PDM_fanLeftCurrentAvg = fanl_current_sens.avg();
-  PDM_fanLeftCurrentMax = fanl_current_sens.max();
-  PDM_fanLeftCurrentMin = fanl_current_sens.min();
+  PDM_fanLeftCurrentAvg = Imon_ch3.avg();
+  PDM_fanLeftCurrentMax = Imon_ch3.max();
+  PDM_fanLeftCurrentMin = Imon_ch3.min();
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
@@ -152,9 +152,9 @@ void send_PDM_406(){
   msg.id = 406;
   msg.len = 8;
 
-  PDM_fanLeftVoltAvg = fanl_volt_sens.avg();
-  PDM_fanLeftVoltMax = fanl_volt_sens.max();
-  PDM_fanLeftVoltMin = fanl_volt_sens.min();
+  PDM_fanLeftVoltAvg = volt_ch2.avg();
+  PDM_fanLeftVoltMax = volt_ch2.max();
+  PDM_fanLeftVoltMin = volt_ch2.min();
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
@@ -173,9 +173,9 @@ void send_PDM_407(){
   msg.id = 407;
   msg.len = 8;
 
-  PDM_wpCurrentAvg = wp_current_sens.avg();
-  PDM_wpCurrentMax = wp_current_sens.max();
-  PDM_wpCurrentMin = wp_current_sens.min();
+  PDM_wpCurrentAvg = Imon_ch4.avg();
+  PDM_wpCurrentMax = Imon_ch4.max();
+  PDM_wpCurrentMin = Imon_ch4.min();
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
@@ -194,9 +194,9 @@ void send_PDM_408(){
   msg.id = 408;
   msg.len = 8;
 
-  PDM_wpVoltAvg = wp_volt_sens.avg();
-  PDM_wpVoltMax = wp_volt_sens.max();
-  PDM_wpVoltMin = wp_volt_sens.min();
+  PDM_wpVoltAvg = volt_ch3.avg();
+  PDM_wpVoltMax = volt_ch3.max();
+  PDM_wpVoltMin = volt_ch3.min();
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
@@ -217,16 +217,16 @@ void send_PDM_409(){
 
   PDM_fanLeftDutyCycle = fan_left.actual();
   PDM_fanRightDutyCycle = fan_right.actual();
-  PDM_wpDutyCycle1 = water_pump1.actual();
-  PDM_wpDutyCycle2 = water_pump2.actual();
+  //PDM_wpDutyCycle1 = 0; //water_pump1.actual();
+  //PDM_wpDutyCycle2 = 0; //water_pump2.actual();
   PDM_teensyTemp = tempmonGetTemp(); // built-in teensy function
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
   msg.buf[2] = PDM_fanLeftDutyCycle.can_value();
   msg.buf[3] = PDM_fanRightDutyCycle.can_value();
-  msg.buf[4] = PDM_wpDutyCycle1.can_value();
-  msg.buf[5] = PDM_wpDutyCycle2.can_value();
+  msg.buf[4] = 0; //PDM_wpDutyCycle1.can_value();
+  msg.buf[5] = 0; //PDM_wpDutyCycle2.can_value();
   msg.buf[6] = PDM_teensyTemp.can_value();
   msg.buf[7] = PDM_teensyTemp.can_value() >> 8;
 
@@ -254,9 +254,9 @@ void send_PDM_412(){
   msg.id = 412;
   msg.len = 8;
 
-  PDM_dataVoltAvg = data_volt_sens.avg();
-  PDM_dataVoltMax = data_volt_sens.max();
-  PDM_dataVoltMin = data_volt_sens.min();
+  PDM_dataVoltAvg = volt_ch4.avg();
+  PDM_dataVoltMax = volt_ch4.max();
+  PDM_dataVoltMin = volt_ch4.min();
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
@@ -275,9 +275,9 @@ void send_PDM_413(){
   msg.id = 413;
   msg.len = 8;
 
-  PDM_keepAliveVoltAvg = keepalive_volt_sens.avg();
-  PDM_keepAliveVoltMax = keepalive_volt_sens.max();
-  PDM_keepAliveVoltMin = keepalive_volt_sens.min();
+  PDM_keepAliveVoltAvg = volt_ch5.avg();
+  PDM_keepAliveVoltMax = volt_ch5.max();
+  PDM_keepAliveVoltMin = volt_ch5.min();
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
@@ -322,16 +322,16 @@ void send_PDM_24(){
 
   PDM_fanLeftDutyCycle = fan_left.actual();
   PDM_fanRightDutyCycle = fan_right.actual();
-  PDM_wpDutyCycle1 = water_pump1.actual();
-  PDM_wpDutyCycle2 = water_pump2.actual();
+  //PDM_wpDutyCycle1 = 0; //water_pump1.actual();
+  //PDM_wpDutyCycle2 = 0; //water_pump2.actual();
   PDM_teensyTemp = tempmonGetTemp(); // built-in teensy function
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
   msg.buf[2] = PDM_fanLeftDutyCycle.can_value();
   msg.buf[3] = PDM_fanRightDutyCycle.can_value();
-  msg.buf[4] = PDM_wpDutyCycle1.can_value();
-  msg.buf[5] = PDM_wpDutyCycle2.can_value();
+  msg.buf[4] = 0; //PDM_wpDutyCycle1.can_value();
+  msg.buf[5] = 0; //PDM_wpDutyCycle2.can_value();
   msg.buf[6] = PDM_teensyTemp.can_value();
   msg.buf[7] = PDM_teensyTemp.can_value() >> 8;
 
