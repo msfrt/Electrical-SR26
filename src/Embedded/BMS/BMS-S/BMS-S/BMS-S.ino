@@ -10,7 +10,6 @@ static CAN_message_t rxmsg;
 #define CAN2_BAUDRATE 1000000
 
 #include "can_send.hpp"
-#include "testCan.hpp"
 
 // signal definitions
 #define NUM_RX_STD_MAILBOXES 32
@@ -18,7 +17,7 @@ static CAN_message_t rxmsg;
 #define NUM_TX_MAILBOXES 30
 #define MAX_CAN_FRAME_READ_PER_CYCLE 5  // Limit per loop iteration
 
-const int MODULE = 2; // BMS-S select, 1-5
+const int MODULE = 5; // BMS-S select, 1-5
 
 void setup() {
   BQ_UART_SERIAL.begin(1000000);
@@ -147,16 +146,16 @@ void loop() {
   }
   Serial.println();
 
-  //send_can_2();
+  send_can_2();
 
-  test_can();
+  //test_can();
 
 }
 
-void setSegmetVoltages(int cell) {
+void setSegmetVoltages() {
   switch (MODULE) {
     case 1:
-      BMS_Module1seg1V = cellVoltages[0];
+      BMS_Module1seg2V.set_can_value(cellVoltages[0]);
       BMS_Module1seg2V = cellVoltages[1];
       BMS_Module1seg3V = cellVoltages[2];
       BMS_Module1seg4V = cellVoltages[3];
@@ -196,6 +195,8 @@ void setSegmetVoltages(int cell) {
 
     case 2:
       BMS_Module2seg1V = cellVoltages[0];
+      Serial.println("\n\n\n");
+      Serial.println(cellVoltages[0]);
       BMS_Module2seg2V = cellVoltages[1];
       BMS_Module2seg3V = cellVoltages[2];
       BMS_Module2seg4V = cellVoltages[3];
@@ -381,6 +382,7 @@ BMSErrorCode_t bqUpdateVoltages() {
         // Small delay to allow the BQ chip to reset its communication state machine
         delay(10); 
     }
+    setSegmetVoltages();
 
     return BMS_OK;
 }

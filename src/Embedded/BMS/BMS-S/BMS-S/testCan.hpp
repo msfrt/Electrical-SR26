@@ -11,7 +11,7 @@
 
 static CAN_message_t msg;
 
-void send_BMS_500() {
+void send_BMS_TEST_500() {
   static StateCounter ctr;
   msg.id = 500;
   msg.len = 8;
