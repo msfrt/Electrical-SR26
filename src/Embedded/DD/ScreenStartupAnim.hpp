@@ -15,7 +15,7 @@
  * base class for all screen displays
  */
 class ScreenStartupAnim : public Screen {
- public:
+public:
   ScreenStartupAnim(ILI9341_t3n &disp);
 
   /** Destructor */
@@ -32,32 +32,34 @@ class ScreenStartupAnim : public Screen {
   /* Animation completion
    * \returns true when the animation has been completed
    */
-  bool IsCompleted() { return completed_; }
+  bool IsCompleted() {
+    return completed_;
+  }
 
- private:
+private:
   bool completed_ =
-      false;  ///< If the animation is complete, this is set to true
+    false;  ///< If the animation is complete, this is set to true
 
   float sparty_pos_x_ = 0;    ///< current X position of sparty in pixels
   float sparty_pos_y_ = 0;    ///< current Y position of sparty in pixels
   float sparty_speed_ = 400;  ///< Speed in pixels per second
 
   int state_racing_pos_x_ =
-      0;  ///< current X position of state racing in pixels
+    0;  ///< current X position of state racing in pixels
   int state_racing_pos_y_ =
-      0;  ///< current Y position of state racing in pixels
+    0;  ///< current Y position of state racing in pixels
 };
 
 /**
  * Constructor
  * \param disp The low-level dispay class
  */
-ScreenStartupAnim::ScreenStartupAnim(ILI9341_t3n &disp) : Screen(disp) {
+ScreenStartupAnim::ScreenStartupAnim(ILI9341_t3n &disp)
+  : Screen(disp) {
   // set max framerate to 30 fps (this will never be achieved lol)
   frame_rate_timer_.set_frequency(30);
 
-  sparty_pos_y_ = (display_height_ - 221) /
-                  2;  // center the sparty vertically
+  sparty_pos_y_ = (display_height_ - 221) / 2;  // center the sparty vertically
   sparty_pos_x_ = -166;
 
   state_racing_pos_y_ = (display_height_ - 221) / 2;
