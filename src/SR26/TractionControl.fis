@@ -1,0 +1,47 @@
+[System]
+Name='TractionControl'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=9
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='SlipRatio'
+Range=[-1 1]
+NumMFs=3
+MF1='Low':'trapmf',[-1 -1 0 0.1]
+MF2='Neutral':'trimf',[0 0.2 0.4]
+MF3='High':'trapmf',[0.3 0.4 1 1]
+
+[Input2]
+Name='SlipRate'
+Range=[-1 1]
+NumMFs=3
+MF1='DecFast':'trapmf',[-1 -1 -0.95 -0.55]
+MF2='Stable':'trimf',[-0.25 0 0.25]
+MF3='IncFast':'trapmf',[0.185 0.465 0.55 0.95]
+
+[Output1]
+Name='CTRL_TorqueIncrease_Nm'
+Range=[0 1]
+NumMFs=3
+MF1='Increase':'trimf',[0 0 0.35]
+MF2='Neutral':'trimf',[0.25 0.5 0.75]
+MF3='Reduce':'trimf',[0.65 1 1]
+
+[Rules]
+1 1, 1 (1) : 1
+2 1, 2 (1) : 1
+3 1, 2 (1) : 1
+1 2, 1 (1) : 1
+2 2, 2 (1) : 1
+3 2, 3 (1) : 1
+1 3, 2 (1) : 1
+2 3, 3 (1) : 1
+3 3, 3 (1) : 1
