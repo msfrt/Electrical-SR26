@@ -21,10 +21,10 @@ FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
 #include "can_send.hpp"
 
 // brake bias calculation for front ATCC
-#include "bias_calc.hpp"
+// #include "bias_calc.hpp"
 
 // rotor temp calculation for ATCC
-#include "rotor_temp_calc.hpp"
+// #include "rotor_temp_calc.hpp"
 
 // rainbow RGB
 #include "rainbow_pixels.hpp"
@@ -34,20 +34,15 @@ FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
 
 const int GLO_NeoPixel_teensy_pin = 0;
       int GLO_NeoPixel_brightness_percent = 10; // 0 - 100 %
-Adafruit_NeoPixel GLO_neopixel(1, GLO_NeoPixel_teensy_pin, NEO_GRB + NEO_KHZ800);
-
-// ATCC Module Select - 0 front, 1 back
-const int ATCCMS = 0;
+Adafruit_NeoPixel GLO_neopixel(0, GLO_NeoPixel_teensy_pin, NEO_GRB + NEO_KHZ800);
 
 FreqMeasureMulti freqRR;
 FreqMeasureMulti freqRL;
+float sumRR = 0, sumRL = 0;
+int countRR = 0, countRL = 0;
 
 #define freq_pinRR 2 // ain2 pin25 on J2 RR
 #define freq_pinRL 3 // ain3 pin17 on J1 RL
-
-float sumRR=0, sumRL=0;
-int countRR=0, countRL=0;
-elapsedMillis timeout;
 
 void setup() {
 
@@ -59,7 +54,7 @@ void setup() {
 
   // Initialize serial communication
   Serial.begin(112500);
-  Serial.println("starting");
+  // Serial.println("starting");
   
   //initialize SPI communication
   SPI.begin();
@@ -71,55 +66,41 @@ void setup() {
   //initialize ADCs
   initialize_ADCs();
 
-  digitalWrite(32, HIGH);
+  // freqRR.begin(freq_pinRR);
+  // freqRL.begin(freq_pinRL);
 
   GLO_neopixel.setPixelColor(0, 0, 255, 0); // green
   GLO_neopixel.show();
 
-  while (!Serial) ; // wait for Arduino Serial Monitor
-  delay(10);
-  Serial.println("FreqMeasureMulti Begin");
-  delay(10);
-  freqRR.begin(freq_pinRR);
-  freqRL.begin(freq_pinRL);
+  // while (!Serial) ; // wait for Arduino Serial Monitor
+  // delay(10);
+  // Serial.println("FreqMeasureMulti Begin");
+  // delay(10);
   
-  if (freqRR.available()) {
-    sumRR = sumRR + freqRR.read();
-    countRR = countRR + 1;
-  }
-  if (freqRL.available()) {
-    sumRL = sumRL + freqRL.read();
-    countRL = countRL + 1;
-  }
-  // print results every half second
-  if (timeout > 500) {
-    if (countRR > 0) {
-      ATCCR_wheelSpeedRR = freqRR.countToFrequency(sumRR / countRR);
-    } else {
-      Serial.print("(no pulses)");
-    }
-    Serial.print(",  ");
-    if (countRL > 0) {
-     ATCCR_wheelSpeedRL = freqRL.countToFrequency(sumRL / countRL);
-    } else {
-      Serial.print("(no pulses)");
-    }
-    Serial.println();
-    sumRR = 0;
-    sumRL = 0;
-    countRR = 0;
-    countRL = 0;
-    timeout = 0;
-  }
 }
 
 void loop() {
 
-  //msu_pixels(GLO_neopixel);
-
+  // rainbow_pixels(GLO_neopixel);
+  
+  // if (freqRR.available()) {
+  //   sumRR = sumRR + freqRR.read();
+  //   countRR = countRR + 1;
+  //   Serial.println("countRR: ");
+  //   Serial.println(countRR);
+  // }
+  
+  // if (freqRL.available()) {
+  //   sumRL = sumRL + freqRL.read();
+  //   countRL = countRL + 1;
+  // }
+  
   sample_ADCs();
-  log_test_sens();
-  //readWheelSpeed();
+  
+  // static EasyTimer wheelTimer(100); // 100 Hz
+  // if (wheelTimer.isup()){
+  //   readWheelSpeed();
+  // }
 
   send_can1();
 }

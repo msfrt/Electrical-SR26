@@ -1,3 +1,5 @@
+VERSION ""
+
 
 NS_ : 
 	NS_DESC_
@@ -32,7 +34,7 @@ NS_ :
 BS_:
 
 BU_: VCU BMS ATCCF ATCCR DD MM5 PDM MM52 RAND
- 
+
 
 BO_ 150 VCU_150: 8 VCU
  SG_ VCU_counterMsg150 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
@@ -483,13 +485,13 @@ BO_ 303 ATCCF_303: 8 ATCCF
 
 BO_ 304 ATCCF_304: 8 ATCCF
  SG_ ATCCF_counterMsg304 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCF_rotTemp_FL : 16|16@1- (1,0) [0|500] "degC" Vector__XXX
- SG_ ATCCF_rotTemp_FR : 32|16@1- (1,0) [0|500] "degC" Vector__XXX
+ SG_ ATCCF_rotTemp_FL : 16|16@1- (0.1,0) [0|500] "degC" Vector__XXX
+ SG_ ATCCF_rotTemp_FR : 32|16@1- (0.1,0) [0|500] "degC" Vector__XXX
 
 BO_ 305 ATCCF_305: 8 ATCCF
  SG_ ATCCF_counterMsg305 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCF_susPot_FR : 16|16@1- (1,0) [0|500] "degC" Vector__XXX
- SG_ ATCCF_susPot_FL : 32|16@1- (1,0) [0|500] "degC" Vector__XXX
+ SG_ ATCCF_susPot_FR : 16|16@1- (0.1,0) [0|500] "mm" Vector__XXX
+ SG_ ATCCF_susPot_FL : 32|16@1- (0.1,0) [0|500] "mm" Vector__XXX
 
 BO_ 200 ATCCR_200: 8 ATCCR
  SG_ ATCCR_counterMsg350 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
@@ -515,8 +517,8 @@ BO_ 203 ATCCR_203: 8 ATCCR
 
 BO_ 204 ATCCR_204: 8 ATCCR
  SG_ ATCCR_counterMsg354 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCR_rotTemp_RL : 16|16@1- (1,0) [0|500] "degC" Vector__XXX
- SG_ ATCCR_rotTemp_RR : 32|16@1- (1,0) [0|500] "degC" Vector__XXX
+ SG_ ATCCR_rotTemp_RL : 16|16@1- (0.1,0) [0|500] "degC" Vector__XXX
+ SG_ ATCCR_rotTemp_RR : 32|16@1- (0.1,0) [0|500] "degC" Vector__XXX
 
 BO_ 205 ATCCR_205: 8 ATCCR
  SG_ ATCCR_counterMsg355 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
@@ -535,8 +537,8 @@ BO_ 207 ATCCR_207: 8 ATCCR
 
 BO_ 208 ATCCR_208: 8 ATCCR
  SG_ ATCCR_counterMsg358 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCR_susPot_RL : 16|16@1- (1,0) [0|500] "degC" Vector__XXX
- SG_ ATCCR_susPot_RR : 32|16@1- (1,0) [0|500] "degC" Vector__XXX
+ SG_ ATCCR_susPot_RL : 16|16@1- (0.1,0) [0|500] "mm" Vector__XXX
+ SG_ ATCCR_susPot_RR : 32|16@1- (0.1,0) [0|500] "mm" Vector__XXX
 
 BO_ 400 PDM_400: 8 PDM
  SG_ PDM_counterMsg400 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
@@ -626,7 +628,9 @@ BO_ 414 PDM_414: 8 PDM
  SG_ PDM_carMiles : 16|16@1- (0.1,0) [-3276.8|3276.7] "mi" Vector__XXX
  SG_ PDM_runtimeHours : 32|16@1- (1,0) [-32768|32767] "hrs" Vector__XXX
  SG_ PDM_runtimeMinutes : 48|16@1- (1,0) [-32768|32767] "mins" Vector__XXX
- 
+
+
+
 CM_ SG_ 150 VCU_counterMsg150 "Counter Message 150";
 CM_ SG_ 150 VCU_throttlePosition "Final throttle position";
 CM_ SG_ 150 VCU_throttlePosition1 "TPS1";
@@ -979,7 +983,6 @@ CM_ SG_ 414 PDM_counterMsg414 "Counter Message 414";
 CM_ SG_ 414 PDM_carMiles "Car Miles";
 CM_ SG_ 414 PDM_runtimeHours "Runtime Hours";
 CM_ SG_ 414 PDM_runtimeMinutes "Runtime Minutes";
-
 BA_DEF_  "MultiplexExtEnabled" ENUM  "No","Yes";
 BA_DEF_  "BusType" STRING ;
 BA_DEF_DEF_  "MultiplexExtEnabled" "No";
