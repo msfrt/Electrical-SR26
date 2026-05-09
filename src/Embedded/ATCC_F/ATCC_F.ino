@@ -11,8 +11,6 @@
 FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
 #define CAN1_BAUDRATE 1000000
 
-// signal definitions
-#include "CAN/SR26_CAN1.hpp"
 #include "CAN/SR26_CAN2.hpp"
 
 // sensor definitions
@@ -41,19 +39,6 @@ FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
 const int GLO_NeoPixel_teensy_pin = 0;
       int GLO_NeoPixel_brightness_percent = 10; // 0 - 100 %
 Adafruit_NeoPixel GLO_neopixel(1, GLO_NeoPixel_teensy_pin, NEO_GRB + NEO_KHZ800);
-
-// ATCC Module Select - 0 front, 1 back
-const int ATCCMS = 0;
-
-FreqMeasureMulti freqFR;
-FreqMeasureMulti freqRL;
-
-#define freq_pinFR 2 // ain2 pin25 on J2 FR
-#define freq_pinRL 3 // ain3 pin17 on J1 RL
-
-float sumFR=0, sumRL=0;
-int countFR=0, countRL=0;
-elapsedMillis timeout;
 
 void setup() {
 
@@ -87,36 +72,7 @@ void setup() {
   Serial.println("FreqMeasureMulti Begin");
   delay(10);
   freqFR.begin(freq_pinFR);
-  freqRL.begin(freq_pinRL);
-  
-  if (freqFR.available()) {
-    sumFR = sumFR + freqFR.read();
-    countFR = countFR + 1;
-  }
-  if (freqRL.available()) {
-    sumRL = sumRL + freqRL.read();
-    countRL = countRL + 1;
-  }
-  // print results every half second
-  if (timeout > 500) {
-    if (countFR > 0) {
-      ATCCF_wheelSpeedFR = freqFR.countToFrequency(sumFR / countFR);
-    } else {
-      Serial.print("(no pulses)");
-    }
-    Serial.print(",  ");
-    if (countRL > 0) {
-      ATCCF_wheelSpeedFL = freqRL.countToFrequency(sumRL / countRL);
-    } else {
-      Serial.print("(no pulses)");
-    }
-    Serial.println();
-    sumFR = 0;
-    sumRL = 0;
-    countFR = 0;
-    countRL = 0;
-    timeout = 0;
-  }
+  freqFL.begin(freq_pinFL);
 }
 
 void loop() {
@@ -124,8 +80,6 @@ void loop() {
   //msu_pixels(GLO_neopixel);
 
   sample_ADCs();
-  log_test_sens();
-  //readWheelSpeed();
-
-  //send_can1();
+  readWheelSpeed();
+  send_can1();
 }
