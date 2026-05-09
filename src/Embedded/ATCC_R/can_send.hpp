@@ -63,6 +63,27 @@ void send_ATCC_201(){
   can1.write(msg);
 } // can1
 
+void send_ATCC_204(){
+  static StateCounter ctr;
+
+  msg.id = 204;
+  msg.len = 8;
+
+  ATCCR_rotTemp_RL = voltage_to_rotor_temp(RotorTempRL.avg()); //voltage_to_NTC_M12_H_temp(ATCC_coolantTempMotorIn.avg());
+  ATCCR_rotTemp_RR = voltage_to_rotor_temp(RotorTempRR.avg()); //voltage_to_NTC_M12_H_temp(ATCC_coolantTempInverterIn.avg());
+  
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = ATCCR_rotTemp_RL.can_value();
+  msg.buf[3] = ATCCR_rotTemp_RL.can_value() >> 8;
+  msg.buf[4] = ATCCR_rotTemp_RR.can_value();
+  msg.buf[5] = ATCCR_rotTemp_RR.can_value() >> 8;
+  msg.buf[6] = 0;
+  msg.buf[7] = 0;
+
+  can1.write(msg);
+}
+
 void send_ATCC_208(){
   static StateCounter ctr;
   //Serial.println("sendingATCC208");
@@ -141,6 +162,11 @@ void send_can1(){
   static EasyTimer ATCC_201_timer(10); // 10 Hz
   if (ATCC_201_timer.isup()){
     send_ATCC_201();
+  }
+
+  static EasyTimer ATCC_204_timer(10); // 10Hz
+  if (ATCC_204_timer.isup()){
+    send_ATCC_204();
   }
 
   static EasyTimer ATCC_208_timer(100); // 100 Hz

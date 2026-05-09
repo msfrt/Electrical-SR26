@@ -17,6 +17,8 @@ ADCChip adc4(ADC4_CS);
 ADCChip adc5(ADC5_CS);
 
 ADCSensor SusPotRL(5,0,1000);
+ADCSensor RotorTempRL(2,0,1000);
+ADCSensor RotorTempRR(6,0,1000);
 ADCSensor SusPotRR(7,0,1000);
 
 void initialize_ADCs()
@@ -34,7 +36,7 @@ void sample_ADCs()
   if (sample_timer_1.isup())
   {
     adc4.sample(SusPotRL);
-    adc5.sample(SusPotRR);
+    adc5.sample(RotorTempRR, RotorTempRL, SusPotRR);
   }
   
 }
