@@ -54,7 +54,7 @@ ADCSensor test41(1,0,1000);
 ADCSensor test42(2,0,1000);
 ADCSensor test43(3,0,1000);
 ADCSensor test44(4,0,1000);
-ADCSensor test45(5,0,1000);
+ADCSensor SusPotRL(5,0,1000);
 ADCSensor test46(6,0,1000);
 ADCSensor test47(7,0,1000);
 
@@ -65,7 +65,7 @@ ADCSensor test53(3,0,1000);
 ADCSensor test54(4,0,1000);
 ADCSensor test55(5,0,1000);
 ADCSensor test56(6,0,1000);
-ADCSensor test57(7,0,1000);
+ADCSensor SusPotRR(7,0,1000);
 
 ADCSensor test60(0,0,1000);
 ADCSensor test61(1,0,1000);
@@ -97,8 +97,8 @@ void sample_ADCs()
     adc1.sample(test10, test11, test12, test13, test14, test15, test16, test17);
     adc2.sample(test20, test21, test22, test23, test24, test25, test26, test27);
     adc3.sample(test30, test31, test32, test33, test34, test35, test36, test37);
-    adc4.sample(test40, test41, test42, test43, test44, test45, test46, test47);
-    adc5.sample(test50, test51, test52, test53, test54, test55, test56, test57);
+    adc4.sample(test40, test41, test42, test43, test44, SusPotRL, test46, test47);
+    adc5.sample(test50, test51, test52, test53, test54, test55, test56, SusPotRR);
     adc6.sample(test60, test61, test62, test63, test64, test65, test66, test67);
   }
   

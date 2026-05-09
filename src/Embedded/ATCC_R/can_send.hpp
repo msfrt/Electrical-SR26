@@ -4,12 +4,20 @@
 #include <FlexCAN_T4.h>
 #include <EasyTimer.h>
 #include <BoardTemp.h>
-#include "CAN/SR26_CAN1.hpp"
 #include "CAN/SR26_CAN2.hpp"
 
 #include "sensors.hpp"
 
 static CAN_message_t msg;
+
+// accounts for 50% of rotor being slots
+float voltage_to_rotor_temp(float voltage){
+    return pow((0.5*pow((25+273),4)+0.5*pow((voltage+273),4)), (1/4));
+}
+
+float voltage_to_sus_pot_val(float voltage){
+  return map(voltage, 0, 5, 0, 150);;
+}
 
 void log_test1() {
   Serial.print("1-0: ");
@@ -83,7 +91,7 @@ void log_test4() {
   Serial.print("4-4: ");
   Serial.print(test44.avg());
   Serial.print(" | 4-5: ");
-  Serial.println(test45.avg());
+  //Serial.println(test45.avg());
   Serial.print("4-6: ");
   Serial.print(test46.avg());
   Serial.print(" | 4-7: ");
@@ -107,7 +115,7 @@ void log_test5() {
   Serial.print("5-6: ");
   Serial.print(test56.avg());
   Serial.print(" | 5-7: ");
-  Serial.println(test57.avg());
+  //Serial.println(test57.avg());
   Serial.println("");
 }
 
@@ -188,10 +196,10 @@ void send_ATCC_300(){
   can1.write(msg);
 } // can1 */
 
-void send_ATCC_351(){
+void send_ATCC_201(){
   static StateCounter ctr;
 
-  msg.id = 351;
+  msg.id = 201;
   msg.len = 8;
 
   ATCCR_wheelSpeedRR = ATCCR_wheelSpeedRR.value();
@@ -208,6 +216,28 @@ void send_ATCC_351(){
 
   can1.write(msg);
 } // can1
+
+void send_ATCC_208(){
+  static StateCounter ctr;
+  Serial.println("sendingATCC208");
+
+  msg.id = 208;
+  msg.len = 8;
+
+  ATCCR_susPot_RR = voltage_to_sus_pot_val(SusPotRL.avg()); //voltage_to_NTC_M12_H_temp(ATCC_coolantTempMotorIn.avg());
+  ATCCR_susPot_RL = voltage_to_sus_pot_val(SusPotRR.avg()); //voltage_to_NTC_M12_H_temp(ATCC_coolantTempInverterIn.avg());
+  
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = ATCCR_susPot_RR.can_value();
+  msg.buf[3] = ATCCR_susPot_RR.can_value() >> 8;
+  msg.buf[4] = ATCCR_susPot_RL.can_value();
+  msg.buf[5] = ATCCR_susPot_RL.can_value() >> 8;
+  msg.buf[6] = 0;
+  msg.buf[7] = 0;
+
+  can1.write(msg);
+}
 
 /*
 void send_ATCC_302(){
@@ -258,14 +288,19 @@ void send_ATCC_303(){
 void send_can1(){
 
   /*
-  static EasyTimer ATCC_300_timer(1); // 200Hz
+  static EasyTimer ATCC_300_timer(1); // 
   if (ATCC_300_timer.isup()){
     send_ATCC_300();
   } */
 
-  static EasyTimer ATCC_351_timer(1); // 200Hz
-  if (ATCC_351_timer.isup()){
-    send_ATCC_351();
+  static EasyTimer ATCC_201_timer(10); // 10 Hz
+  if (ATCC_201_timer.isup()){
+    send_ATCC_201();
+  }
+
+  static EasyTimer ATCC_208_timer(100); // 100 Hz
+  if (ATCC_208_timer.isup()){
+    send_ATCC_208();
   }
 
   /*
