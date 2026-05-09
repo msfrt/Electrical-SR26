@@ -9,7 +9,7 @@
 
 // bus and message_t definition
 FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
-#define CAN1_BAUDRATE 500000
+#define CAN1_BAUDRATE 1000000
 
 // signal definitions
 #include "CAN/SR26_CAN1.hpp"
@@ -127,5 +127,5 @@ void loop() {
   log_test_sens();
   //readWheelSpeed();
 
-  send_can1();
+  //send_can1();
 }

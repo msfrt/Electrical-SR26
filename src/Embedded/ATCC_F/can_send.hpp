@@ -17,7 +17,7 @@ float voltage_to_rotor_temp(float voltage){
 }
 
 float voltage_to_sus_pot_val(float voltage){
-  return voltage;
+  return map(voltage, 0, 5, 0, 150);;
 }
 
 void log_test1() {
@@ -292,13 +292,13 @@ void send_can1(){
     send_ATCC_300();
   } */
 
-  static EasyTimer ATCC_301_timer(1); // 200Hz
+  static EasyTimer ATCC_301_timer(10); // 200Hz
   if (ATCC_301_timer.isup()){
     send_ATCC_301();
   }
 
   
-  static EasyTimer ATCC_304_timer(1); // 200Hz
+  static EasyTimer ATCC_304_timer(100); // 200Hz
   if (ATCC_304_timer.isup()){
     send_ATCC_304();
   }
