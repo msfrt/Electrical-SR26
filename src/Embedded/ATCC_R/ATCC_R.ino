@@ -36,19 +36,6 @@ const int GLO_NeoPixel_teensy_pin = 0;
       int GLO_NeoPixel_brightness_percent = 10; // 0 - 100 %
 Adafruit_NeoPixel GLO_neopixel(1, GLO_NeoPixel_teensy_pin, NEO_GRB + NEO_KHZ800);
 
-// ATCC Module Select - 0 front, 1 back
-const int ATCCMS = 0;
-
-FreqMeasureMulti freqRR;
-FreqMeasureMulti freqRL;
-
-#define freq_pinRR 2 // ain2 pin25 on J2 RR
-#define freq_pinRL 3 // ain3 pin17 on J1 RL
-
-float sumRR=0, sumRL=0;
-int countRR=0, countRL=0;
-elapsedMillis timeout;
-
 void setup() {
 
   // begin Neopixel
@@ -83,34 +70,6 @@ void setup() {
   freqRR.begin(freq_pinRR);
   freqRL.begin(freq_pinRL);
   
-  if (freqRR.available()) {
-    sumRR = sumRR + freqRR.read();
-    countRR = countRR + 1;
-  }
-  if (freqRL.available()) {
-    sumRL = sumRL + freqRL.read();
-    countRL = countRL + 1;
-  }
-  // print results every half second
-  if (timeout > 500) {
-    if (countRR > 0) {
-      ATCCR_wheelSpeedRR = freqRR.countToFrequency(sumRR / countRR);
-    } else {
-      Serial.print("(no pulses)");
-    }
-    Serial.print(",  ");
-    if (countRL > 0) {
-     ATCCR_wheelSpeedRL = freqRL.countToFrequency(sumRL / countRL);
-    } else {
-      Serial.print("(no pulses)");
-    }
-    Serial.println();
-    sumRR = 0;
-    sumRL = 0;
-    countRR = 0;
-    countRL = 0;
-    timeout = 0;
-  }
 }
 
 void loop() {
@@ -118,8 +77,6 @@ void loop() {
   //msu_pixels(GLO_neopixel);
 
   sample_ADCs();
-  log_test_sens();
-  //readWheelSpeed();
-
+  readWheelSpeed();
   send_can1();
 }

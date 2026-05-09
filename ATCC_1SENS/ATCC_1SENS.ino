@@ -72,6 +72,6 @@ void loop() {
 
   sample_ADCs();
   log_test_sens();
-  readWheelSpeed();
+  //readWheelSpeed();
 
 }

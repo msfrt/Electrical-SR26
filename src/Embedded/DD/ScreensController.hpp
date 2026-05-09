@@ -111,8 +111,8 @@ ScreensController::ScreensController(ILI9341_t3n &left, ILI9341_t3n &right)
   info_screen_1_left_ = new ScreenInfo(display_left_);
   info_screen_1_left_->SetSignal(1, &VCU_driveSpeed, "MPH:", "%4.1f");
   info_screen_1_left_->SetSignal(2, &ATCCR_coolT_Inv_Out, "COOLT:", "%4.1f");
-  info_screen_1_left_->SetSignal(3, &ATCCR_coolT_Inv_In, "COOLT:", "%4.1f");
-  info_screen_1_left_->SetSignal(4, &ATCCR_coolT_Motor_In, "COOLT:", "%4.1f");
+  info_screen_1_left_->SetSignal(3, &ATCCR_susPot_RL, "SP1:", "%4.1f");
+  info_screen_1_left_->SetSignal(4, &ATCCR_susPot_RL, "SP2:", "%4.1f");
 
   info_screen_1_right_ = new ScreenInfo(display_right_);
   info_screen_1_right_->SetSignal(1, &PM_dcBusVolt, "HV:", "%4.1f");
