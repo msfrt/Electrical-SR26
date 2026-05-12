@@ -495,8 +495,8 @@ StateSignal ATCCR_tireTemp_RRI(16, true, 1, 0.0, 0, 150, 0.0, -1, 203);
 
 // Message: ATCCR_204 [0xcc]
 StateSignal ATCCR_counterMsg354(4, false, 1, 0.0, 0, 15, 0.0, -1, 204);
-StateSignal ATCCR_rotTemp_RL(16, true, 1, 0.0, 0, 500, 0.0, -1, 204);
-StateSignal ATCCR_rotTemp_RR(16, true, 1, 0.0, 0, 500, 0.0, -1, 204);
+StateSignal ATCCR_rotTemp_RL(16, true, 10, 0.0, 0, 500, 0.0, -1, 204);
+StateSignal ATCCR_rotTemp_RR(16, true, 10, 0.0, 0, 500, 0.0, -1, 204);
 
 // Message: ATCCR_205 [0xcd]
 StateSignal ATCCR_counterMsg355(4, false, 1, 0.0, 0, 15, 0.0, -1, 205);
@@ -515,8 +515,8 @@ StateSignal ATCCR_coolT_Motor_In(16, true, 1, 0.0, 0, 150, 0.0, -1, 207);
 
 // Message: ATCCR_208 [0xd0]
 StateSignal ATCCR_counterMsg358(4, false, 1, 0.0, 0, 15, 0.0, -1, 208);
-StateSignal ATCCR_susPot_RL(16, true, 1, 0.0, 0, 500, 0.0, -1, 208);
-StateSignal ATCCR_susPot_RR(16, true, 1, 0.0, 0, 500, 0.0, -1, 208);
+StateSignal ATCCR_susPot_RL(16, true, 10, 0.0, 0, 500, 0.0, -1, 208);
+StateSignal ATCCR_susPot_RR(16, true, 10, 0.0, 0, 500, 0.0, -1, 208);
 
 // Message: PDM_400 [0x190]
 StateSignal PDM_counterMsg400(4, false, 1, 0.0, 0, 15, 0.0, -1, 400);
