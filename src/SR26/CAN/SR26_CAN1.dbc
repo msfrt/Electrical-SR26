@@ -36,57 +36,6 @@ BS_:
 BU_: VCU PM C50 LWS DCDC
 
 
-BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
- SG_ ATCCF_teensyTemp : 0|16@1- (0.1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCF_boardTemp : 0|16@1- (0.1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCF_counterMsg300 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCF_wheelSpeedFR : 0|16@1+ (1,0) [0|2000] "Hz" Vector__XXX
- SG_ ATCCF_wheelSpeedFL : 0|16@1+ (1,0) [0|2000] "Hz" Vector__XXX
- SG_ ATCCF_counterMsg301 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCF_tireTemp_FLI : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCF_tireTemp_FLM : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCF_tireTemp_FLO : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCF_counterMsg302 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCF_tireTemp_FRI : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCF_tireTemp_FRM : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCF_tireTemp_FRO : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCF_counterMsg303 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCF_rotTemp_FR : 0|16@1- (1,0) [0|500] "degC" Vector__XXX
- SG_ ATCCF_rotTemp_FL : 0|16@1- (1,0) [0|500] "degC" Vector__XXX
- SG_ ATCCF_counterMsg304 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCF_susPot_FL : 0|16@1- (1,0) [0|500] "degC" Vector__XXX
- SG_ ATCCF_susPot_FR : 0|16@1- (1,0) [0|500] "degC" Vector__XXX
- SG_ ATCCF_counterMsg305 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCR_teensyTemp : 0|16@1- (0.1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCR_boardTemp : 0|16@1- (0.1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCR_counterMsg350 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCR_wheelSpeedRR : 0|16@1+ (1,0) [0|2000] "Hz" Vector__XXX
- SG_ ATCCR_wheelSpeedRL : 0|16@1+ (1,0) [0|2000] "Hz" Vector__XXX
- SG_ ATCCR_counterMsg351 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCR_tireTemp_RLI : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCR_tireTemp_RLM : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCR_tireTemp_RLO : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCR_counterMsg352 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCR_tireTemp_RRI : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCR_tireTemp_RRM : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCR_tireTemp_RRO : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCR_counterMsg353 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCR_rotTemp_RR : 0|16@1- (1,0) [0|500] "degC" Vector__XXX
- SG_ ATCCR_rotTemp_RL : 0|16@1- (1,0) [0|500] "degC" Vector__XXX
- SG_ ATCCR_counterMsg354 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCR_flowR_Inv_Out : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCR_flowR_Inv_In : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCR_counterMsg355 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCR_coolT_Inv_Out : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCR_coolT_Inv_In : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCR_counterMsg356 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCR_coolT_Motor_In : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCR_flowR_Motor_In : 0|16@1- (1,0) [0|150] "degC" Vector__XXX
- SG_ ATCCR_counterMsg357 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ ATCCR_susPot_RR : 0|16@1- (1,0) [0|500] "degC" Vector__XXX
- SG_ ATCCR_susPot_RL : 0|16@1- (1,0) [0|500] "degC" Vector__XXX
- SG_ ATCCR_counterMsg358 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
-
 BO_ 402690000 VCU_18008FD0: 8 VCU
  SG_ VCU_dcdcProtect : 2|2@1+ (1,0) [0|0] "" Vector__XXX
  SG_ VCU_dcdcEnable : 0|2@1+ (1,0) [0|0] "" Vector__XXX
@@ -299,19 +248,6 @@ BO_ 402772111 DCDC_1801D08F: 8 DCDC
 
 
 
-CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
-CM_ SG_ 3221225472 ATCCF_teensyTemp "Teensy Board Temp";
-CM_ SG_ 3221225472 ATCCF_boardTemp "Board Temp";
-CM_ SG_ 3221225472 ATCCF_counterMsg300 "Counter Message 300";
-CM_ SG_ 3221225472 ATCCF_wheelSpeedFR "FR Angular Wheel Frequency";
-CM_ SG_ 3221225472 ATCCF_wheelSpeedFL "FL Angular Wheel Frequency";
-CM_ SG_ 3221225472 ATCCF_counterMsg301 "Counter Message 301";
-CM_ SG_ 3221225472 ATCCR_teensyTemp "Teensy Board Temp";
-CM_ SG_ 3221225472 ATCCR_boardTemp "Board Temp";
-CM_ SG_ 3221225472 ATCCR_counterMsg350 "Counter Message 350";
-CM_ SG_ 3221225472 ATCCR_wheelSpeedRR "FR Angular Wheel Frequency";
-CM_ SG_ 3221225472 ATCCR_wheelSpeedRL "FL Angular Wheel Frequency";
-CM_ SG_ 3221225472 ATCCR_counterMsg351 "Counter Message 351";
 CM_ SG_ 402690000 VCU_dcdcProtect "Protect command - once commanded, converter won't work until restart (decimal); 1: protection confirmed";
 CM_ SG_ 402690000 VCU_dcdcEnable "Enable command (decimal); 1: enable, 2: disable ";
 CM_ SG_ 192 VCU_torqueLimitCommand "Torque Limit - set to 0 to keep default";
@@ -455,4 +391,3 @@ BA_DEF_  "MultiplexExtEnabled" ENUM  "No","Yes";
 BA_DEF_  "BusType" STRING ;
 BA_DEF_DEF_  "MultiplexExtEnabled" "No";
 BA_DEF_DEF_  "BusType" "CAN";
-
