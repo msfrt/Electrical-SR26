@@ -8,8 +8,8 @@
 #include <FreqMeasureMulti.h>
 
 // bus and message_t definition
-FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
-#define CAN1_BAUDRATE 1000000
+FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can2;
+#define CAN2_BAUDRATE 1000000
 
 // signal definitions
 #include "CAN/SR26_CAN2.hpp"
@@ -30,19 +30,20 @@ FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
 #include "rainbow_pixels.hpp"
 
 // wheel speed calc
+
 #include "wheel_speed.hpp"
 
 const int GLO_NeoPixel_teensy_pin = 0;
       int GLO_NeoPixel_brightness_percent = 10; // 0 - 100 %
 Adafruit_NeoPixel GLO_neopixel(0, GLO_NeoPixel_teensy_pin, NEO_GRB + NEO_KHZ800);
 
-FreqMeasureMulti freqRR;
-FreqMeasureMulti freqRL;
-float sumRR = 0, sumRL = 0;
-int countRR = 0, countRL = 0;
+FreqMeasureMulti freqFR;
+FreqMeasureMulti freqFL;
+float sumFR = 0, sumFL = 0;
+int countFR = 0, countFL = 0;
 
-#define freq_pinRR 2 // ain2 pin25 on J2 RR
-#define freq_pinRL 3 // ain3 pin17 on J1 RL
+#define freq_pinFR 2 // ain2 pin25 on J2 RR
+#define freq_pinFL 3 // ain3 pin17 on J1 RL
 
 void setup() {
 
@@ -60,14 +61,14 @@ void setup() {
   SPI.begin();
 
   //initialize the CAN Bus and set its baud rate to 1Mb
-  can1.begin();
-  can1.setBaudRate(CAN1_BAUDRATE);
+  can2.begin();
+  can2.setBaudRate(CAN2_BAUDRATE);
 
   //initialize ADCs
   initialize_ADCs();
 
-  // freqRR.begin(freq_pinRR);
-  // freqRL.begin(freq_pinRL);
+  freqFR.begin(freq_pinFR);
+  freqFL.begin(freq_pinFL);
 
   GLO_neopixel.setPixelColor(0, 0, 255, 0); // green
   GLO_neopixel.show();
@@ -83,24 +84,19 @@ void loop() {
 
   // rainbow_pixels(GLO_neopixel);
   
-  // if (freqRR.available()) {
-  //   sumRR = sumRR + freqRR.read();
-  //   countRR = countRR + 1;
-  //   Serial.println("countRR: ");
-  //   Serial.println(countRR);
-  // }
+  if (freqFR.available()) {
+    sumFR = sumFR + freqFR.read();
+    countFR = countFR + 1;
+  }
   
-  // if (freqRL.available()) {
-  //   sumRL = sumRL + freqRL.read();
-  //   countRL = countRL + 1;
-  // }
+  if (freqFL.available()) {
+    sumFL = sumFL + freqFL.read();
+    countFL = countFL + 1;
+  }
+
+  read_wheelSpeed();
   
   sample_ADCs();
-  
-  // static EasyTimer wheelTimer(100); // 100 Hz
-  // if (wheelTimer.isup()){
-  //   readWheelSpeed();
-  // }
 
-  send_can1();
+  send_can();
 }

@@ -446,8 +446,8 @@ StateSignal ATCCF_teensyTemp(16, true, 10, 0.0, 0, 150, 0.0, -1, 300);
 
 // Message: ATCCF_301 [0x12d]
 StateSignal ATCCF_counterMsg301(4, false, 1, 0.0, 0, 15, 0.0, -1, 301);
-StateSignal ATCCF_wheelSpeedFL(16, false, 1, 0.0, 0, 2000, 0.0, -1, 301);
-StateSignal ATCCF_wheelSpeedFR(16, false, 1, 0.0, 0, 2000, 0.0, -1, 301);
+StateSignal ATCCF_wheelSpeedFL(16, false, 10, 0.0, 0, 2000, 0.0, -1, 301);
+StateSignal ATCCF_wheelSpeedFR(16, false, 10, 0.0, 0, 2000, 0.0, -1, 301);
 
 // Message: ATCCF_302 [0x12e]
 StateSignal ATCCF_counterMsg302(4, false, 1, 0.0, 0, 15, 0.0, -1, 302);
@@ -463,13 +463,13 @@ StateSignal ATCCF_tireTemp_FRI(16, true, 1, 0.0, 0, 150, 0.0, -1, 303);
 
 // Message: ATCCF_304 [0x130]
 StateSignal ATCCF_counterMsg304(4, false, 1, 0.0, 0, 15, 0.0, -1, 304);
-StateSignal ATCCF_rotTemp_FL(16, true, 1, 0.0, 0, 500, 0.0, -1, 304);
-StateSignal ATCCF_rotTemp_FR(16, true, 1, 0.0, 0, 500, 0.0, -1, 304);
+StateSignal ATCCF_rotTemp_FL(16, true, 10, 0.0, 0, 500, 0.0, -1, 304);
+StateSignal ATCCF_rotTemp_FR(16, true, 10, 0.0, 0, 500, 0.0, -1, 304);
 
 // Message: ATCCF_305 [0x131]
 StateSignal ATCCF_counterMsg305(4, false, 1, 0.0, 0, 15, 0.0, -1, 305);
-StateSignal ATCCF_susPot_FR(16, true, 1, 0.0, 0, 500, 0.0, -1, 305);
-StateSignal ATCCF_susPot_FL(16, true, 1, 0.0, 0, 500, 0.0, -1, 305);
+StateSignal ATCCF_susPot_FR(16, true, 100, 0.0, 0, 500, 0.0, -1, 305);
+StateSignal ATCCF_susPot_FH(16, true, 100, 0.0, 0, 500, 0.0, -1, 305);
 
 // Message: ATCCR_200 [0xc8]
 StateSignal ATCCR_counterMsg350(4, false, 1, 0.0, 0, 15, 0.0, -1, 200);
@@ -478,8 +478,8 @@ StateSignal ATCCR_teensyTemp(16, true, 10, 0.0, 0, 150, 0.0, -1, 200);
 
 // Message: ATCCR_201 [0xc9]
 StateSignal ATCCR_counterMsg351(4, false, 1, 0.0, 0, 15, 0.0, -1, 201);
-StateSignal ATCCR_wheelSpeedRL(16, false, 1, 0.0, 0, 2000, 0.0, -1, 201);
-StateSignal ATCCR_wheelSpeedRR(16, false, 1, 0.0, 0, 2000, 0.0, -1, 201);
+StateSignal ATCCR_wheelSpeedRL(16, false, 10, 0.0, 0, 2000, 0.0, -1, 201);
+StateSignal ATCCR_wheelSpeedRR(16, false, 10, 0.0, 0, 2000, 0.0, -1, 201);
 
 // Message: ATCCR_202 [0xca]
 StateSignal ATCCR_counterMsg352(4, false, 1, 0.0, 0, 15, 0.0, -1, 202);
@@ -515,8 +515,8 @@ StateSignal ATCCR_coolT_Motor_In(16, true, 1, 0.0, 0, 150, 0.0, -1, 207);
 
 // Message: ATCCR_208 [0xd0]
 StateSignal ATCCR_counterMsg358(4, false, 1, 0.0, 0, 15, 0.0, -1, 208);
-StateSignal ATCCR_susPot_RL(16, true, 10, 0.0, 0, 500, 0.0, -1, 208);
-StateSignal ATCCR_susPot_RR(16, true, 10, 0.0, 0, 500, 0.0, -1, 208);
+StateSignal ATCCR_susPot_RR(16, true, 100, 0.0, 0, 500, 0.0, -1, 208);
+StateSignal ATCCR_susPot_RH(16, true, 100, 0.0, 0, 500, 0.0, -1, 208);
 
 // Message: PDM_400 [0x190]
 StateSignal PDM_counterMsg400(4, false, 1, 0.0, 0, 15, 0.0, -1, 400);
@@ -1608,8 +1608,8 @@ void read_ATCCF_304(const CAN_message_t &imsg) {
 void read_ATCCF_305(const CAN_message_t &imsg) {
 
 	ATCCF_counterMsg305.set_can_value(((imsg.buf[0] & 0b00001111)));
-	ATCCF_susPot_FR.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
-	ATCCF_susPot_FL.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	ATCCF_susPot_FH.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	ATCCF_susPot_FR.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
 
 }
 
@@ -1718,8 +1718,8 @@ void read_ATCCR_207(const CAN_message_t &imsg) {
 void read_ATCCR_208(const CAN_message_t &imsg) {
 
 	ATCCR_counterMsg358.set_can_value(((imsg.buf[0] & 0b00001111)));
-	ATCCR_susPot_RL.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
-	ATCCR_susPot_RR.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	ATCCR_susPot_RR.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	ATCCR_susPot_RH.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
 
 }
 

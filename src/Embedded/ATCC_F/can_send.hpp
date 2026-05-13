@@ -19,6 +19,8 @@ void send_ATCC_301(){
 
   // Serial.println("ATCCR_wheelSpeedRR: ");
   // Serial.println(ATCCR_wheelSpeedRR.value());
+  // Serial.println("ATCCR_wheelSpeedRL: ");
+  // Serial.println(ATCCR_wheelSpeedRL.value());
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
@@ -29,7 +31,7 @@ void send_ATCC_301(){
   msg.buf[6] = 0;
   msg.buf[7] = 0;
 
-  can1.write(msg);
+  can2.write(msg);
 } // can1
 
 void send_ATCC_304(){
@@ -38,8 +40,8 @@ void send_ATCC_304(){
   msg.id = 304;
   msg.len = 8;
 
-  ATCCF_rotTemp_FL = voltage_to_rotor_temp(RotorTempFL.avg());
-  ATCCF_rotTemp_FR = voltage_to_rotor_temp(RotorTempFR.avg());
+  ATCCF_rotTemp_FL = RotorTempFL.avg();
+  ATCCF_rotTemp_FR = RotorTempFR.avg();
 
   // Serial.println("RotorTempRR.avg(): ");
   // Serial.println(RotorTempRR.avg());
@@ -54,17 +56,19 @@ void send_ATCC_304(){
   msg.buf[6] = 0;
   msg.buf[7] = 0;
 
-  can1.write(msg);
+  can2.write(msg);
 }
 
 void send_ATCC_305(){
   static StateCounter ctr;
 
+  // MODIFY TO INCLUDE HEAVE IF INCLUDING HEAVE POT
+
   msg.id = 305;
   msg.len = 8;
 
-  ATCCF_susPot_FL = SusPotFL.avg();
-  ATCCF_susPot_FR = SusPotFR.avg();
+  // ATCCR_susPot_RR = voltage_to_sus_pot_rear_roll_val(SusPotRearRoll.avg());
+  ATCCF_susPot_FH = voltage_to_sus_pot_front_heave_val(SusPotFrontHeave.avg());
 
   // Serial.println("SusPotRL.avg(): ");
   // Serial.println(SusPotRL.avg());
@@ -77,19 +81,21 @@ void send_ATCC_305(){
   
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = ATCCF_susPot_FL.can_value();
-  msg.buf[3] = ATCCF_susPot_FL.can_value() >> 8;
-  msg.buf[4] = ATCCF_susPot_FR.can_value();
-  msg.buf[5] = ATCCF_susPot_FR.can_value() >> 8;
+  msg.buf[2] = 0;
+  msg.buf[3] = 0;
+  // msg.buf[2] = ATCCR_susPot_RR.can_value();
+  // msg.buf[3] = ATCCR_susPot_RR.can_value() >> 8;
+  msg.buf[4] = ATCCF_susPot_FH.can_value();
+  msg.buf[5] = ATCCF_susPot_FH.can_value() >> 8;
   msg.buf[6] = 0;
   msg.buf[7] = 0;
 
-  can1.write(msg);
+  can2.write(msg);
 }
 
-void send_can1(){
+void send_can(){
 
-  static EasyTimer ATCC_301_timer(100); // 1000 Hz
+  static EasyTimer ATCC_301_timer(100); // 100 Hz
   if (ATCC_301_timer.isup()){
     send_ATCC_301();
   }
