@@ -43,9 +43,11 @@ void send_ATCC_304(){
   ATCCF_rotTemp_FL = RotorTempFL.avg();
   ATCCF_rotTemp_FR = RotorTempFR.avg();
 
-  // Serial.println("RotorTempRR.avg(): ");
-  // Serial.println(RotorTempRR.avg());
-  // Serial.println(voltage_to_rotor_temp(RotorTempRR.avg()));
+  // Serial.println("RotorTempFR.avg(): ");
+  // Serial.println(RotorTempFR.avg());
+  // Serial.println(voltage_to_rotor_temp(RotorTempFR.avg()));
+  // Serial.println("RotorTempFL.avg(): ");
+  // Serial.println(RotorTempFL.avg());
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
@@ -70,13 +72,13 @@ void send_ATCC_305(){
   // ATCCR_susPot_RR = voltage_to_sus_pot_rear_roll_val(SusPotRearRoll.avg());
   ATCCF_susPot_FH = voltage_to_sus_pot_front_heave_val(SusPotFrontHeave.avg());
 
-  // Serial.println("SusPotRL.avg(): ");
-  // Serial.println(SusPotRL.avg());
+  // Serial.println("SusPotFrontHeave.avg(): ");
+  // Serial.println(SusPotFrontHeave.avg());
 
   // Serial.println("SusPotRR.avg(): ");
   // Serial.println(SusPotRR.avg());
 
-  // Serial.println(ATCCR_susPot_RL.value());
+  // Serial.println(ATCCF_susPot_FH.value());
   // Serial.println(ATCCR_susPot_RR.value());
   
   msg.buf[0] = ctr.value();
