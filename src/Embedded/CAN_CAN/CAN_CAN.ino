@@ -59,11 +59,11 @@ void set_mailboxes() {
   }
 
   can1.setMBFilter(REJECT_ALL);
-  can1.setMBFilter(MB0, MM5_yawRate.get_msg_id());
-  can1.setMBFilter(MB1, MM5_ay.get_msg_id());
-  can1.setMBFilter(MB2, MM5_rollRate.get_msg_id());
-  can1.setMBFilter(MB3, MM5_ax.get_msg_id()); 
-  can1.setMBFilter(MB4, MM5_az.get_msg_id());
+  can1.setMBFilter(MB0, MM5F_yawRate.get_msg_id());
+  can1.setMBFilter(MB1, MM5F_ay.get_msg_id());
+  can1.setMBFilter(MB2, MM5F_rollRate.get_msg_id());
+  can1.setMBFilter(MB3, MM5F_ax.get_msg_id()); 
+  can1.setMBFilter(MB4, MM5F_az.get_msg_id());
   can1.setMBFilter(MB5, 0);
   can1.setMBFilter(MB6, 0);
   can1.setMBFilter(MB7, 0);
@@ -84,49 +84,49 @@ void readCan() {
   }
 }
 
-void send_MM52_450() {
+void send_MM5R_450() {
   static StateCounter ctr;
   msg.id = 450;
   msg.len = 8;
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = MM5_yawRate.can_value();
-  msg.buf[3] = MM5_yawRate.can_value() >> 8;
-  msg.buf[4] = MM5_ay.can_value();
-  msg.buf[5] = MM5_ay.can_value() >> 8;
+  msg.buf[2] = MM5F_yawRate.can_value();
+  msg.buf[3] = MM5F_yawRate.can_value() >> 8;
+  msg.buf[4] = MM5F_ay.can_value();
+  msg.buf[5] = MM5F_ay.can_value() >> 8;
   msg.buf[6] = 0;
   msg.buf[7] = 0;
 
   can2.write(msg);
 }
 
-void send_MM52_451() {
+void send_MM5R_451() {
   static StateCounter ctr;
   msg.id = 451;
   msg.len = 8;
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = MM5_rollRate.can_value();
-  msg.buf[3] = MM5_rollRate.can_value() >> 8;
-  msg.buf[4] = MM5_ax.can_value();
-  msg.buf[5] = MM5_ax.can_value() >> 8;
-  msg.buf[6] = MM5_az.can_value();
-  msg.buf[7] = MM5_az.can_value() >> 8;
+  msg.buf[2] = MM5F_rollRate.can_value();
+  msg.buf[3] = MM5F_rollRate.can_value() >> 8;
+  msg.buf[4] = MM5F_ax.can_value();
+  msg.buf[5] = MM5F_ax.can_value() >> 8;
+  msg.buf[6] = MM5F_az.can_value();
+  msg.buf[7] = MM5F_az.can_value() >> 8;
 
   can2.write(msg);
 }
 
 void send_can() {
-  static EasyTimer MM52_450_timer(100); // 100Hz
-  if (MM52_450_timer.isup()){
-    send_MM52_450();
+  static EasyTimer MM5R_450_timer(100); // 100Hz
+  if (MM5R_450_timer.isup()){
+    send_MM5R_450();
   }
 
-  static EasyTimer MM52_451_timer(100); // 100Hz
-  if (MM52_451_timer.isup()){
-    send_MM52_451();
+  static EasyTimer MM5R_451_timer(100); // 100Hz
+  if (MM5R_451_timer.isup()){
+    send_MM5R_451();
   }
 }
 
