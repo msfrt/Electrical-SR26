@@ -53,7 +53,7 @@ ADCChip adc5(ADC5_CS);
 // ADCSensor test42(2,0,1000);
 // ADCSensor test43(3,0,1000);
 // ADCSensor test44(4,0,1000);
-ADCSensor SusPotFrontHeave(5,0,1000); // verified, works (RR in old harness)
+ADCSensor SusPotFrontRoll(5,0,1000); // verified, works (FL in old harness)
 // ADCSensor test46(6,0,1000);
 // ADCSensor test47(7,0,1000);
 
@@ -64,7 +64,7 @@ ADCSensor RotorTempFR(2,500,5); // verified, works
 // ADCSensor test54(4,0,1000);
 // ADCSensor test55(5,0,1000);
 ADCSensor RotorTempFL(6,500,5);
-ADCSensor SusPotFrontRoll(7,0,1000); // modify to include this (RL in old harness)
+ADCSensor SusPotFrontHeave(7,0,1000); // modify to include this (FR in old harness)
 
 // ADCSensor test60(0,0,1000);
 // ADCSensor test61(1,0,1000);
@@ -95,8 +95,8 @@ void sample_ADCs()
     // adc1.sample(test10, test11, test12, test13, test14, test15, test16, test17);
     // adc2.sample(test20, test21, test22, test23, test24, test25, test26, test27);
     // adc3.sample(test30, test31, test32, test33, test34, test35, test36, test37);
-    adc4.sample(SusPotFrontHeave);
-    adc5.sample(RotorTempFR, RotorTempFL, SusPotFrontRoll);
+    adc4.sample(SusPotFrontRoll);
+    adc5.sample(RotorTempFR, RotorTempFL, SusPotFrontHeave);
     // adc6.sample(test60, test61, test62, test63, test64, test65, test66, test67);
   }
   
