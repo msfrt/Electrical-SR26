@@ -25,8 +25,8 @@ struct MorseStartup {
     last_change = millis();
     active = true;
     current_duration = 0;
-    analogWrite(GLO_brakelight_teensy_pin, 0);
-    Serial.println("Startup Morse sequence beginning.");
+    digitalWrite(GLO_brakelight_teensy_pin, LOW);
+    // Serial.println("Startup Morse sequence beginning.");
   }
 
   void update() {
@@ -38,7 +38,7 @@ struct MorseStartup {
 
       if (led_on) {
         // Turn off LED
-        analogWrite(GLO_brakelight_teensy_pin, 0);
+        digitalWrite(GLO_brakelight_teensy_pin, LOW);
         led_on = false;
         current_duration = gap;
         //Serial.println("OFF");
@@ -46,17 +46,17 @@ struct MorseStartup {
         index++;
         if (index >= length) {
           active = false;
-          Serial.println("Startup Morse sequence complete.");
+          // Serial.println("Startup Morse sequence complete.");
         }
       } else {
         if (index < length) {
           led_on = true;
           current_duration = (message[index] == 1) ? dash : dot;
-          analogWrite(GLO_brakelight_teensy_pin, 255);
-          Serial.print((message[index] == 1) ? "Dash" : "Dot");
-          Serial.print(" - ON for ");
-          Serial.print(current_duration);
-          Serial.println(" ms");
+          digitalWrite(GLO_brakelight_teensy_pin, HIGH);
+          // Serial.print((message[index] == 1) ? "Dash" : "Dot");
+          // Serial.print(" - ON for ");
+          // Serial.print(current_duration);
+          // Serial.println(" ms");
         }
       }
     }
