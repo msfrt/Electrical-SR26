@@ -4,8 +4,8 @@
 #include <PWMControl.h>
 #include <StateCAN.h>
 
-#include "CAN/raptor_CAN1.hpp"
-#include "CAN/raptor_CAN2.hpp"
+// #include "CAN/SR26_CAN1.hpp"
+// #include "CAN/SR26_CAN2.hpp"
 
 extern int fan_signalL;
 extern int fan_signalR;
@@ -46,7 +46,7 @@ PWMDevice fan_right(fanr_pin, 12, 14, 10, 10000, fan_right_row_signal, fan_right
                     fanr_min_pwm, fanr_max_pwm, fanr_ss_dur, fanr_update_freq, fanr_pwm_freq_norm, fanr_pwm_freq_ss);
 
 // **Water Pump1 Variables**
-int wp1_pin = 14; // ch7pwm
+int wp1_pin = 15; // ch7pwm
 int wp1_min_pwm = 0;
 int wp1_max_pwm = 255;
 int wp1_ss_dur = 5000;
@@ -55,7 +55,7 @@ int wp1_pwm_freq_norm = 40;
 int wp1_pwm_freq_ss = 420;
 
 // **Water Pump2 Variables**
-int wp2_pin = 15; // ch8pwm
+int wp2_pin = 14; // ch8pwm
 int wp2_min_pwm = 0;
 int wp2_max_pwm = 255;
 int wp2_ss_dur = 5000;

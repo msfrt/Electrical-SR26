@@ -74,14 +74,14 @@ void set_digipot_position(uint8_t channel, int pos) {
   pinMode(32, OUTPUT);
   digitalWrite(32, HIGH);
 
-  Serial.println("run");
+  // Serial.println("run");
 
   SPI1.beginTransaction(SPISettings(DPOT_SPI_HZ, MSBFIRST, SPI_MODE0));
   SPI1.transfer((uint8_t)0x00);           // C1C0 = 00 -> write wiper register
   SPI1.transfer((uint8_t)0xFA);           // D7..D0
   SPI1.endTransaction();
 
-  Serial.println("run2");
+  // Serial.println("run2");
 
   // Disable decoder to de-assert CS
   digitalWrite(mux_en, LOW);
@@ -113,8 +113,8 @@ EasyTimer odometer_update_timer(2);
 #include "fans.hpp"
 
 // CAN Message Definitions
-#include "CAN/raptor_CAN1.hpp"
-#include "CAN/raptor_CAN2.hpp"
+#include "CAN/SR26_CAN1.hpp"
+#include "CAN/SR26_CAN2.hpp"
 #include "can_send.hpp"
 
 // Miscellaneous Functions
@@ -192,7 +192,7 @@ void setup() { //high 18 low 26
   board_temp.begin();
 
   // neat brakelight animation
-  //brakelight_start();
+  brakelight_start();
 
   set_digipot_position(4, 254);
 }
@@ -225,10 +225,16 @@ void loop() {
     digitalWrite(PIN_OUTPUT_CTRL, LOW);
   }
 
+  
+
   //sample_ADCs();
-  if (board_temp_sample_timer.isup()) board_temp.sample();
+  // if (board_temp_sample_timer.isup()) board_temp.sample();
   read_CAN();
 
+  brakelight_run();
+  // digitalWrite(GLO_brakelight_teensy_pin, LOW);
+  // Serial.print("brakelight volt sens: ");
+  // Serial.println(brakelight_volt_sens.avg());
 /*
   Serial.print("brakelight volt sens: ");
   Serial.println(brakelight_volt_sens.avg());
@@ -239,9 +245,9 @@ void loop() {
   Serial.println("");
 */
 
-  static EasyTimer efuse_on_off(1);
+  // static EasyTimer efuse_on_off(1);
 
-  static bool efuse_on = true;
+  // static bool efuse_on = true;
 
   /*
   if (efuse_on_off.isup()) {
@@ -258,41 +264,44 @@ void loop() {
   }
   */
 
-  elapsed = (millis() - lastT);
-  if (has_received_vcu_msg == false) {
-    elapsed = 0;
-  }
-  if (VCU_counterMsg201.can_value() != lastCounter) {
-    lastT = millis();
-    lastCounter = VCU_counterMsg201.can_value();
-    has_received_vcu_msg = true;
-  }
+  // elapsed = (millis() - lastT);
+  // if (has_received_vcu_msg == false) {
+  //   elapsed = 0;
+  // }
+  // if (VCU_counterMsg201.can_value() != lastCounter) {
+  //   lastT = millis();
+  //   lastCounter = VCU_counterMsg201.can_value();
+  //   has_received_vcu_msg = true;
+  // }
 
-  if (elapsed > 300 && has_received_vcu_msg == true) {
-    vcu_timeout = true;
-    Serial.println("timeout");
-  }
+  // if (elapsed > 300 && has_received_vcu_msg == true) {
+  //   vcu_timeout = true;
+  //   Serial.println("timeout");
+  // }
 
-  if (vcu_timeout == true) {
-    Serial.println("timeout");
-  }
+  // if (vcu_timeout == true) {
+  //   Serial.println("timeout");
+  // }
 
-  if (testMode) {
-    if (testNum == 1) {
-      //Serial.println(PDM_fanRightDutyCycle.can_value());
-      PDM_fanRightDutyCycle.set_can_value(100);
-      fan_signalL = PDM_fanRightDutyCycle.can_value();
-      send_can2();
-    } else if (testNum == 2) {
-      fan_signalL = vcu_timeout ? 0 : VCU_radFanLDuty.can_value() / 10.0;
-      fan_signalR = vcu_timeout ? 0 : VCU_radFanRDuty.can_value() / 10.0;
-      wp_signal1   = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
-      wp_signal2   = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
-      send_can2();
-    }
-  } else {
-    send_can2();
-  }
+  // if (testMode) {
+  //   if (testNum == 1) {
+  //     //Serial.println(PDM_fanRightDutyCycle.can_value());
+  //     PDM_fanRightDutyCycle.set_can_value(100);
+  //     fan_signalL = PDM_fanRightDutyCycle.can_value();
+  //     send_can2();
+  //   } else if (testNum == 2) {
+  //     fan_signalL = vcu_timeout ? 0 : VCU_radFanLDuty.can_value() / 10.0;
+  //     fan_signalR = vcu_timeout ? 0 : VCU_radFanRDuty.can_value() / 10.0;
+  //     wp_signal1   = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
+  //     wp_signal2   = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
+  //     send_can2();
+  //   }
+  // } else {
+  //   send_can2();
+  // }
+
+  // wp_signal1 = 100;
+  // wp_signal2 = 100;
 
   updateFanSpeed(fan_signalL, fan_signalR, wp_signal1, wp_signal2);
 
@@ -306,32 +315,32 @@ void loop() {
 }
 
 void set_mailboxes() {
-  can2.setMaxMB(64);
-  can2.enableFIFO();
-  can2.setMB(MB4, RX, STD);
-  can2.setMB(MB5, RX, STD);
-  can2.setMB(MB6, RX, STD);
-  can2.setMB(MB7, RX, STD);
-  can2.setMB(MB8, RX, STD);
-  can2.setMB(MB9, RX, STD);
-  can2.setMB(MB10, RX, STD);
-  can2.setMB(MB11, RX, STD);
-  can2.setMB(MB12, RX, EXT);
-  can2.setMB(MB13, RX, EXT);
-  can2.setMB(MB14, RX, EXT);
-  can2.setMB(MB15, RX, EXT);
+  // can2.setMaxMB(64);
+  // can2.enableFIFO();
+  // can2.setMB(MB4, RX, STD);
+  // can2.setMB(MB5, RX, STD);
+  // can2.setMB(MB6, RX, STD);
+  // can2.setMB(MB7, RX, STD);
+  // can2.setMB(MB8, RX, STD);
+  // can2.setMB(MB9, RX, STD);
+  // can2.setMB(MB10, RX, STD);
+  // can2.setMB(MB11, RX, STD);
+  // can2.setMB(MB12, RX, EXT);
+  // can2.setMB(MB13, RX, EXT);
+  // can2.setMB(MB14, RX, EXT);
+  // can2.setMB(MB15, RX, EXT);
 }
 
 void read_CAN() {
   int count = 0;
 
   while (can1.read(rxmsg) && count < MAX_CAN_FRAME_READ_PER_CYCLE) {
-    decode_raptor_CAN1(rxmsg);
+    decode_SR26_CAN1(rxmsg);
     count++;
   }
 
-  while (can2.read(rxmsg) && count < MAX_CAN_FRAME_READ_PER_CYCLE) {
-    decode_raptor_CAN2(rxmsg);
-    count++;
-  }
+  // while (can2.read(rxmsg) && count < MAX_CAN_FRAME_READ_PER_CYCLE) {
+  //   decode_SR26_CAN2(rxmsg);
+  //   count++;
+  // }
 }

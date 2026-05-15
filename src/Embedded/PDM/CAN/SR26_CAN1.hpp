@@ -8,8 +8,8 @@
     
 ******************************************************************************/
 
-#ifndef SR26_CAN1_HPP
-#define SR26_CAN1_HPP
+#ifndef OUTPUT_HPP
+#define OUTPUT_HPP
 
 #include <FlexCAN_T4.h>
 #include <StateCAN.h>
