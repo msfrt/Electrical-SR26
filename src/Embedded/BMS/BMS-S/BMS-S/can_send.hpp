@@ -9,7 +9,7 @@
 #include "CAN/SR26_CAN2.hpp"
 
 
-// Module1Module1Module1Module1Module1Module1Module1Module1
+const int MODULE_2 = 1; // BMS-S select, 1-5
 
 static CAN_message_t msg;
 
@@ -18,18 +18,18 @@ void send_BMS_500() {
   msg.id = 500;
   msg.len = 8;
 
-  BMS_PackVoltage = 0;
-  BMS_PackCurrent = 0;
-  BMS_PackSOC = 0;
+  BMS_packmVoltage = 0;
+  BMS_packCurrent = 0;
+  BMS_packSOC = 0;
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_PackVoltage.can_value();
-  msg.buf[3] = BMS_PackVoltage.can_value() >> 8;
-  msg.buf[4] = BMS_PackCurrent.can_value();
-  msg.buf[5] = BMS_PackCurrent.can_value() >> 8;
-  msg.buf[6] = BMS_PackSOC.can_value();
-  msg.buf[7] = BMS_PackSOC.can_value() >> 8;
+  msg.buf[2] = BMS_packmVoltage.can_value();
+  msg.buf[3] = BMS_packmVoltage.can_value() >> 8;
+  msg.buf[4] = BMS_packCurrent.can_value();
+  msg.buf[5] = BMS_packCurrent.can_value() >> 8;
+  msg.buf[6] = BMS_packSOC.can_value();
+  msg.buf[7] = BMS_packSOC.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -39,18 +39,19 @@ void send_BMS_501() {
   msg.id = 501;
   msg.len = 8;
 
-  BMS_Module1V = 0;
-  BMS_Module2V = 0;
-  BMS_Module3V = 0;
+  BMS_module1Volt = 0;
+  BMS_module2Volt = 0;
+  BMS_module3Volt = 0;
+
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module1V.can_value();
-  msg.buf[3] = BMS_Module1V.can_value() >> 8;
-  msg.buf[4] = BMS_Module2V.can_value();
-  msg.buf[5] = BMS_Module2V.can_value() >> 8;
-  msg.buf[6] = BMS_Module3V.can_value();
-  msg.buf[7] = BMS_Module3V.can_value() >> 8;
+  msg.buf[2] = BMS_module1Volt.can_value();
+  msg.buf[3] = BMS_module2Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module2Volt.can_value();
+  msg.buf[5] = BMS_module2Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module3Volt.can_value();
+  msg.buf[7] = BMS_module3Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -60,15 +61,15 @@ void send_BMS_502() {
   msg.id = 502;
   msg.len = 8;
 
-  BMS_Module4V = 0;
-  BMS_Module5V = 0;
+  BMS_module4Volt = 0;
+  BMS_module5Volt = 0;
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module4V.can_value();
-  msg.buf[3] = BMS_Module4V.can_value() >> 8;
-  msg.buf[4] = BMS_Module5V.can_value();
-  msg.buf[5] = BMS_Module5V.can_value() >> 8;
+  msg.buf[2] = BMS_module4Volt.can_value();
+  msg.buf[3] = BMS_module4Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module5Volt.can_value();
+  msg.buf[5] = BMS_module5Volt.can_value() >> 8;
   msg.buf[6] = 0;
   msg.buf[7] = 0;
 
@@ -82,12 +83,12 @@ void send_BMS_503() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module1seg1V.can_value();
-  msg.buf[3] = BMS_Module1seg1V.can_value() >> 8;
-  msg.buf[4] = BMS_Module1seg1V.can_value();
-  msg.buf[5] = BMS_Module1seg1V.can_value() >> 8;
-  msg.buf[6] = BMS_Module1seg1V.can_value();
-  msg.buf[7] = BMS_Module1seg1V.can_value() >> 8;
+  msg.buf[2] = BMS_module1Cell1Volt.can_value();
+  msg.buf[3] = BMS_module1Cell1Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module1Cell1Volt.can_value();
+  msg.buf[5] = BMS_module1Cell1Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module1Cell1Volt.can_value();
+  msg.buf[7] = BMS_module1Cell1Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -100,12 +101,12 @@ void send_BMS_504() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module1seg4V.can_value();
-  msg.buf[3] = BMS_Module1seg4V.can_value() >> 8;
-  msg.buf[4] = BMS_Module1seg5V.can_value();
-  msg.buf[5] = BMS_Module1seg5V.can_value() >> 8;
-  msg.buf[6] = BMS_Module1seg6V.can_value();
-  msg.buf[7] = BMS_Module1seg6V.can_value() >> 8;
+  msg.buf[2] = BMS_module1Cell4Volt.can_value();
+  msg.buf[3] = BMS_module1Cell4Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module1Cell5Volt.can_value();
+  msg.buf[5] = BMS_module1Cell5Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module1Cell6Volt.can_value();
+  msg.buf[7] = BMS_module1Cell6Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -118,12 +119,12 @@ void send_BMS_505() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module1seg7V.can_value();
-  msg.buf[3] = BMS_Module1seg7V.can_value() >> 8;
-  msg.buf[4] = BMS_Module1seg8V.can_value();
-  msg.buf[5] = BMS_Module1seg8V.can_value() >> 8;
-  msg.buf[6] = BMS_Module1seg9V.can_value();
-  msg.buf[7] = BMS_Module1seg9V.can_value() >> 8;
+  msg.buf[2] = BMS_module1Cell7Volt.can_value();
+  msg.buf[3] = BMS_module1Cell7Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module1Cell8Volt.can_value();
+  msg.buf[5] = BMS_module1Cell8Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module1Cell9Volt.can_value();
+  msg.buf[7] = BMS_module1Cell9Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -136,12 +137,12 @@ void send_BMS_506() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module1seg10V.can_value();
-  msg.buf[3] = BMS_Module1seg10V.can_value() >> 8;
-  msg.buf[4] = BMS_Module1seg11V.can_value();
-  msg.buf[5] = BMS_Module1seg11V.can_value() >> 8;
-  msg.buf[6] = BMS_Module1seg12V.can_value();
-  msg.buf[7] = BMS_Module1seg12V.can_value() >> 8;
+  msg.buf[2] = BMS_module1Cell10Volt.can_value();
+  msg.buf[3] = BMS_module1Cell10Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module1Cell11Volt.can_value();
+  msg.buf[5] = BMS_module1Cell11Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module1Cell12Volt.can_value();
+  msg.buf[7] = BMS_module1Cell12Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -154,12 +155,12 @@ void send_BMS_507() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module1seg13V.can_value();
-  msg.buf[3] = BMS_Module1seg13V.can_value() >> 8;
-  msg.buf[4] = BMS_Module1seg14V.can_value();
-  msg.buf[5] = BMS_Module1seg14V.can_value() >> 8;
-  msg.buf[6] = BMS_Module1seg15V.can_value();
-  msg.buf[7] = BMS_Module1seg15V.can_value() >> 8;
+  msg.buf[2] = BMS_module1Cell13Volt.can_value();
+  msg.buf[3] = BMS_module1Cell13Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module1Cell14Volt.can_value();
+  msg.buf[5] = BMS_module1Cell14Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module1Cell15Volt.can_value();
+  msg.buf[7] = BMS_module1Cell15Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -172,12 +173,12 @@ void send_BMS_508() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module1seg16V.can_value();
-  msg.buf[3] = BMS_Module1seg16V.can_value() >> 8;
-  msg.buf[4] = BMS_Module1seg17V.can_value();
-  msg.buf[5] = BMS_Module1seg17V.can_value() >> 8;
-  msg.buf[6] = BMS_Module1seg18V.can_value();
-  msg.buf[7] = BMS_Module1seg18V.can_value() >> 8;
+  msg.buf[2] = BMS_module1Cell16Volt.can_value();
+  msg.buf[3] = BMS_module1Cell16Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module1Cell17Volt.can_value();
+  msg.buf[5] = BMS_module1Cell17Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module1Cell18Volt.can_value();
+  msg.buf[7] = BMS_module1Cell18Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -189,12 +190,12 @@ void send_BMS_509() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module1seg1Temp.can_value();
-  msg.buf[3] = BMS_Module1seg1Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module1seg1Temp.can_value();
-  msg.buf[5] = BMS_Module1seg1Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module1seg1Temp.can_value();
-  msg.buf[7] = BMS_Module1seg1Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module1Cell1Temp.can_value();
+  msg.buf[3] = BMS_module1Cell1Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module1Cell1Temp.can_value();
+  msg.buf[5] = BMS_module1Cell1Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module1Cell1Temp.can_value();
+  msg.buf[7] = BMS_module1Cell1Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -206,12 +207,12 @@ void send_BMS_510() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module1seg4Temp.can_value();
-  msg.buf[3] = BMS_Module1seg4Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module1seg5Temp.can_value();
-  msg.buf[5] = BMS_Module1seg5Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module1seg6Temp.can_value();
-  msg.buf[7] = BMS_Module1seg6Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module1Cell4Temp.can_value();
+  msg.buf[3] = BMS_module1Cell4Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module1Cell5Temp.can_value();
+  msg.buf[5] = BMS_module1Cell5Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module1Cell6Temp.can_value();
+  msg.buf[7] = BMS_module1Cell6Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -224,12 +225,12 @@ void send_BMS_511() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module1seg7Temp.can_value();
-  msg.buf[3] = BMS_Module1seg7Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module1seg8Temp.can_value();
-  msg.buf[5] = BMS_Module1seg8Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module1seg9Temp.can_value();
-  msg.buf[7] = BMS_Module1seg9Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module1Cell7Temp.can_value();
+  msg.buf[3] = BMS_module1Cell7Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module1Cell8Temp.can_value();
+  msg.buf[5] = BMS_module1Cell8Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module1Cell9Temp.can_value();
+  msg.buf[7] = BMS_module1Cell9Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -241,12 +242,12 @@ void send_BMS_512() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module1seg10Temp.can_value();
-  msg.buf[3] = BMS_Module1seg10Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module1seg11Temp.can_value();
-  msg.buf[5] = BMS_Module1seg11Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module1seg12Temp.can_value();
-  msg.buf[7] = BMS_Module1seg12Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module1Cell10Temp.can_value();
+  msg.buf[3] = BMS_module1Cell10Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module1Cell11Temp.can_value();
+  msg.buf[5] = BMS_module1Cell11Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module1Cell12Temp.can_value();
+  msg.buf[7] = BMS_module1Cell12Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -258,12 +259,12 @@ void send_BMS_513() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module1seg13Temp.can_value();
-  msg.buf[3] = BMS_Module1seg13Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module1seg14Temp.can_value();
-  msg.buf[5] = BMS_Module1seg14Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module1seg15Temp.can_value();
-  msg.buf[7] = BMS_Module1seg15Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module1Cell13Temp.can_value();
+  msg.buf[3] = BMS_module1Cell13Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module1Cell14Temp.can_value();
+  msg.buf[5] = BMS_module1Cell14Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module1Cell15Temp.can_value();
+  msg.buf[7] = BMS_module1Cell15Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -275,12 +276,12 @@ void send_BMS_514() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module1seg16Temp.can_value();
-  msg.buf[3] = BMS_Module1seg16Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module1seg17Temp.can_value();
-  msg.buf[5] = BMS_Module1seg17Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module1seg18Temp.can_value();
-  msg.buf[7] = BMS_Module1seg18Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module1Cell16Temp.can_value();
+  msg.buf[3] = BMS_module1Cell16Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module1Cell17Temp.can_value();
+  msg.buf[5] = BMS_module1Cell17Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module1Cell18Temp.can_value();
+  msg.buf[7] = BMS_module1Cell18Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -293,12 +294,12 @@ void send_BMS_515() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module2seg1V.can_value();
-  msg.buf[3] = BMS_Module2seg1V.can_value() >> 8;
-  msg.buf[4] = BMS_Module2seg1V.can_value();
-  msg.buf[5] = BMS_Module2seg1V.can_value() >> 8;
-  msg.buf[6] = BMS_Module2seg1V.can_value();
-  msg.buf[7] = BMS_Module2seg1V.can_value() >> 8;
+  msg.buf[2] = BMS_module2Cell1Volt.can_value();
+  msg.buf[3] = BMS_module2Cell1Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module2Cell1Volt.can_value();
+  msg.buf[5] = BMS_module2Cell1Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module2Cell1Volt.can_value();
+  msg.buf[7] = BMS_module2Cell1Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -311,12 +312,12 @@ void send_BMS_516() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module2seg4V.can_value();
-  msg.buf[3] = BMS_Module2seg4V.can_value() >> 8;
-  msg.buf[4] = BMS_Module2seg5V.can_value();
-  msg.buf[5] = BMS_Module2seg5V.can_value() >> 8;
-  msg.buf[6] = BMS_Module2seg6V.can_value();
-  msg.buf[7] = BMS_Module2seg6V.can_value() >> 8;
+  msg.buf[2] = BMS_module2Cell4Volt.can_value();
+  msg.buf[3] = BMS_module2Cell4Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module2Cell5Volt.can_value();
+  msg.buf[5] = BMS_module2Cell5Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module2Cell6Volt.can_value();
+  msg.buf[7] = BMS_module2Cell6Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -328,12 +329,12 @@ void send_BMS_517() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module2seg7V.can_value();
-  msg.buf[3] = BMS_Module2seg7V.can_value() >> 8;
-  msg.buf[4] = BMS_Module2seg8V.can_value();
-  msg.buf[5] = BMS_Module2seg8V.can_value() >> 8;
-  msg.buf[6] = BMS_Module2seg9V.can_value();
-  msg.buf[7] = BMS_Module2seg9V.can_value() >> 8;
+  msg.buf[2] = BMS_module2Cell7Volt.can_value();
+  msg.buf[3] = BMS_module2Cell7Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module2Cell8Volt.can_value();
+  msg.buf[5] = BMS_module2Cell8Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module2Cell9Volt.can_value();
+  msg.buf[7] = BMS_module2Cell9Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -346,12 +347,12 @@ void send_BMS_518() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module2seg10V.can_value();
-  msg.buf[3] = BMS_Module2seg10V.can_value() >> 8;
-  msg.buf[4] = BMS_Module2seg11V.can_value();
-  msg.buf[5] = BMS_Module2seg11V.can_value() >> 8;
-  msg.buf[6] = BMS_Module2seg12V.can_value();
-  msg.buf[7] = BMS_Module2seg12V.can_value() >> 8;
+  msg.buf[2] = BMS_module2Cell10Volt.can_value();
+  msg.buf[3] = BMS_module2Cell10Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module2Cell11Volt.can_value();
+  msg.buf[5] = BMS_module2Cell11Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module2Cell12Volt.can_value();
+  msg.buf[7] = BMS_module2Cell12Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -365,12 +366,12 @@ void send_BMS_519() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module2seg13V.can_value();
-  msg.buf[3] = BMS_Module2seg13V.can_value() >> 8;
-  msg.buf[4] = BMS_Module2seg14V.can_value();
-  msg.buf[5] = BMS_Module2seg14V.can_value() >> 8;
-  msg.buf[6] = BMS_Module2seg15V.can_value();
-  msg.buf[7] = BMS_Module2seg15V.can_value() >> 8;
+  msg.buf[2] = BMS_module2Cell13Volt.can_value();
+  msg.buf[3] = BMS_module2Cell13Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module2Cell14Volt.can_value();
+  msg.buf[5] = BMS_module2Cell14Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module2Cell15Volt.can_value();
+  msg.buf[7] = BMS_module2Cell15Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -385,12 +386,12 @@ void send_BMS_520() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module2seg16V.can_value();
-  msg.buf[3] = BMS_Module2seg16V.can_value() >> 8;
-  msg.buf[4] = BMS_Module2seg17V.can_value();
-  msg.buf[5] = BMS_Module2seg17V.can_value() >> 8;
-  msg.buf[6] = BMS_Module2seg18V.can_value();
-  msg.buf[7] = BMS_Module2seg18V.can_value() >> 8;
+  msg.buf[2] = BMS_module2Cell16Volt.can_value();
+  msg.buf[3] = BMS_module2Cell16Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module2Cell17Volt.can_value();
+  msg.buf[5] = BMS_module2Cell17Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module2Cell18Volt.can_value();
+  msg.buf[7] = BMS_module2Cell18Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -403,12 +404,12 @@ void send_BMS_521() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module2seg1Temp.can_value();
-  msg.buf[3] = BMS_Module2seg1Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module2seg1Temp.can_value();
-  msg.buf[5] = BMS_Module2seg1Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module2seg1Temp.can_value();
-  msg.buf[7] = BMS_Module2seg1Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module2Cell1Temp.can_value();
+  msg.buf[3] = BMS_module2Cell1Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module2Cell1Temp.can_value();
+  msg.buf[5] = BMS_module2Cell1Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module2Cell1Temp.can_value();
+  msg.buf[7] = BMS_module2Cell1Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -422,12 +423,12 @@ void send_BMS_522() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module2seg4Temp.can_value();
-  msg.buf[3] = BMS_Module2seg4Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module2seg5Temp.can_value();
-  msg.buf[5] = BMS_Module2seg5Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module2seg6Temp.can_value();
-  msg.buf[7] = BMS_Module2seg6Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module2Cell4Temp.can_value();
+  msg.buf[3] = BMS_module2Cell4Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module2Cell5Temp.can_value();
+  msg.buf[5] = BMS_module2Cell5Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module2Cell6Temp.can_value();
+  msg.buf[7] = BMS_module2Cell6Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -440,12 +441,12 @@ void send_BMS_523() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module2seg7Temp.can_value();
-  msg.buf[3] = BMS_Module2seg7Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module2seg8Temp.can_value();
-  msg.buf[5] = BMS_Module2seg8Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module2seg9Temp.can_value();
-  msg.buf[7] = BMS_Module2seg9Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module2Cell7Temp.can_value();
+  msg.buf[3] = BMS_module2Cell7Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module2Cell8Temp.can_value();
+  msg.buf[5] = BMS_module2Cell8Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module2Cell9Temp.can_value();
+  msg.buf[7] = BMS_module2Cell9Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -459,12 +460,12 @@ void send_BMS_524() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module2seg10Temp.can_value();
-  msg.buf[3] = BMS_Module2seg10Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module2seg11Temp.can_value();
-  msg.buf[5] = BMS_Module2seg11Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module2seg12Temp.can_value();
-  msg.buf[7] = BMS_Module2seg12Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module2Cell10Temp.can_value();
+  msg.buf[3] = BMS_module2Cell10Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module2Cell11Temp.can_value();
+  msg.buf[5] = BMS_module2Cell11Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module2Cell12Temp.can_value();
+  msg.buf[7] = BMS_module2Cell12Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -477,12 +478,12 @@ void send_BMS_525() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module2seg13Temp.can_value();
-  msg.buf[3] = BMS_Module2seg13Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module2seg14Temp.can_value();
-  msg.buf[5] = BMS_Module2seg14Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module2seg15Temp.can_value();
-  msg.buf[7] = BMS_Module2seg15Temp.can_value() >> 8;
+  msg.buf[2] = BMS_Module2Cell13Temp.can_value();
+  msg.buf[3] = BMS_Module2Cell13Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module2Cell14Temp.can_value();
+  msg.buf[5] = BMS_module2Cell14Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module2Cell15Temp.can_value();
+  msg.buf[7] = BMS_module2Cell15Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -496,12 +497,12 @@ void send_BMS_526() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module2seg16Temp.can_value();
-  msg.buf[3] = BMS_Module2seg16Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module2seg17Temp.can_value();
-  msg.buf[5] = BMS_Module2seg17Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module2seg18Temp.can_value();
-  msg.buf[7] = BMS_Module2seg18Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module2Cell16Temp.can_value();
+  msg.buf[3] = BMS_module2Cell16Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module2Cell17Temp.can_value();
+  msg.buf[5] = BMS_module2Cell17Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module2Cell18Temp.can_value();
+  msg.buf[7] = BMS_module2Cell18Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -514,12 +515,12 @@ void send_BMS_527() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module3seg1V.can_value();
-  msg.buf[3] = BMS_Module3seg1V.can_value() >> 8;
-  msg.buf[4] = BMS_Module3seg1V.can_value();
-  msg.buf[5] = BMS_Module3seg1V.can_value() >> 8;
-  msg.buf[6] = BMS_Module3seg1V.can_value();
-  msg.buf[7] = BMS_Module3seg1V.can_value() >> 8;
+  msg.buf[2] = BMS_module3Cell1Volt.can_value();
+  msg.buf[3] = BMS_module3Cell1Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module3Cell1Volt.can_value();
+  msg.buf[5] = BMS_module3Cell1Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module3Cell1Volt.can_value();
+  msg.buf[7] = BMS_module3Cell1Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -532,12 +533,12 @@ void send_BMS_528() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module3seg4V.can_value();
-  msg.buf[3] = BMS_Module3seg4V.can_value() >> 8;
-  msg.buf[4] = BMS_Module3seg5V.can_value();
-  msg.buf[5] = BMS_Module3seg5V.can_value() >> 8;
-  msg.buf[6] = BMS_Module3seg6V.can_value();
-  msg.buf[7] = BMS_Module3seg6V.can_value() >> 8;
+  msg.buf[2] = BMS_module3Cell4Volt.can_value();
+  msg.buf[3] = BMS_module3Cell4Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module3Cell5Volt.can_value();
+  msg.buf[5] = BMS_module3Cell5Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module3Cell6Volt.can_value();
+  msg.buf[7] = BMS_module3Cell6Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -551,12 +552,12 @@ void send_BMS_529() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module3seg7V.can_value();
-  msg.buf[3] = BMS_Module3seg7V.can_value() >> 8;
-  msg.buf[4] = BMS_Module3seg8V.can_value();
-  msg.buf[5] = BMS_Module3seg8V.can_value() >> 8;
-  msg.buf[6] = BMS_Module3seg9V.can_value();
-  msg.buf[7] = BMS_Module3seg9V.can_value() >> 8;
+  msg.buf[2] = BMS_module3Cell7Volt.can_value();
+  msg.buf[3] = BMS_module3Cell7Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module3Cell8Volt.can_value();
+  msg.buf[5] = BMS_module3Cell8Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module3Cell9Volt.can_value();
+  msg.buf[7] = BMS_module3Cell9Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -570,12 +571,12 @@ void send_BMS_530() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module3seg10V.can_value();
-  msg.buf[3] = BMS_Module3seg10V.can_value() >> 8;
-  msg.buf[4] = BMS_Module3seg11V.can_value();
-  msg.buf[5] = BMS_Module3seg11V.can_value() >> 8;
-  msg.buf[6] = BMS_Module3seg12V.can_value();
-  msg.buf[7] = BMS_Module3seg12V.can_value() >> 8;
+  msg.buf[2] = BMS_module3Cell10Volt.can_value();
+  msg.buf[3] = BMS_module3Cell10Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module3Cell11Volt.can_value();
+  msg.buf[5] = BMS_module3Cell11Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module3Cell12Volt.can_value();
+  msg.buf[7] = BMS_module3Cell12Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -589,12 +590,12 @@ void send_BMS_531() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module3seg13V.can_value();
-  msg.buf[3] = BMS_Module3seg13V.can_value() >> 8;
-  msg.buf[4] = BMS_Module3seg14V.can_value();
-  msg.buf[5] = BMS_Module3seg14V.can_value() >> 8;
-  msg.buf[6] = BMS_Module3seg15V.can_value();
-  msg.buf[7] = BMS_Module3seg15V.can_value() >> 8;
+  msg.buf[2] = BMS_module3Cell13Volt.can_value();
+  msg.buf[3] = BMS_module3Cell13Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module3Cell14Volt.can_value();
+  msg.buf[5] = BMS_module3Cell14Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module3Cell15Volt.can_value();
+  msg.buf[7] = BMS_module3Cell15Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -608,12 +609,12 @@ void send_BMS_532() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module3seg16V.can_value();
-  msg.buf[3] = BMS_Module3seg16V.can_value() >> 8;
-  msg.buf[4] = BMS_Module3seg17V.can_value();
-  msg.buf[5] = BMS_Module3seg17V.can_value() >> 8;
-  msg.buf[6] = BMS_Module3seg18V.can_value();
-  msg.buf[7] = BMS_Module3seg18V.can_value() >> 8;
+  msg.buf[2] = BMS_module3Cell16Volt.can_value();
+  msg.buf[3] = BMS_module3Cell16Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module3Cell17Volt.can_value();
+  msg.buf[5] = BMS_module3Cell17Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module3Cell18Volt.can_value();
+  msg.buf[7] = BMS_module3Cell18Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -627,12 +628,12 @@ void send_BMS_533() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module3seg1Temp.can_value();
-  msg.buf[3] = BMS_Module3seg1Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module3seg1Temp.can_value();
-  msg.buf[5] = BMS_Module3seg1Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module3seg1Temp.can_value();
-  msg.buf[7] = BMS_Module3seg1Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module3Cell1Temp.can_value();
+  msg.buf[3] = BMS_module3Cell1Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module3Cell1Temp.can_value();
+  msg.buf[5] = BMS_module3Cell1Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module3Cell1Temp.can_value();
+  msg.buf[7] = BMS_module3Cell1Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -645,12 +646,12 @@ void send_BMS_534() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module3seg4Temp.can_value();
-  msg.buf[3] = BMS_Module3seg4Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module3seg5Temp.can_value();
-  msg.buf[5] = BMS_Module3seg5Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module3seg6Temp.can_value();
-  msg.buf[7] = BMS_Module3seg6Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module3Cell4Temp.can_value();
+  msg.buf[3] = BMS_module3Cell4Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module3Cell5Temp.can_value();
+  msg.buf[5] = BMS_module3Cell5Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module3Cell6Temp.can_value();
+  msg.buf[7] = BMS_module3Cell6Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -663,12 +664,12 @@ void send_BMS_535() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module3seg7Temp.can_value();
-  msg.buf[3] = BMS_Module3seg7Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module3seg8Temp.can_value();
-  msg.buf[5] = BMS_Module3seg8Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module3seg9Temp.can_value();
-  msg.buf[7] = BMS_Module3seg9Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module3Cell7Temp.can_value();
+  msg.buf[3] = BMS_module3Cell7Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module3Cell8Temp.can_value();
+  msg.buf[5] = BMS_module3Cell8Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module3Cell9Temp.can_value();
+  msg.buf[7] = BMS_module3Cell9Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -682,12 +683,12 @@ void send_BMS_536() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module3seg10Temp.can_value();
-  msg.buf[3] = BMS_Module3seg10Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module3seg11Temp.can_value();
-  msg.buf[5] = BMS_Module3seg11Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module3seg12Temp.can_value();
-  msg.buf[7] = BMS_Module3seg12Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module3Cell10Temp.can_value();
+  msg.buf[3] = BMS_module3Cell10Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module3Cell11Temp.can_value();
+  msg.buf[5] = BMS_module3Cell11Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module3Cell12Temp.can_value();
+  msg.buf[7] = BMS_module3Cell12Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -699,12 +700,12 @@ void send_BMS_537() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module3seg13Temp.can_value();
-  msg.buf[3] = BMS_Module3seg13Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module3seg14Temp.can_value();
-  msg.buf[5] = BMS_Module3seg14Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module3seg15Temp.can_value();
-  msg.buf[7] = BMS_Module3seg15Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module3Cell13Temp.can_value();
+  msg.buf[3] = BMS_module3Cell13Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module3Cell14Temp.can_value();
+  msg.buf[5] = BMS_module3Cell14Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module3Cell15Temp.can_value();
+  msg.buf[7] = BMS_module3Cell15Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -718,12 +719,12 @@ void send_BMS_538() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module3seg16Temp.can_value();
-  msg.buf[3] = BMS_Module3seg16Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module3seg17Temp.can_value();
-  msg.buf[5] = BMS_Module3seg17Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module3seg18Temp.can_value();
-  msg.buf[7] = BMS_Module3seg18Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module3Cell16Temp.can_value();
+  msg.buf[3] = BMS_module3Cell16Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module3Cell17Temp.can_value();
+  msg.buf[5] = BMS_module3Cell17Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module3Cell18Temp.can_value();
+  msg.buf[7] = BMS_module3Cell18Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -737,12 +738,12 @@ void send_BMS_539() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module4seg1V.can_value();
-  msg.buf[3] = BMS_Module4seg1V.can_value() >> 8;
-  msg.buf[4] = BMS_Module4seg1V.can_value();
-  msg.buf[5] = BMS_Module4seg1V.can_value() >> 8;
-  msg.buf[6] = BMS_Module4seg1V.can_value();
-  msg.buf[7] = BMS_Module4seg1V.can_value() >> 8;
+  msg.buf[2] = BMS_module4Cell1Volt.can_value();
+  msg.buf[3] = BMS_module4Cell1Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module4Cell1Volt.can_value();
+  msg.buf[5] = BMS_module4Cell1Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module4Cell1Volt.can_value();
+  msg.buf[7] = BMS_module4Cell1Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -756,12 +757,12 @@ void send_BMS_540() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module4seg4V.can_value();
-  msg.buf[3] = BMS_Module4seg4V.can_value() >> 8;
-  msg.buf[4] = BMS_Module4seg5V.can_value();
-  msg.buf[5] = BMS_Module4seg5V.can_value() >> 8;
-  msg.buf[6] = BMS_Module4seg6V.can_value();
-  msg.buf[7] = BMS_Module4seg6V.can_value() >> 8;
+  msg.buf[2] = BMS_module4Cell4Volt.can_value();
+  msg.buf[3] = BMS_module4Cell4Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module4Cell5Volt.can_value();
+  msg.buf[5] = BMS_module4Cell5Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module4Cell6Volt.can_value();
+  msg.buf[7] = BMS_module4Cell6Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -774,12 +775,12 @@ void send_BMS_541() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module4seg7V.can_value();
-  msg.buf[3] = BMS_Module4seg7V.can_value() >> 8;
-  msg.buf[4] = BMS_Module4seg8V.can_value();
-  msg.buf[5] = BMS_Module4seg8V.can_value() >> 8;
-  msg.buf[6] = BMS_Module4seg9V.can_value();
-  msg.buf[7] = BMS_Module4seg9V.can_value() >> 8;
+  msg.buf[2] = BMS_module4Cell7Volt.can_value();
+  msg.buf[3] = BMS_module4Cell7Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module4Cell8Volt.can_value();
+  msg.buf[5] = BMS_module4Cell8Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module4cCell9Volt.can_value();
+  msg.buf[7] = BMS_module4cCell9Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -793,12 +794,12 @@ void send_BMS_542() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module4seg10V.can_value();
-  msg.buf[3] = BMS_Module4seg10V.can_value() >> 8;
-  msg.buf[4] = BMS_Module4seg11V.can_value();
-  msg.buf[5] = BMS_Module4seg11V.can_value() >> 8;
-  msg.buf[6] = BMS_Module4seg12V.can_value();
-  msg.buf[7] = BMS_Module4seg12V.can_value() >> 8;
+  msg.buf[2] = BMS_module4Cell10Volt.can_value();
+  msg.buf[3] = BMS_module4Cell10Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module4Cell11Volt.can_value();
+  msg.buf[5] = BMS_module4Cell11Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module4Cell12Volt.can_value();
+  msg.buf[7] = BMS_module4Cell12Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -811,12 +812,12 @@ void send_BMS_543() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module4seg13V.can_value();
-  msg.buf[3] = BMS_Module4seg13V.can_value() >> 8;
-  msg.buf[4] = BMS_Module4seg14V.can_value();
-  msg.buf[5] = BMS_Module4seg14V.can_value() >> 8;
-  msg.buf[6] = BMS_Module4seg15V.can_value();
-  msg.buf[7] = BMS_Module4seg15V.can_value() >> 8;
+  msg.buf[2] = BMS_module4Cell13Volt.can_value();
+  msg.buf[3] = BMS_module4Cell13Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module4Cell14Volt.can_value();
+  msg.buf[5] = BMS_module4Cell14Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module4Cell15Volt.can_value();
+  msg.buf[7] = BMS_module4Cell15Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -829,12 +830,12 @@ void send_BMS_544() {
   
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module4seg16V.can_value();
-  msg.buf[3] = BMS_Module4seg16V.can_value() >> 8;
-  msg.buf[4] = BMS_Module4seg17V.can_value();
-  msg.buf[5] = BMS_Module4seg17V.can_value() >> 8;
-  msg.buf[6] = BMS_Module4seg18V.can_value();
-  msg.buf[7] = BMS_Module4seg18V.can_value() >> 8;
+  msg.buf[2] = BMS_module4Cell16Volt.can_value();
+  msg.buf[3] = BMS_module4Cell16Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module4Cell17Volt.can_value();
+  msg.buf[5] = BMS_module4Cell17Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module4Cell18Volt.can_value();
+  msg.buf[7] = BMS_module4Cell18Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -847,12 +848,12 @@ void send_BMS_545() {
  
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module4seg1Temp.can_value();
-  msg.buf[3] = BMS_Module4seg1Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module4seg1Temp.can_value();
-  msg.buf[5] = BMS_Module4seg1Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module4seg1Temp.can_value();
-  msg.buf[7] = BMS_Module4seg1Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module4Cell1Temp.can_value();
+  msg.buf[3] = BMS_module4Cell1Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module4Cell1Temp.can_value();
+  msg.buf[5] = BMS_module4Cell1Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module4Cell1Temp.can_value();
+  msg.buf[7] = BMS_module4Cell1Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -865,12 +866,12 @@ void send_BMS_546() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module4seg4Temp.can_value();
-  msg.buf[3] = BMS_Module4seg4Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module4seg5Temp.can_value();
-  msg.buf[5] = BMS_Module4seg5Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module4seg6Temp.can_value();
-  msg.buf[7] = BMS_Module4seg6Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module4Cell4Temp.can_value();
+  msg.buf[3] = BMS_module4Cell4Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module4Cell5Temp.can_value();
+  msg.buf[5] = BMS_module4Cell5Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module4Cell6Temp.can_value();
+  msg.buf[7] = BMS_module4Cell6Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -884,12 +885,12 @@ void send_BMS_547() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module4seg7Temp.can_value();
-  msg.buf[3] = BMS_Module4seg7Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module4seg8Temp.can_value();
-  msg.buf[5] = BMS_Module4seg8Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module4seg9Temp.can_value();
-  msg.buf[7] = BMS_Module4seg9Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module4Cell7Temp.can_value();
+  msg.buf[3] = BMS_module4Cell7Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module4Cell8Temp.can_value();
+  msg.buf[5] = BMS_module4Cell8Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module4Cell9Temp.can_value();
+  msg.buf[7] = BMS_module4Cell9Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -903,12 +904,12 @@ void send_BMS_548() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module4seg10Temp.can_value();
-  msg.buf[3] = BMS_Module4seg10Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module4seg11Temp.can_value();
-  msg.buf[5] = BMS_Module4seg11Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module4seg12Temp.can_value();
-  msg.buf[7] = BMS_Module4seg12Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module4Cell10Temp.can_value();
+  msg.buf[3] = BMS_module4Cell10Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module4Cell11Temp.can_value();
+  msg.buf[5] = BMS_module4Cell11Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module4Cell12Temp.can_value();
+  msg.buf[7] = BMS_module4Cell12Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -922,12 +923,12 @@ void send_BMS_549() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module4seg13Temp.can_value();
-  msg.buf[3] = BMS_Module4seg13Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module4seg14Temp.can_value();
-  msg.buf[5] = BMS_Module4seg14Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module4seg15Temp.can_value();
-  msg.buf[7] = BMS_Module4seg15Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module4Cell13Temp.can_value();
+  msg.buf[3] = BMS_module4Cell13Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module4Cell14Temp.can_value();
+  msg.buf[5] = BMS_module4Cell14Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module4Cell15Temp.can_value();
+  msg.buf[7] = BMS_module4Cell15Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -941,12 +942,12 @@ void send_BMS_550() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module4seg16Temp.can_value();
-  msg.buf[3] = BMS_Module4seg16Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module4seg17Temp.can_value();
-  msg.buf[5] = BMS_Module4seg17Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module4seg18Temp.can_value();
-  msg.buf[7] = BMS_Module4seg18Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module4Cell16Temp.can_value();
+  msg.buf[3] = BMS_module4Cell16Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module4Cell17Temp.can_value();
+  msg.buf[5] = BMS_module4Cell17Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module4Cell18Temp.can_value();
+  msg.buf[7] = BMS_module4Cell18Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -959,12 +960,12 @@ void send_BMS_551() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module5seg1V.can_value();
-  msg.buf[3] = BMS_Module5seg1V.can_value() >> 8;
-  msg.buf[4] = BMS_Module5seg1V.can_value();
-  msg.buf[5] = BMS_Module5seg1V.can_value() >> 8;
-  msg.buf[6] = BMS_Module5seg1V.can_value();
-  msg.buf[7] = BMS_Module5seg1V.can_value() >> 8;
+  msg.buf[2] = BMS_module5Cell1Volt.can_value();
+  msg.buf[3] = BMS_module5Cell1Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module5Cell1Volt.can_value();
+  msg.buf[5] = BMS_module5Cell1Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module5Cell1Volt.can_value();
+  msg.buf[7] = BMS_module5Cell1Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -977,12 +978,12 @@ void send_BMS_552() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module5seg4V.can_value();
-  msg.buf[3] = BMS_Module5seg4V.can_value() >> 8;
-  msg.buf[4] = BMS_Module5seg5V.can_value();
-  msg.buf[5] = BMS_Module5seg5V.can_value() >> 8;
-  msg.buf[6] = BMS_Module5seg6V.can_value();
-  msg.buf[7] = BMS_Module5seg6V.can_value() >> 8;
+  msg.buf[2] = BMS_module5Cell4Volt.can_value();
+  msg.buf[3] = BMS_module5Cell4Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module5Cell5Volt.can_value();
+  msg.buf[5] = BMS_module5Cell5Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module5Cell6Volt.can_value();
+  msg.buf[7] = BMS_module5Cell6Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -996,12 +997,12 @@ void send_BMS_553() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module5seg7V.can_value();
-  msg.buf[3] = BMS_Module5seg7V.can_value() >> 8;
-  msg.buf[4] = BMS_Module5seg8V.can_value();
-  msg.buf[5] = BMS_Module5seg8V.can_value() >> 8;
-  msg.buf[6] = BMS_Module5seg9V.can_value();
-  msg.buf[7] = BMS_Module5seg9V.can_value() >> 8;
+  msg.buf[2] = BMS_module5Cell7Volt.can_value();
+  msg.buf[3] = BMS_module5Cell7Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module5Cell8Volt.can_value();
+  msg.buf[5] = BMS_module5Cell8Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module5Cell9Volt.can_value();
+  msg.buf[7] = BMS_module5Cell9Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -1014,12 +1015,12 @@ void send_BMS_554() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module5seg10V.can_value();
-  msg.buf[3] = BMS_Module5seg10V.can_value() >> 8;
-  msg.buf[4] = BMS_Module5seg11V.can_value();
-  msg.buf[5] = BMS_Module5seg11V.can_value() >> 8;
-  msg.buf[6] = BMS_Module5seg12V.can_value();
-  msg.buf[7] = BMS_Module5seg12V.can_value() >> 8;
+  msg.buf[2] = BMS_module5Cell10Volt.can_value();
+  msg.buf[3] = BMS_module5Cell10Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module5Cell11Volt.can_value();
+  msg.buf[5] = BMS_module5Cell11Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module5Cell12Volt.can_value();
+  msg.buf[7] = BMS_module5Cell12Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -1033,12 +1034,12 @@ void send_BMS_555() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module5seg13V.can_value();
-  msg.buf[3] = BMS_Module5seg13V.can_value() >> 8;
-  msg.buf[4] = BMS_Module5seg14V.can_value();
-  msg.buf[5] = BMS_Module5seg14V.can_value() >> 8;
-  msg.buf[6] = BMS_Module5seg15V.can_value();
-  msg.buf[7] = BMS_Module5seg15V.can_value() >> 8;
+  msg.buf[2] = BMS_module5Cell13Volt.can_value();
+  msg.buf[3] = BMS_module5Cell13Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module5Cell14Volt.can_value();
+  msg.buf[5] = BMS_module5Cell14Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module5Cell15Volt.can_value();
+  msg.buf[7] = BMS_module5Cell15Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -1052,12 +1053,12 @@ void send_BMS_556() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module5seg16V.can_value();
-  msg.buf[3] = BMS_Module5seg16V.can_value() >> 8;
-  msg.buf[4] = BMS_Module5seg17V.can_value();
-  msg.buf[5] = BMS_Module5seg17V.can_value() >> 8;
-  msg.buf[6] = BMS_Module5seg18V.can_value();
-  msg.buf[7] = BMS_Module5seg18V.can_value() >> 8;
+  msg.buf[2] = BMS_module5Cell16Volt.can_value();
+  msg.buf[3] = BMS_module5Cell16Volt.can_value() >> 8;
+  msg.buf[4] = BMS_module5Cell17Volt.can_value();
+  msg.buf[5] = BMS_module5Cell17Volt.can_value() >> 8;
+  msg.buf[6] = BMS_module5Cell18Volt.can_value();
+  msg.buf[7] = BMS_module5Cell18Volt.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -1071,12 +1072,12 @@ void send_BMS_557() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module5seg1Temp.can_value();
-  msg.buf[3] = BMS_Module5seg1Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module5seg1Temp.can_value();
-  msg.buf[5] = BMS_Module5seg1Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module5seg1Temp.can_value();
-  msg.buf[7] = BMS_Module5seg1Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module5Cell1Temp.can_value();
+  msg.buf[3] = BMS_module5Cell1Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module5Cell1Temp.can_value();
+  msg.buf[5] = BMS_module5Cell1Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module5Cell1Temp.can_value();
+  msg.buf[7] = BMS_module5Cell1Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -1089,12 +1090,12 @@ void send_BMS_558() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module5seg4Temp.can_value();
-  msg.buf[3] = BMS_Module5seg4Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module5seg5Temp.can_value();
-  msg.buf[5] = BMS_Module5seg5Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module5seg6Temp.can_value();
-  msg.buf[7] = BMS_Module5seg6Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module5Cell4Temp.can_value();
+  msg.buf[3] = BMS_module5Cell4Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module5Cell5Temp.can_value();
+  msg.buf[5] = BMS_module5Cell5Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module5Cell6Temp.can_value();
+  msg.buf[7] = BMS_module5Cell6Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -1108,12 +1109,12 @@ void send_BMS_559() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module5seg7Temp.can_value();
-  msg.buf[3] = BMS_Module5seg7Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module5seg8Temp.can_value();
-  msg.buf[5] = BMS_Module5seg8Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module5seg9Temp.can_value();
-  msg.buf[7] = BMS_Module5seg9Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module5Cell7Temp.can_value();
+  msg.buf[3] = BMS_module5Cell7Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module5Cell8Temp.can_value();
+  msg.buf[5] = BMS_module5Cell8Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module5Cell9Temp.can_value();
+  msg.buf[7] = BMS_module5Cell9Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -1127,12 +1128,12 @@ void send_BMS_560() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module5seg10Temp.can_value();
-  msg.buf[3] = BMS_Module5seg10Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module5seg11Temp.can_value();
-  msg.buf[5] = BMS_Module5seg11Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module5seg12Temp.can_value();
-  msg.buf[7] = BMS_Module5seg12Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module5Cell10Temp.can_value();
+  msg.buf[3] = BMS_module5Cell10Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module5Cell11Temp.can_value();
+  msg.buf[5] = BMS_module5Cell11Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module5Cell12Temp.can_value();
+  msg.buf[7] = BMS_module5Cell12Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -1146,12 +1147,12 @@ void send_BMS_561() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module5seg13Temp.can_value();
-  msg.buf[3] = BMS_Module5seg13Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module5seg14Temp.can_value();
-  msg.buf[5] = BMS_Module5seg14Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module5seg15Temp.can_value();
-  msg.buf[7] = BMS_Module5seg15Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module5Cell13Temp.can_value();
+  msg.buf[3] = BMS_module5Cell13Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module5Cell14Temp.can_value();
+  msg.buf[5] = BMS_module5Cell14Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module5Cell15Temp.can_value();
+  msg.buf[7] = BMS_module5Cell15Temp.can_value() >> 8;
 
   can2.write(msg);
 }
@@ -1164,17 +1165,109 @@ void send_BMS_562() {
 
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = BMS_Module5seg16Temp.can_value();
-  msg.buf[3] = BMS_Module5seg16Temp.can_value() >> 8;
-  msg.buf[4] = BMS_Module5seg17Temp.can_value();
-  msg.buf[5] = BMS_Module5seg17Temp.can_value() >> 8;
-  msg.buf[6] = BMS_Module5seg18Temp.can_value();
-  msg.buf[7] = BMS_Module5seg18Temp.can_value() >> 8;
+  msg.buf[2] = BMS_module5Cell16Temp.can_value();
+  msg.buf[3] = BMS_module5Cell16Temp.can_value() >> 8;
+  msg.buf[4] = BMS_module5Cell17Temp.can_value();
+  msg.buf[5] = BMS_module5Cell17Temp.can_value() >> 8;
+  msg.buf[6] = BMS_module5Cell18Temp.can_value();
+  msg.buf[7] = BMS_module5Cell18Temp.can_value() >> 8;
 
   can2.write(msg);
 }
 
-const int MODULE_2 = 5; // BMS-S select, 1-5
+void send_BMS_563() {
+  static StateCounter ctr;
+  msg.id = 563;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_module1voltageBMSS.can_value();
+  msg.buf[3] = BMS_module1voltageBMSS.can_value() >> 8;
+  msg.buf[4] = 0;
+  msg.buf[5] = 0;
+  msg.buf[6] = 0;
+  msg.buf[7] = 0;
+
+  can2.write(msg);
+}
+
+void send_BMS_564() {
+  static StateCounter ctr;
+  msg.id = 564;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_module2voltageBMSS.can_value();
+  msg.buf[3] = BMS_module2voltageBMSS.can_value() >> 8;
+  msg.buf[4] = 0;
+  msg.buf[5] = 0;
+  msg.buf[6] = 0;
+  msg.buf[7] = 0;
+
+  can2.write(msg);
+}
+
+void send_BMS_565() {
+  static StateCounter ctr;
+  msg.id = 565;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_module3voltageBMSS.can_value();
+  msg.buf[3] = BMS_module3voltageBMSS.can_value() >> 8;
+  msg.buf[4] = 0;
+  msg.buf[5] = 0;
+  msg.buf[6] = 0;
+  msg.buf[7] = 0;
+
+  can2.write(msg);
+}
+
+void send_BMS_566() {
+  static StateCounter ctr;
+  msg.id = 566;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_module4voltageBMSS.can_value();
+  msg.buf[3] = BMS_module4voltageBMSS.can_value() >> 8;
+  msg.buf[4] = 0;
+  msg.buf[5] = 0;
+  msg.buf[6] = 0;
+  msg.buf[7] = 0;
+
+  can2.write(msg);
+}
+
+void send_BMS_567() {
+  static StateCounter ctr;
+  msg.id = 567;
+  msg.len = 8;
+
+
+  msg.buf[0] = ctr.value();
+  msg.buf[1] = 0;
+  msg.buf[2] = BMS_module4voltageBMSS.can_value();
+  msg.buf[3] = BMS_module4voltageBMSS.can_value() >> 8;
+  msg.buf[4] = 0;
+  msg.buf[5] = 0;
+  msg.buf[6] = 0;
+  msg.buf[7] = 0;
+
+  can2.write(msg);
+}
+
+
+
+// const int MODULE_2 = 1; // BMS-S select, 1-5
 
 void send_can_2() {
 
@@ -1226,34 +1319,39 @@ void send_can_2() {
         send_BMS_508();
       }
 
-      static EasyTimer BMS_509_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_509_timer(10); // 10Hz for 100ms message interval
       if (BMS_509_timer.isup()) {
         send_BMS_509();
       }
 
-      static EasyTimer BMS_510_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_510_timer(10); // 10Hz for 100ms message interval
       if (BMS_510_timer.isup()) {
         send_BMS_510();
       }
 
-      static EasyTimer BMS_511_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_511_timer(10); // 10Hz for 100ms message interval
       if (BMS_511_timer.isup()) {
         send_BMS_511();
       }
 
-      static EasyTimer BMS_512_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_512_timer(10); // 10Hz for 100ms message interval
       if (BMS_512_timer.isup()) {
         send_BMS_512();
       }
 
-      static EasyTimer BMS_513_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_513_timer(10); // 10Hz for 100ms message interval
       if (BMS_513_timer.isup()) {
         send_BMS_513();
       }
 
-      static EasyTimer BMS_514_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_514_timer(10); // 10Hz for 100ms message interval
       if (BMS_514_timer.isup()) {
         send_BMS_514();
+      }
+
+      static EasyTimer BMS_563_timer(10); // 10Hz for 100ms message interval
+      if (BMS_563_timer.isup()) {
+        send_BMS_563();
       }
       break;
 
@@ -1288,33 +1386,38 @@ void send_can_2() {
         send_BMS_520();
       }
 
-      static EasyTimer BMS_521_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_521_timer(10); // 10Hz for 100ms message interval
       if (BMS_521_timer.isup()) {
         send_BMS_521();
       }
 
-      static EasyTimer BMS_522_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_522_timer(10); // 10Hz for 100ms message interval
       if (BMS_522_timer.isup()) {
         send_BMS_522();
       }
 
-      static EasyTimer BMS_523_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_523_timer(10); // 10Hz for 100ms message interval
       if (BMS_523_timer.isup()) {
         send_BMS_523();
       }
 
-      static EasyTimer BMS_524_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_524_timer(10); // 10Hz for 100ms message interval
       if (BMS_524_timer.isup()) {
         send_BMS_524();
       }
-      static EasyTimer BMS_525_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_525_timer(10); // 10Hz for 100ms message interval
       if (BMS_525_timer.isup()) {
         send_BMS_525();
       }
 
-      static EasyTimer BMS_526_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_526_timer(10); // 10Hz for 100ms message interval
       if (BMS_526_timer.isup()) {
         send_BMS_526();
+      }
+
+      static EasyTimer BMS_564_timer(10); // 10Hz for 100ms message interval
+      if (BMS_564_timer.isup()) {
+        send_BMS_564();
       }
       break;
     
@@ -1349,33 +1452,37 @@ void send_can_2() {
         send_BMS_532();
       }
 
-      static EasyTimer BMS_533_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_533_timer(10); // 10Hz for 100ms message interval
       if (BMS_533_timer.isup()) {
         send_BMS_533();
       }
 
-      static EasyTimer BMS_534_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_534_timer(10); // 10Hz for 100ms message interval
       if (BMS_534_timer.isup()) {
         send_BMS_534();
       }
-      static EasyTimer BMS_535_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_535_timer(10); // 10Hz for 100ms message interval
       if (BMS_535_timer.isup()) {
         send_BMS_535();
       }
 
-      static EasyTimer BMS_536_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_536_timer(10); // 10Hz for 100ms message interval
       if (BMS_536_timer.isup()) {
         send_BMS_536();
       }
 
-      static EasyTimer BMS_537_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_537_timer(10); // 10Hz for 100ms message interval
       if (BMS_537_timer.isup()) {
         send_BMS_537();
       }
 
-      static EasyTimer BMS_538_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_538_timer(10); // 10Hz for 100ms message interval
       if (BMS_538_timer.isup()) {
         send_BMS_538();
+      }
+      static EasyTimer BMS_565_timer(10); // 10Hz for 100ms message interval
+      if (BMS_565_timer.isup()) {
+        send_BMS_565();
       }
       break;
 
@@ -1409,34 +1516,38 @@ void send_can_2() {
       if (BMS_544_timer.isup()) {
         send_BMS_544();
       }
-      static EasyTimer BMS_545_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_545_timer(10); // 10Hz for 100ms message interval
       if (BMS_545_timer.isup()) {
         send_BMS_545();
       }
 
-      static EasyTimer BMS_546_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_546_timer(10); // 10Hz for 100ms message interval
       if (BMS_546_timer.isup()) {
         send_BMS_546();
       }
 
-      static EasyTimer BMS_547_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_547_timer(10); // 10Hz for 100ms message interval
       if (BMS_547_timer.isup()) {
         send_BMS_547();
       }
 
-      static EasyTimer BMS_548_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_548_timer(10); // 10Hz for 100ms message interval
       if (BMS_548_timer.isup()) {
         send_BMS_548();
       }
 
-      static EasyTimer BMS_549_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_549_timer(10); // 10Hz for 100ms message interval
       if (BMS_549_timer.isup()) {
         send_BMS_549();
       }
 
-      static EasyTimer BMS_550_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_550_timer(10); // 10Hz for 100ms message interval
       if (BMS_550_timer.isup()) {
         send_BMS_550();
+      }
+      static EasyTimer BMS_566_timer(10); // 10Hz for 100ms message interval
+      if (BMS_566_timer.isup()) {
+        send_BMS_566();
       }
       break;
 
@@ -1470,34 +1581,39 @@ void send_can_2() {
         send_BMS_556();
       }
 
-      static EasyTimer BMS_557_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_557_timer(10); // 10Hz for 100ms message interval
       if (BMS_557_timer.isup()) {
         send_BMS_557();
       }
 
-      static EasyTimer BMS_558_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_558_timer(10); // 10Hz for 100ms message interval
       if (BMS_558_timer.isup()) {
         send_BMS_558();
       }
 
-      static EasyTimer BMS_559_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_559_timer(10); // 10Hz for 100ms message interval
       if (BMS_559_timer.isup()) {
         send_BMS_559();
       }
 
-      static EasyTimer BMS_560_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_560_timer(10); // 10Hz for 100ms message interval
       if (BMS_560_timer.isup()) {
         send_BMS_560();
       }
 
-      static EasyTimer BMS_561_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_561_timer(10); // 10Hz for 100ms message interval
       if (BMS_561_timer.isup()) {
         send_BMS_561();
       }
 
-      static EasyTimer BMS_562_timer(1); // 10Hz for 100ms message interval
+      static EasyTimer BMS_562_timer(10); // 10Hz for 100ms message interval
       if (BMS_562_timer.isup()) {
         send_BMS_562();
+      }
+
+      static EasyTimer BMS_567_timer(10); // 10Hz for 100ms message interval
+      if (BMS_567_timer.isup()) {
+        send_BMS_567();
       }
       break;
   }
