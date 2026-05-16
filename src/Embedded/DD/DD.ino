@@ -383,18 +383,18 @@ void set_mailboxes() {
   can1.setMBFilter(MB14, 0);
 
   can2.setMBFilter(REJECT_ALL);
-  can2.setMBFilter(MB0, BMS_packVolt.get_msg_id());
-  can2.setMBFilter(MB1, BMS_packCurr.get_msg_id());
+  can2.setMBFilter(MB0, 0);
+  can2.setMBFilter(MB1, 0);
   can2.setMBFilter(MB2, VCU_brakePressureF.get_msg_id());
   can2.setMBFilter(MB3, VCU_brakePressureR.get_msg_id()); 
   can2.setMBFilter(MB4, PDM_fanRightDutyCycle.get_msg_id());
   can2.setMBFilter(MB5, PDM_fanLeftDutyCycle.get_msg_id());
   can2.setMBFilter(MB6, PDM_pdmVoltAvg.get_msg_id());
-  can2.setMBFilter(MB7, 0);
+  can2.setMBFilter(MB7, ATCCR_susPot_RL.get_msg_id());
   can2.setMBFilter(MB8, VCU_brakeBias.get_msg_id());
   can2.setMBFilter(MB9, VCU_driveSpeed.get_msg_id());
-  can2.setMBFilter(MB10, BMS_maxCellVolt.get_msg_id());
-  can2.setMBFilter(MB11, 0);
+  can2.setMBFilter(MB10, 0);
+  can2.setMBFilter(MB11, ATCCR_susPot_RL.get_msg_id());
   can2.setMBFilter(MB12, 0);
   can2.setMBFilter(MB13, 0);
   can2.setMBFilter(MB14, 0);

@@ -439,6 +439,17 @@ StateSignal DD_counterMsg250(4, false, 1, 0.0, 0, 15, 0.0, -1, 250);
 StateSignal DD_boardTemp(16, true, 10, 0.0, 0, 150, 0.0, -1, 250);
 StateSignal DD_teensyTemp(16, true, 10, 0.0, 0, 150, 0.0, -1, 250);
 
+// Message: MM5F_372 [0x174]
+StateSignal MM5F_yawRate(16, false, 200, -163.9, 0, 0, 0.0, -1, 372);
+StateSignal MM5F_ay(16, false, 7849, -4.1745795, 0, 0, 0.0, -1, 372);
+
+// Message: MM5F_376 [0x178]
+StateSignal MM5F_rollRate(16, false, -200, 163.9, 0, 0, 0.0, -1, 376);
+StateSignal MM5F_ax(16, false, -7849, 4.1745795, 0, 0, 0.0, -1, 376);
+
+// Message: MM5F_380 [0x17c]
+StateSignal MM5F_az(16, false, -7849, 4.1745795, 0, 0, 0.0, -1, 380);
+
 // Message: ATCCF_300 [0x12c]
 StateSignal ATCCF_counterMsg300(4, false, 1, 0.0, 0, 15, 0.0, -1, 300);
 StateSignal ATCCF_boardTemp(16, true, 10, 0.0, 0, 150, 0.0, -1, 300);
@@ -606,6 +617,15 @@ StateSignal PDM_counterMsg414(4, false, 1, 0.0, 0, 15, 0.0, -1, 414);
 StateSignal PDM_carMiles(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 414);
 StateSignal PDM_runtimeHours(16, true, 1, 0.0, -32768, 32767, 0.0, -1, 414);
 StateSignal PDM_runtimeMinutes(16, true, 1, 0.0, -32768, 32767, 0.0, -1, 414);
+
+// Message: MM5R_450 [0x1c2]
+StateSignal MM5R_yawRate(16, false, 200, -163.9, 0, 0, 0.0, -1, 450);
+StateSignal MM5R_ay(16, false, 7849, -4.1745795, 0, 0, 0.0, -1, 450);
+
+// Message: MM5R_451 [0x1c3]
+StateSignal MM5R_rollRate(16, false, -200, 163.9, 0, 0, 0.0, -1, 451);
+StateSignal MM5R_ax(16, false, -7849, 4.1745795, 0, 0, 0.0, -1, 451);
+StateSignal MM5R_az(16, false, -7849, 4.1745795, 0, 0, 0.0, -1, 451);
 
 
 
@@ -1540,6 +1560,38 @@ void read_DD_250(const CAN_message_t &imsg) {
 }
 
 /*
+ * Decode a CAN frame for the message MM5F_372
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_MM5F_372(const CAN_message_t &imsg) {
+
+	MM5F_yawRate.set_can_value((imsg.buf[0]) | (imsg.buf[1] << 8));
+	MM5F_ay.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+
+}
+
+/*
+ * Decode a CAN frame for the message MM5F_376
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_MM5F_376(const CAN_message_t &imsg) {
+
+	MM5F_rollRate.set_can_value((imsg.buf[0]) | (imsg.buf[1] << 8));
+	MM5F_ax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+
+}
+
+/*
+ * Decode a CAN frame for the message MM5F_380
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_MM5F_380(const CAN_message_t &imsg) {
+
+	MM5F_az.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+
+}
+
+/*
  * Decode a CAN frame for the message ATCCF_300
  * \param imsg A reference to the incoming CAN message frame
  */
@@ -1917,6 +1969,29 @@ void read_PDM_414(const CAN_message_t &imsg) {
 
 }
 
+/*
+ * Decode a CAN frame for the message MM5R_450
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_MM5R_450(const CAN_message_t &imsg) {
+
+	MM5R_yawRate.set_can_value((imsg.buf[0]) | (imsg.buf[1] << 8));
+	MM5R_ay.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+
+}
+
+/*
+ * Decode a CAN frame for the message MM5R_451
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_MM5R_451(const CAN_message_t &imsg) {
+
+	MM5R_rollRate.set_can_value((imsg.buf[0]) | (imsg.buf[1] << 8));
+	MM5R_ax.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	MM5R_az.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+
+}
+
 
 
 
@@ -2221,6 +2296,18 @@ void decode_SR26_CAN2(const CAN_message_t &imsg) {
 			read_DD_250(imsg);
 			break;
 
+		case 372:
+			read_MM5F_372(imsg);
+			break;
+
+		case 376:
+			read_MM5F_376(imsg);
+			break;
+
+		case 380:
+			read_MM5F_380(imsg);
+			break;
+
 		case 300:
 			read_ATCCF_300(imsg);
 			break;
@@ -2339,6 +2426,14 @@ void decode_SR26_CAN2(const CAN_message_t &imsg) {
 
 		case 414:
 			read_PDM_414(imsg);
+			break;
+
+		case 450:
+			read_MM5R_450(imsg);
+			break;
+
+		case 451:
+			read_MM5R_451(imsg);
 			break;
 
 	}
