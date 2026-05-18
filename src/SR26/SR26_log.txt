@@ -6,7 +6,7 @@
  
 ### Building with Raptor_2025a_1.0.15771...
 ### Building with MATLAB 25.1.0.2973910 (R2025a) Update 1...
-### Current Time: May 14, 2026 15:59:45
+### Current Time: May 15, 2026 23:50:53
 ### Raptor Evaluation License Expires: December 25, 2026
 ### Raptor IO Customization for Target: GCM-1793-196-1503...
 Processing with raptor_rlc... 
@@ -170,7 +170,7 @@ Warning: Update the system target file 'raptor.tlc' to support the enhanced TLC 
 ...............................................................................
 ...............................................................................
 ...............................................................................
-...........................................
+....................................................
 ### Caching model source code
 ...............................................................................
 ...............................................................................
@@ -185,26 +185,26 @@ Warning: Update the system target file 'raptor.tlc' to support the enhanced TLC 
 ...............................................................................
 ...............................................................................
 ...............................................................................
-...................................................
+....................................................................
 ### Writing header file SR26_types.h
 ### Writing source file SR26.c
+.
 ### Writing header file SR26_private.h
 ### Writing header file SR26.h
-.
 ### Writing header file rtwtypes.h
 ### Writing header file multiword_types.h
+.
 ### Writing header file zero_crossing_types.h
 ### Writing header file rt_nonfinite.h
 ### Writing source file rt_nonfinite.c
-.
 ### Writing header file rtGetInf.h
 ### Writing source file rtGetInf.c
+.
 ### Writing header file rtGetNaN.h
 ### Writing source file rtGetNaN.c
-.
 ### Writing source file SR26_data.c
-### TLC code generation complete (took 22.774s).
-..............
+### TLC code generation complete (took 27.357s).
+...............
 ### Found Timed Triggers
 Timer_ooqlV, Interval : Foreground
 Timer_BGND_G6Wyo, Interval : Background
@@ -215,7 +215,7 @@ SR26_step, Interval :
 ### Including : GCM-1793-196-1503_genfiles.tlc
 ### Copying files into build directory
 ...............................................................................
-..............................
+.................................
 ### Finished target language compiler...
 ### Saving binary information cache.
 .
@@ -227,7 +227,7 @@ SR26_step, Interval :
 ### Exiting code generation...
 
 ### Building source files...
-### Beginning Build for SR26_004 ... 
+### Beginning Build for SR26_009 ... 
         1 file(s) copied. 
 #-------------------------------------------- 
 # Compiling... 
@@ -241,8 +241,8 @@ SR26_step, Interval :
 # Compiling source file : raptorcrc.c 
 # Compiling source file : rtgetinf.c 
 # Compiling source file : rtgetnan.c 
-# Compiling source file : sr26.c 
 # Compiling source file : rt_nonfinite.c 
+# Compiling source file : sr26.c 
 # Compiling source file : sr26_data.c 
 # Compiling source file : table_functions.c 
 # Compiling source file : time.c 
@@ -264,14 +264,14 @@ SR26_step, Interval :
 Generating ASAP2 file... 
 A2L:  Build Dir: C:\repos\Electrical-SR26\src\SR26\SR26_raptor_rtw 
 A2L: Model Name: SR26 
-A2L:    SwIDTxt: SR26_004 
+A2L:    SwIDTxt: SR26_009 
 A2L:     Target: GCM-1793-196-1503 
 Address Mode: SYM 
 Preparing to generate ASAP2 file... 
 Creating ASAP2 file for access level 1... 
 Creating ASAP2 file for access level RPG... 
-Created ASAP2 file : C:\repos\Electrical-SR26\src\SR26\SR26_raptor_rtw\SR26_004.a2l
-Created ASAP2 file : C:\repos\Electrical-SR26\src\SR26\SR26_raptor_rtw\SR26_004_RPG.a2l
+Created ASAP2 file : C:\repos\Electrical-SR26\src\SR26\SR26_raptor_rtw\SR26_009.a2l
+Created ASAP2 file : C:\repos\Electrical-SR26\src\SR26\SR26_raptor_rtw\SR26_009_RPG.a2l
 settings = 
   struct with fields:
                      Target: 'GCM-1793-196-1503'
@@ -292,15 +292,15 @@ settings =
                   RaptorDir: 'C:\Program Files (x86)\NewEagle\Raptor\2025a_1.0.15771'
                 AddBuildNum: 1
                 SetFileName: 0
-                   BuildUID: '7z0lC7yx_U2S_UmGt_mwM'
-                   BuildNum: 4
+                   BuildUID: 'yjTsd_1zjk_X2KPUyHZJJ'
+                   BuildNum: 9
               buildLocation: 'Raptor Default'
-                    SwIdTxt: 'SR26_004'
-                   CalIdTxt: 'SR26_004_000'
+                    SwIdTxt: 'SR26_009'
+                   CalIdTxt: 'SR26_009_000'
                HardwareType: '2954298118'
                  IdTableRev: '3'
              ProgramFileExt: 'hex'
-                  DateStamp: '14-May-2026 16:01:41'
+                  DateStamp: '15-May-2026 23:52:47'
                OutputHexA2L: 0
                 exeLocation: 'C:\repos\Electrical-SR26\src\SR26\SR26_raptor_rtw'
                 a2lLocation: 'C:\repos\Electrical-SR26\src\SR26\SR26_raptor_rtw'
@@ -311,29 +311,28 @@ settings =
 ### Calculating Memory Usage
 Memory Usage Summary:
  
-   FLASH APP0                          :  550063  of 1966079 Bytes ( 28.0 %)
+   FLASH APP0                          :  550969  of 1966079 Bytes ( 28.0 %)
    FLASH APP1                          :     232  of 1572863 Bytes (  0.0 %)
    FLASH DATA                          :   15254  of  507903 Bytes (  3.0 %)
    FIXEDEE                             :       0  of    2160 Bytes (  0.0 %)
-   EEPROM                              :   10552  of   70800 Bytes ( 14.9 %)
-   INTERNAL RAM1                       :   13644  of  131072 Bytes ( 10.4 %)
-                 EEVariables_RAMShadow :   10552             Bytes (  8.1 %)
-                          RAMVariables :     684             Bytes (  0.5 %)
-                      RAMEditVariables :     380             Bytes (  0.3 %)
-   INTERNAL RAM2                       :   68205  of  131072 Bytes ( 52.0 %)
-                                SR26_B :     244             Bytes (  0.2 %)
-                            SR26_DWork :     188             Bytes (  0.1 %)
+   EEPROM                              :   10776  of   70800 Bytes ( 15.2 %)
+   INTERNAL RAM1                       :   13912  of  131072 Bytes ( 10.6 %)
+                 EEVariables_RAMShadow :   10776             Bytes (  8.2 %)
+                          RAMVariables :     720             Bytes (  0.5 %)
+                      RAMEditVariables :     388             Bytes (  0.3 %)
+   INTERNAL RAM2                       :   68225  of  131072 Bytes ( 52.1 %)
+                                SR26_B :     256             Bytes (  0.2 %)
+                            SR26_DWork :     196             Bytes (  0.1 %)
  
 NewEagle.RILPackager v22.1.0.1484
-RPG written to: C:\ECU\rpg\SR26_004.rpg
+RPG written to: C:\ECU\rpg\SR26_009.rpg
 RILPackager: Finished
  
-Build Number: 4
-Build Time: 194.9 seconds.
+Build Number: 9
+Build Time: 184.4 seconds.
  
 ########################################
 #####   Successful Raptor Build    #####
 #####       Show in Folder         #####
 ########################################
  
-Warning: Block diagram 'SR26' contains disabled library links. Use Model Advisor to find the disabled links in non-library models.  The diagram has been saved but may not contain what you intended. 
