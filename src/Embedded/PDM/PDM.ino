@@ -157,8 +157,8 @@ EasyTimer odometer_update_timer(2);
 // #include "obd.hpp"
 
 // Debugging Timer
-EasyTimer debug(2);
-const bool GLO_debug = false;
+// EasyTimer debug(2);
+// const bool GLO_debug = false;
 
 // Global fan and wp Speed Signal (Controlled by CAN)
 int fan_signalL = 3; // Default value
@@ -181,22 +181,20 @@ void setup() { //high 18 low 26
 
   // initialize the ADC sensors
   initialize_ADCs();
-  Serial.println("ADCs Initialized");
+  // Serial.println("ADCs Initialized");
 
   SPI.begin();
   SPI1.begin();
-  Serial.println("SPI Began");
+  // Serial.println("SPI Began");
 
   channel_enable();
-  Serial.println("Channels Enabled");
+  // Serial.println("Channels Enabled");
 
   digipot_setup();
-  Serial.println("Digipots Setup");
+  // Serial.println("Digipots Setup");
 
   // neat brakelight animation
   brakelight_start();
-
-  // set a delay on the shutdown circuit LEDs
 }
 
 // placeholder function for undefined
@@ -208,9 +206,6 @@ void odometer(float speed, int mileage) {
   Serial.println("Odometer update (placeholder function)");
 }
 
-const bool testMode = true;
-const int testNum = 1;
-
 int lastCounter = VCU_counterMsg201.can_value();
 float lastT = 0.0;
 bool vcu_timeout = false;
@@ -221,67 +216,53 @@ void loop() {
 
   sample_ADCs();
 
-  if (debug.isup()){
-    // Serial.println("Imon_pdm: ");
-    // Serial.println(Imon_pdm.avg());
+  // if (debug.isup()){
+  //   // Serial.println("Imon_pdm: ");
+  //   // Serial.println(Imon_pdm.avg());
 
-    Serial.println("pdm_volt_sens: ");
-    Serial.println(pdm_volt_sens.avg());
+  //   Serial.println("pdm_volt_sens: ");
+  //   Serial.println(pdm_volt_sens.avg());
 
-    // Serial.println("brakelight_volt_sens: ");
-    // Serial.println(brakelight_volt_sens.avg());
+  //   // Serial.println("brakelight_volt_sens: ");
+  //   // Serial.println(brakelight_volt_sens.avg());
 
-    // Serial.println("Imon_brakelight: ");
-    // Serial.println(Imon_brakelight.avg());
+  //   // Serial.println("Imon_brakelight: ");
+  //   // Serial.println(Imon_brakelight.avg());
     
-    Serial.println("volt_ch6: ");
-    Serial.println(volt_ch6.avg());
+  //   Serial.println("volt_ch6: ");
+  //   Serial.println(volt_ch6.avg());
 
-    Serial.println("Imon_ch6: ");
-    Serial.println(Imon_ch6.avg());
-  }
+  //   Serial.println("Imon_ch6: ");
+  //   Serial.println(Imon_ch6.avg());
+  // }
 
   read_CAN();
 
   brakelight_run();
 
-  // elapsed = (millis() - lastT);
-  // if (has_received_vcu_msg == false) {
-  //   elapsed = 0;
-  // }
-  // if (VCU_counterMsg201.can_value() != lastCounter) {
-  //   lastT = millis();
-  //   lastCounter = VCU_counterMsg201.can_value();
-  //   has_received_vcu_msg = true;
-  // }
+  elapsed = (millis() - lastT);
+  if (has_received_vcu_msg == false) {
+    elapsed = 0;
+  }
+  if (VCU_counterMsg201.can_value() != lastCounter) {
+    lastT = millis();
+    lastCounter = VCU_counterMsg201.can_value();
+    has_received_vcu_msg = true;
+  }
 
-  // if (elapsed > 300 && has_received_vcu_msg == true) {
-  //   vcu_timeout = true;
-  //   Serial.println("timeout");
-  // }
+  if (elapsed > 300 && has_received_vcu_msg == true) {
+    vcu_timeout = true;
+    // Serial.println("timeout");
+  }
 
   // if (vcu_timeout == true) {
   //   Serial.println("timeout");
   // }
 
-  // if (testMode) {
-  //   if (testNum == 1) {
-  //     //Serial.println(PDM_fanRightDutyCycle.can_value());
-  //     PDM_fanRightDutyCycle.set_can_value(100);
-  //     fan_signalL = PDM_fanRightDutyCycle.can_value();
-  //     send_can2();
-  //   } else if (testNum == 2) {
-  //     fan_signalL = vcu_timeout ? 0 : VCU_radFanLDuty.can_value() / 10.0;
-  //     fan_signalR = vcu_timeout ? 0 : VCU_radFanRDuty.can_value() / 10.0;
-  //     wp_signal1   = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
-  //     wp_signal2   = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
-  //     send_can2();
-  //   }
-  // } else {
-  //   send_can2();
-  // }
-
-  // wp_signal1 = XXX.can_value(); // grab the CAN value but also apply a CAN timeout (need to check failure mode)
+  fan_signalL = vcu_timeout ? 0 : VCU_radFanLDuty.can_value() / 10.0;
+  fan_signalR = vcu_timeout ? 0 : VCU_radFanRDuty.can_value() / 10.0;
+  wp_signal1 = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
+  wp_signal2 = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
 
   updateFanSpeed(fan_signalL, fan_signalR, wp_signal1, wp_signal2);
 
