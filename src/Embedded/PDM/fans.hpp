@@ -13,7 +13,7 @@ extern int wp_signal1;
 extern int wp_signal2;
 
 // **Left Fan Variables**
-int fanl_pin = 28; // pwm4 signal
+int fanl_pin = 15; // ch7pwm
 int fanl_min_pwm = 0;
 int fanl_max_pwm = 255;
 int fanl_ss_dur = 5000; // Soft start duration in milliseconds
@@ -22,7 +22,7 @@ int fanl_pwm_freq_norm = 40;
 int fanl_pwm_freq_ss = 420;
 
 // **Right Fan Variables**
-int fanr_pin = 29; // pwm5 signal
+int fanr_pin = 14; // ch8pwm
 int fanr_min_pwm = 0;
 int fanr_max_pwm = 255;
 int fanr_ss_dur = 5000;
@@ -46,7 +46,7 @@ PWMDevice fan_right(fanr_pin, 12, 14, 10, 10000, fan_right_row_signal, fan_right
                     fanr_min_pwm, fanr_max_pwm, fanr_ss_dur, fanr_update_freq, fanr_pwm_freq_norm, fanr_pwm_freq_ss);
 
 // **Water Pump1 Variables**
-int wp1_pin = 15; // ch7pwm
+int wp1_pin = 28; // pwm4 signal
 int wp1_min_pwm = 0;
 int wp1_max_pwm = 255;
 int wp1_ss_dur = 5000;
@@ -55,7 +55,7 @@ int wp1_pwm_freq_norm = 40;
 int wp1_pwm_freq_ss = 420;
 
 // **Water Pump2 Variables**
-int wp2_pin = 14; // ch8pwm
+int wp2_pin = 29; // pwm5 signal
 int wp2_min_pwm = 0;
 int wp2_max_pwm = 255;
 int wp2_ss_dur = 5000;

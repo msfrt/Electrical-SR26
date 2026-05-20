@@ -26,10 +26,10 @@ ADCSensor      volt_ch3(3, 0, 331); // front boards
 ADCSensor      volt_ch4(4, 0, 331); // unused
 ADCSensor      volt_ch5(5, 0, 331); // acc fans, shutdown circuit
 ADCSensor      volt_ch6(6, 0, 331); // vcu
-ADCSensor      volt_ch7(7, 0, 331); // water pump 1 PWM?
+ADCSensor      volt_ch7(7, 0, 331); // rad fans
 
 // ADC2
-ADCSensor             volt_ch8(0, 0, 331); // water pump 2 PWM?
+ADCSensor             volt_ch8(0, 0, 331); // unused
 ADCSensor brakelight_volt_sens(1, 0, 331); // voltage reading looks good
 ADCSensor             Imon_ch1(2, 0, 50); // atcc rear, transponder, inverter, energy meter
 ADCSensor             Imon_ch2(3, 0, 50); // water pumps, c50
@@ -39,8 +39,8 @@ ADCSensor             Imon_ch5(6, 0, 50); // acc fans, shutdown circuit
 ADCSensor             Imon_ch6(7, 0, 50); // vcu
 
 // ADC3
-ADCSensor        Imon_ch7(0, 0, 50); // water pump 1 PWM?
-ADCSensor        Imon_ch8(1, 0, 50); // water pump 2 PWM?
+ADCSensor        Imon_ch7(0, 0, 50); // rad fans
+ADCSensor        Imon_ch8(1, 0, 50); // unused
 ADCSensor        Imon_pdm(2, 2484, 19.46); // this calibration kinda sucks, looks good enough
 ADCSensor Imon_brakelight(3, 2514, 166.67); // looks good enough
 

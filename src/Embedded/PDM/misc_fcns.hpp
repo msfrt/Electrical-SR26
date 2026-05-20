@@ -133,7 +133,7 @@ bool has_called_startup = false;
 bool brakelight_run() {
 
   if (VCU_brakeLightCmd.can_value() == 1) {
-    digitalWrite(GLO_brakelight_teensy_pin, HIGH);
+    digitalWrite(BRAKELIGHT_PIN, HIGH);
     return true;
   } else {
     if (!has_called_startup) {
@@ -143,7 +143,7 @@ bool brakelight_run() {
     }
 
     if (millis() > 5000) {
-      digitalWrite(GLO_brakelight_teensy_pin, LOW);
+      digitalWrite(BRAKELIGHT_PIN, LOW);
       //Serial.println("brakelight off");
     }
 
@@ -157,7 +157,7 @@ bool brakelight_run() {
 
 void brakelight_start(){
 
-  digitalWrite(GLO_brakelight_teensy_pin, LOW);
+  digitalWrite(BRAKELIGHT_PIN, LOW);
 
 }
 
