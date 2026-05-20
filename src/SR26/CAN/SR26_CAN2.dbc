@@ -1,35 +1,34 @@
 VERSION ""
 
-
 NS_ : 
-	NS_DESC_
-	CM_
-	BA_DEF_
-	BA_
-	VAL_
-	CAT_DEF_
-	CAT_
-	FILTER
-	BA_DEF_DEF_
-	EV_DATA_
-	ENVVAR_DATA_
-	SGTYPE_
-	SGTYPE_VAL_
-	BA_DEF_SGTYPE_
-	BA_SGTYPE_
-	SIG_TYPE_REF_
-	VAL_TABLE_
-	SIG_GROUP_
-	SIG_VALTYPE_
-	SIGTYPE_VALTYPE_
-	BO_TX_BU_
-	BA_DEF_REL_
-	BA_REL_
-	BA_DEF_DEF_REL_
-	BU_SG_REL_
-	BU_EV_REL_
-	BU_BO_REL_
-	SG_MUL_VAL_
+    NS_DESC_
+    CM_
+    BA_DEF_
+    BA_
+    VAL_
+    CAT_DEF_
+    CAT_
+    FILTER
+    BA_DEF_DEF_
+    EV_DATA_
+    ENVVAR_DATA_
+    SGTYPE_
+    SGTYPE_VAL_
+    BA_DEF_SGTYPE_
+    BA_SGTYPE_
+    SIG_TYPE_REF_
+    VAL_TABLE_
+    SIG_GROUP_
+    SIG_VALTYPE_
+    SIGTYPE_VALTYPE_
+    BO_TX_BU_
+    BA_DEF_REL_
+    BA_REL_
+    BA_DEF_DEF_REL_
+    BU_SG_REL_
+    BU_EV_REL_
+    BU_BO_REL_
+    SG_MUL_VAL_
 
 BS_:
 
@@ -159,381 +158,401 @@ BO_ 156 VCU_156: 8 VCU
  SG_ VCU_counterMsg156 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 500 BMS_500: 8 BMS
- SG_ BMS_packSOC : 48|16@1+ (1,0) [0|15] "%" Vector__XXX
- SG_ BMS_packCurrent : 32|16@1+ (1,0) [-3276|3276] "A" Vector__XXX
- SG_ BMS_packmVoltage : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_packSOC : 48|16@1+ (1,0) [0|100] "%" Vector__XXX
+ SG_ BMS_packCurrent : 32|16@1- (0.1,0) [-3276.8|3276.7] "A" Vector__XXX
+ SG_ BMS_packmVoltage : 16|16@1- (0.1,0) [-3276.8|3276.7] "V" Vector__XXX
  SG_ BMS_counterMsg500 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 501 BMS_501: 8 BMS
- SG_ BMS_module3Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module2Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module1Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module3Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module2Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module1Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg501 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 502 BMS_502: 8 BMS
- SG_ BMS_module5Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module4Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module5Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module4Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg502 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 503 BMS_503: 8 BMS
- SG_ BMS_module1Cell3Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module1Cell2Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module1Cell1Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module1Cell3Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module1Cell2Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module1Cell1Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg503 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 504 BMS_504: 8 BMS
- SG_ BMS_module1Cell6Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module1Cell5Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module1Cell4Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module1Cell6Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module1Cell5Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module1Cell4Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg504 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 505 BMS_505: 8 BMS
- SG_ BMS_module1Cell9Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module1Cell8Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module1Cell7Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module1Cell9Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module1Cell8Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module1Cell7Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg505 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 506 BMS_506: 8 BMS
- SG_ BMS_module1Cell12Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module1Cell11Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module1Cell10Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module1Cell12Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module1Cell11Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module1Cell10Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg506 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 507 BMS_507: 8 BMS
- SG_ BMS_module1Cell15Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module1Cell14Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module1Cell13Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module1Cell15Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module1Cell14Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module1Cell13Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg507 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 508 BMS_508: 8 BMS
- SG_ BMS_module1Cell18Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module1Cell17Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module1Cell16Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module1Cell18Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module1Cell17Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module1Cell16Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg508 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 509 BMS_509: 8 BMS
- SG_ BMS_module1Cell3Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module1Cell2Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module1Cell1Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module1Cell3Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module1Cell2Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module1Cell1Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg509 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 510 BMS_510: 8 BMS
- SG_ BMS_module1Cell6Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module1Cell5Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module1Cell4Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module1Cell6Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module1Cell5Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module1Cell4Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg510 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 511 BMS_511: 8 BMS
- SG_ BMS_module1Cell9Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module1Cell8Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module1Cell7Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module1Cell9Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module1Cell8Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module1Cell7Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg511 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 512 BMS_512: 8 BMS
- SG_ BMS_module1Cell12Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module1Cell11Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module1Cell10Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module1Cell12Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module1Cell11Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module1Cell10Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg512 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 513 BMS_513: 8 BMS
- SG_ BMS_module1Cell15Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module1Cell14Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module1Cell13Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module1Cell15Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module1Cell14Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module1Cell13Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg513 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 514 BMS_514: 8 BMS
- SG_ BMS_module1Cell18Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module1Cell17Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module1Cell16Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module1Cell18Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module1Cell17Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module1Cell16Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg514 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 515 BMS_515: 8 BMS
- SG_ BMS_module2Cell3Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module2Cell2Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module2Cell1Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module2Cell3Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module2Cell2Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module2Cell1Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg515 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 516 BMS_516: 8 BMS
- SG_ BMS_module2Cell6Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module2Cell5Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module2Cell4Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module2Cell6Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module2Cell5Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module2Cell4Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg516 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 517 BMS_517: 8 BMS
- SG_ BMS_module2Cell9Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module2Cell8Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module2Cell7Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module2Cell9Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module2Cell8Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module2Cell7Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg517 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 518 BMS_518: 8 BMS
- SG_ BMS_module2Cell12Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module2Cell11Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module2Cell10Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module2Cell12Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module2Cell11Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module2Cell10Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg518 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 519 BMS_519: 8 BMS
- SG_ BMS_module2Cell15Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module2Cell14Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module2Cell13Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module2Cell15Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module2Cell14Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module2Cell13Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg519 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 520 BMS_520: 8 BMS
- SG_ BMS_module2Cell18Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module2Cell17Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module2Cell16Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module2Cell18Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module2Cell17Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module2Cell16Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg520 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 521 BMS_521: 8 BMS
- SG_ BMS_module2Cell3Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module2Cell2Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module2Cell1Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module2Cell3Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module2Cell2Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module2Cell1Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg521 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 522 BMS_522: 8 BMS
- SG_ BMS_module2Cell6Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module2Cell5Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module2Cell4Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module2Cell6Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module2Cell5Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module2Cell4Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg522 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 523 BMS_523: 8 BMS
- SG_ BMS_module2Cell9Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module2Cell8Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module2Cell7Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module2Cell9Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module2Cell8Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module2Cell7Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg523 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 524 BMS_524: 8 BMS
- SG_ BMS_module2Cell12Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module2Cell11Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module2Cell10Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module2Cell12Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module2Cell11Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module2Cell10Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg524 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 525 BMS_525: 8 BMS
- SG_ BMS_module2Cell15Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module2Cell14Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_Module2Cell13Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module2Cell15Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module2Cell14Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_Module2Cell13Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg525 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 526 BMS_526: 8 BMS
- SG_ BMS_module2Cell18Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module2Cell17Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module2Cell16Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module2Cell18Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module2Cell17Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module2Cell16Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg526 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 527 BMS_527: 8 BMS
- SG_ BMS_module3Cell3Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module3Cell2Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module3Cell1Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module3Cell3Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module3Cell2Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module3Cell1Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg527 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 528 BMS_528: 8 BMS
- SG_ BMS_module3Cell6Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module3Cell5Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module3Cell4Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module3Cell6Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module3Cell5Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module3Cell4Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg528 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 529 BMS_529: 8 BMS
- SG_ BMS_module3Cell9Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module3Cell8Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module3Cell7Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module3Cell9Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module3Cell8Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module3Cell7Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg529 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 530 BMS_530: 8 BMS
- SG_ BMS_module3Cell12Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module3Cell11Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module3Cell10Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module3Cell12Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module3Cell11Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module3Cell10Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg530 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 531 BMS_531: 8 BMS
- SG_ BMS_module3Cell15Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module3Cell14Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module3Cell13Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module3Cell15Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module3Cell14Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module3Cell13Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg531 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 532 BMS_532: 8 BMS
- SG_ BMS_module3Cell18Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module3Cell17Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module3Cell16Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module3Cell18Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module3Cell17Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module3Cell16Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg532 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 533 BMS_533: 8 BMS
- SG_ BMS_module3Cell3Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module3Cell2Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module3Cell1Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module3Cell3Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module3Cell2Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module3Cell1Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg533 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 534 BMS_534: 8 BMS
- SG_ BMS_module3Cell6Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module3Cell5Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module3Cell4Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module3Cell6Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module3Cell5Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module3Cell4Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg534 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 535 BMS_535: 8 BMS
- SG_ BMS_module3Cell9Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module3Cell8Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module3Cell7Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module3Cell9Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module3Cell8Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module3Cell7Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg535 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 536 BMS_536: 8 BMS
- SG_ BMS_module3Cell12Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module3Cell11Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module3Cell10Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module3Cell12Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module3Cell11Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module3Cell10Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg536 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 537 BMS_537: 8 BMS
- SG_ BMS_module3Cell15Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module3Cell14Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module3Cell13Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module3Cell15Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module3Cell14Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module3Cell13Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg537 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 538 BMS_538: 8 BMS
- SG_ BMS_module3Cell18Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module3Cell17Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module3Cell16Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module3Cell18Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module3Cell17Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module3Cell16Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg538 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 539 BMS_539: 8 BMS
- SG_ BMS_module4Cell3Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module4Cell2Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module4Cell1Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module4Cell3Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module4Cell2Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module4Cell1Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg539 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 540 BMS_540: 8 BMS
- SG_ BMS_module4Cell6Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module4Cell5Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module4Cell4Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module4Cell6Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module4Cell5Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module4Cell4Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg540 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 541 BMS_541: 8 BMS
- SG_ BMS_module4cCell9Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module4Cell8Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module4Cell7Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module4cCell9Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module4Cell8Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module4Cell7Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg541 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 542 BMS_542: 8 BMS
- SG_ BMS_module4Cell12Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module4Cell11Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module4Cell10Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module4Cell12Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module4Cell11Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module4Cell10Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg542 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 543 BMS_543: 8 BMS
- SG_ BMS_module4Cell15Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module4Cell14Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module4Cell13Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module4Cell15Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module4Cell14Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module4Cell13Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg543 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 544 BMS_544: 8 BMS
- SG_ BMS_module4Cell18Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module4Cell17Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module4Cell16Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module4Cell18Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module4Cell17Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module4Cell16Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg544 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 545 BMS_545: 8 BMS
- SG_ BMS_module4Cell3Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module4Cell2Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module4Cell1Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module4Cell3Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module4Cell2Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module4Cell1Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg545 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 546 BMS_546: 8 BMS
- SG_ BMS_module4Cell6Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module4Cell5Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module4Cell4Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module4Cell6Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module4Cell5Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module4Cell4Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg546 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 547 BMS_547: 8 BMS
- SG_ BMS_module4Cell9Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module4Cell8Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module4Cell7Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module4Cell9Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module4Cell8Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module4Cell7Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg547 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 548 BMS_548: 8 BMS
- SG_ BMS_module4Cell12Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module4Cell11Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module4Cell10Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module4Cell12Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module4Cell11Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module4Cell10Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg548 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 549 BMS_549: 8 BMS
- SG_ BMS_module4Cell15Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module4Cell14Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module4Cell13Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module4Cell15Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module4Cell14Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module4Cell13Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg549 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 550 BMS_550: 8 BMS
- SG_ BMS_module4Cell18Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module4Cell17Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module4Cell16Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module4Cell18Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module4Cell17Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module4Cell16Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg550 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 551 BMS_551: 8 BMS
- SG_ BMS_module5Cell3Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module5Cell2Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module5Cell1Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module5Cell3Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module5Cell2Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module5Cell1Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg551 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 552 BMS_552: 8 BMS
- SG_ BMS_module5Cell6Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module5Cell5Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module5Cell4Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module5Cell6Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module5Cell5Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module5Cell4Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg552 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 553 BMS_553: 8 BMS
- SG_ BMS_module5Cell9Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module5Cell8Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module5Cell7Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module5Cell9Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module5Cell8Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module5Cell7Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg553 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 554 BMS_554: 8 BMS
- SG_ BMS_module5Cell12Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module5Cell11Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module5Cell10Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module5Cell12Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module5Cell11Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module5Cell10Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg554 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 555 BMS_555: 8 BMS
- SG_ BMS_module5Cell15Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module5Cell14Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module5Cell13Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module5Cell15Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module5Cell14Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module5Cell13Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg555 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 556 BMS_556: 8 BMS
- SG_ BMS_module5Cell18Volt : 48|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module5Cell17Volt : 32|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
- SG_ BMS_module5Cell16Volt : 16|16@1+ (1,0) [-3276|3276] "mV" Vector__XXX
+ SG_ BMS_module5Cell18Volt : 48|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module5Cell17Volt : 32|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ BMS_module5Cell16Volt : 16|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ BMS_counterMsg556 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 557 BMS_557: 8 BMS
- SG_ BMS_module5Cell3Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module5Cell2Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module5Cell1Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module5Cell3Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module5Cell2Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module5Cell1Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg557 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 558 BMS_558: 8 BMS
- SG_ BMS_module5Cell6Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module5Cell5Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module5Cell4Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module5Cell6Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module5Cell5Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module5Cell4Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg558 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 559 BMS_559: 8 BMS
- SG_ BMS_module5Cell9Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module5Cell8Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module5Cell7Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module5Cell9Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module5Cell8Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module5Cell7Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg559 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 560 BMS_560: 8 BMS
- SG_ BMS_module5Cell12Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module5Cell11Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module5Cell10Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module5Cell12Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module5Cell11Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module5Cell10Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg560 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 561 BMS_561: 8 BMS
- SG_ BMS_module5Cell15Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module5Cell14Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module5Cell13Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module5Cell15Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module5Cell14Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module5Cell13Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg561 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 562 BMS_562: 8 BMS
- SG_ BMS_module5Cell18Temp : 48|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module5Cell17Temp : 32|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
- SG_ BMS_module5Cell16Temp : 16|16@1+ (0.1,0) [-3276|3276] "degC" Vector__XXX
+ SG_ BMS_module5Cell18Temp : 48|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module5Cell17Temp : 32|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
+ SG_ BMS_module5Cell16Temp : 16|16@1- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
  SG_ BMS_counterMsg562 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 563 BMS_563: 8 BMS
+ SG_ BMS_module1voltageBMSS : 16|16@1- (0.1,0) [-3276.8|3276.7] "V" Vector__XXX
+ SG_ BMS_counterMsg563 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 564 BMS_564: 8 BMS
+ SG_ BMS_module2voltageBMSS : 16|16@1- (0.1,0) [-3276.8|3276.7] "V" Vector__XXX
+ SG_ BMS_counterMsg564 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 565 BMS_565: 8 BMS
+ SG_ BMS_module3voltageBMSS : 16|16@1- (0.1,0) [-3276.8|3276.7] "V" Vector__XXX
+ SG_ BMS_counterMsg565 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 566 BMS_566: 8 BMS
+ SG_ BMS_module4voltageBMSS : 16|16@1- (0.1,0) [-3276.8|3276.7] "V" Vector__XXX
+ SG_ BMS_counterMsg566 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 567 BMS_567: 8 BMS
+ SG_ BMS_module5voltageBMSS : 16|16@1- (0.1,0) [-3276.8|3276.7] "V" Vector__XXX
+ SG_ BMS_counterMsg567 : 0|8@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 250 DD_250: 8 DD
  SG_ DD_teensyTemp : 32|16@1- (0.1,0) [0|150] "degC" Vector__XXX
@@ -563,8 +582,7 @@ BO_ 451 MM52_451: 8 MM52
 BO_ 400 PDM_400: 8 PDM
  SG_ PDM_coolingOverrideActive : 56|1@1+ (1,0) [0|0] "bool" Vector__XXX
  SG_ PDM_vehicleState : 48|8@1- (1,0) [0|3] "" Vector__XXX
- SG_ PDM_brakelightVoltAvg : 32|16@1- (0.001,0) [-5|100] "V" Vector__XXX
- SG_ PDM_boardTemp : 16|16@1- (0.1,0) [-5|100] "degC" Vector__XXX
+ SG_ PDM_teensyTemp : 16|16@1- (0.1,0) [-5|100] "degC" Vector__XXX
  SG_ PDM_counterMsg400 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 401 PDM_401: 8 PDM
@@ -580,74 +598,122 @@ BO_ 402 PDM_402: 8 PDM
  SG_ PDM_counterMsg402 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 403 PDM_403: 8 PDM
- SG_ PDM_fanRightCurrentMin : 48|16@1- (0.01,0) [-5|20] "A" Vector__XXX
- SG_ PDM_fanRightCurrentMax : 32|16@1- (0.01,0) [-5|20] "A" Vector__XXX
- SG_ PDM_fanRightCurrentAvg : 16|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch1CurrentMin : 48|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch1CurrentMax : 32|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch1CurrentAvg : 16|16@1- (0.01,0) [-5|20] "A" Vector__XXX
  SG_ PDM_counterMsg403 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 404 PDM_404: 8 PDM
- SG_ PDM_fanRightVoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
- SG_ PDM_fanRightVoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
- SG_ PDM_fanRightVoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch1VoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch1VoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch1VoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
  SG_ PDM_counterMsg404 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 405 PDM_405: 8 PDM
- SG_ PDM_fanLeftCurrentMin : 48|16@1- (0.01,0) [-5|20] "A" Vector__XXX
- SG_ PDM_fanLeftCurrentMax : 32|16@1- (0.01,0) [-5|20] "A" Vector__XXX
- SG_ PDM_fanLeftCurrentAvg : 16|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch2CurrentMin : 48|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch2CurrentMax : 32|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch2CurrentAvg : 16|16@1- (0.01,0) [-5|20] "A" Vector__XXX
  SG_ PDM_counterMsg405 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 406 PDM_406: 8 PDM
- SG_ PDM_fanLeftVoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
- SG_ PDM_fanLeftVoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
- SG_ PDM_fanLeftVoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch2VoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch2VoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch2VoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
  SG_ PDM_counterMsg406 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 407 PDM_407: 8 PDM
- SG_ PDM_wpCurrentMin : 48|16@1- (0.01,0) [-5|20] "A" Vector__XXX
- SG_ PDM_wpCurrentMax : 32|16@1- (0.01,0) [-5|20] "A" Vector__XXX
- SG_ PDM_wpCurrentAvg : 16|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch3CurrentMin : 48|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch3CurrentMax : 32|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch3CurrentAvg : 16|16@1- (0.01,0) [-5|20] "A" Vector__XXX
  SG_ PDM_counterMsg407 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 408 PDM_408: 8 PDM
- SG_ PDM_wpVoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
- SG_ PDM_wpVoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
- SG_ PDM_wpVoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch3VoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch3VoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch3VoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
  SG_ PDM_counterMsg408 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 409 PDM_409: 8 PDM
- SG_ PDM_teensyTemp : 48|16@1- (0.1,0) [-5|100] "degC" Vector__XXX
- SG_ PDM_wpDutyCycle : 32|8@1+ (1,0) [0|100] "Duty Cycle" Vector__XXX
- SG_ PDM_fanRightDutyCycle : 24|8@1+ (1,0) [0|100] "Duty Cycle" Vector__XXX
- SG_ PDM_fanLeftDutyCycle : 16|8@1+ (1,0) [0|100] "Duty Cycle" Vector__XXX
+ SG_ PDM_ch4CurrentMin : 48|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch4CurrentMax : 32|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch4CurrentAvg : 16|16@1- (0.01,0) [-5|20] "A" Vector__XXX
  SG_ PDM_counterMsg409 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 410 PDM_410: 8 PDM
- SG_ PDM_uptime : 0|32@1+ (1,0) [0|4294967295] "ms" Vector__XXX
+ SG_ PDM_ch4VoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch4VoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch4VoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_counterMsg410 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 411 PDM_411: 8 PDM
- SG_ PDM_glvVoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
- SG_ PDM_glvVoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
- SG_ PDM_glvVoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch5CurrentMin : 48|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch5CurrentMax : 32|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch5CurrentAvg : 16|16@1- (0.01,0) [-5|20] "A" Vector__XXX
  SG_ PDM_counterMsg411 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 412 PDM_412: 8 PDM
- SG_ PDM_dataVoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
- SG_ PDM_dataVoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
- SG_ PDM_dataVoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch5VoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch5VoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch5VoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
  SG_ PDM_counterMsg412 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 413 PDM_413: 8 PDM
- SG_ PDM_keepAliveVoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
- SG_ PDM_keepAliveVoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
- SG_ PDM_keepAliveVoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch6CurrentMin : 48|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch6CurrentMax : 32|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch6CurrentAvg : 16|16@1- (0.01,0) [-5|20] "A" Vector__XXX
  SG_ PDM_counterMsg413 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 414 PDM_414: 8 PDM
- SG_ PDM_runtimeMinutes : 48|16@1- (1,0) [-32768|32767] "mins" Vector__XXX
- SG_ PDM_runtimeHours : 32|16@1- (1,0) [-32768|32767] "hrs" Vector__XXX
- SG_ PDM_carMiles : 16|16@1- (0.1,0) [-3276.8|3276.7] "mi" Vector__XXX
+ SG_ PDM_ch6VoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch6VoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch6VoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
  SG_ PDM_counterMsg414 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 415 PDM_415: 8 PDM
+ SG_ PDM_ch7CurrentMin : 48|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch7CurrentMax : 32|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch7CurrentAvg : 16|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_counterMsg415 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 416 PDM_416: 8 PDM
+ SG_ PDM_ch7VoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch7VoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch7VoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_counterMsg416 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 417 PDM_417: 8 PDM
+ SG_ PDM_ch8CurrentMin : 48|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch8CurrentMax : 32|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_ch8CurrentAvg : 16|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_counterMsg417 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 418 PDM_418: 8 PDM
+ SG_ PDM_ch8VoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch8VoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_ch8VoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_counterMsg418 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 419 PDM_419: 8 PDM
+ SG_ PDM_brakelightCurrentMin : 48|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_brakelightCurrentMax : 32|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_brakelightCurrentAvg : 16|16@1- (0.01,0) [-5|20] "A" Vector__XXX
+ SG_ PDM_counterMsg419 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 420 PDM_420: 8 PDM
+ SG_ PDM_brakelightVoltMin : 48|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_brakelightVoltMax : 32|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_brakelightVoltAvg : 16|16@1- (0.001,0) [-5|20] "V" Vector__XXX
+ SG_ PDM_counterMsg420 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 421 PDM_421: 8 PDM
+ SG_ PDM_wp2DutyCycle : 40|8@1+ (1,0) [0|100] "Duty Cycle" Vector__XXX
+ SG_ PDM_wp1DutyCycle : 32|8@1+ (1,0) [0|100] "Duty Cycle" Vector__XXX
+ SG_ PDM_fanRightDutyCycle : 24|8@1+ (1,0) [0|100] "Duty Cycle" Vector__XXX
+ SG_ PDM_fanLeftDutyCycle : 16|8@1+ (1,0) [0|100] "Duty Cycle" Vector__XXX
+ SG_ PDM_counterMsg421 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 422 PDM_422: 8 PDM
+ SG_ PDM_uptime : 0|32@1+ (1,0) [0|4294967295] "ms" Vector__XXX
 
 
 
@@ -657,12 +723,49 @@ CM_ SG_ 300 ATCCF_counterMsg300 "Counter Message 300";
 CM_ SG_ 301 ATCCF_wheelSpeedFR "FR Angular Wheel Frequency";
 CM_ SG_ 301 ATCCF_wheelSpeedFL "FL Angular Wheel Frequency";
 CM_ SG_ 301 ATCCF_counterMsg301 "Counter Message 301";
+CM_ SG_ 302 ATCCF_tireTemp_FLI "FLI Tire Temperature";
+CM_ SG_ 302 ATCCF_tireTemp_FLM "FLM Tire Temperature";
+CM_ SG_ 302 ATCCF_tireTemp_FLO "FLO Tire Temperature";
+CM_ SG_ 302 ATCCF_counterMsg302 "Counter Message 302";
+CM_ SG_ 303 ATCCF_tireTemp_FRI "FRI Tire Temperature";
+CM_ SG_ 303 ATCCF_tireTemp_FRM "FRM Tire Temperature";
+CM_ SG_ 303 ATCCF_tireTemp_FRO "FRO Tire Temperature";
+CM_ SG_ 303 ATCCF_counterMsg303 "Counter Message 303";
+CM_ SG_ 304 ATCCF_rotTemp_FR "FR Rotor Temperature";
+CM_ SG_ 304 ATCCF_rotTemp_FL "FL Rotor Temperature";
+CM_ SG_ 304 ATCCF_counterMsg304 "Counter Message 304";
+CM_ SG_ 305 ATCCF_susPot_FH "Front Heave Damper Travel";
+CM_ SG_ 305 ATCCF_susPot_FR "Front Roll Damper Travel";
+CM_ SG_ 305 ATCCF_counterMsg305 "Counter Message 305";
 CM_ SG_ 200 ATCCR_teensyTemp "Teensy Board Temp";
 CM_ SG_ 200 ATCCR_boardTemp "Board Temp";
-CM_ SG_ 200 ATCCR_counterMsg200 "Counter Message 350";
-CM_ SG_ 201 ATCCR_wheelSpeedRR "FR Angular Wheel Frequency";
-CM_ SG_ 201 ATCCR_wheelSpeedRL "FL Angular Wheel Frequency";
-CM_ SG_ 201 ATCCR_counterMsg201 "Counter Message 351";
+CM_ SG_ 200 ATCCR_counterMsg200 "Counter Message 200";
+CM_ SG_ 201 ATCCR_wheelSpeedRR "RR Angular Wheel Frequency";
+CM_ SG_ 201 ATCCR_wheelSpeedRL "RL Angular Wheel Frequency";
+CM_ SG_ 201 ATCCR_counterMsg201 "Counter Message 201";
+CM_ SG_ 202 ATCCR_tireTemp_RLI "RLI Tire Temperature";
+CM_ SG_ 202 ATCCR_tireTemp_RLM "RLM Tire Temperature";
+CM_ SG_ 202 ATCCR_tireTemp_RLO "RLO Tire Temperature";
+CM_ SG_ 202 ATCCR_counterMsg202 "Counter Message 202";
+CM_ SG_ 203 ATCCR_tireTemp_RRI "RRI Tire Temperature";
+CM_ SG_ 203 ATCCR_tireTemp_RRM "RRM Tire Temperature";
+CM_ SG_ 203 ATCCR_tireTemp_RRO "RRO Tire Temperature";
+CM_ SG_ 203 ATCCR_counterMsg203 "Counter Message 203";
+CM_ SG_ 204 ATCCR_rotTemp_RR "RR Rotor Temperature";
+CM_ SG_ 204 ATCCR_rotTemp_RL "RL Rotor Temperature";
+CM_ SG_ 204 ATCCR_counterMsg204 "Counter Message 204";
+CM_ SG_ 205 ATCCR_flowR_Inv_Out "Inverter Out Flow Rate";
+CM_ SG_ 205 ATCCR_flowR_Inv_In "Inverter In Flow Rate";
+CM_ SG_ 205 ATCCR_counterMsg205 "Counter Message 205";
+CM_ SG_ 206 ATCCR_coolT_Inv_Out "Inverter Out Coolant Temperature";
+CM_ SG_ 206 ATCCR_coolT_Inv_In "Inverter In Coolant Temperature";
+CM_ SG_ 206 ATCCR_counterMsg206 "Counter Message 206";
+CM_ SG_ 207 ATCCR_coolT_Motor_In "Motor In Coolant Temperature";
+CM_ SG_ 207 ATCCR_flowR_Motor_In "Motor In Flow Rate";
+CM_ SG_ 207 ATCCR_counterMsg207 "Counter Message 207";
+CM_ SG_ 208 ATCCR_susPot_RH "Rear Heave Damper Travel";
+CM_ SG_ 208 ATCCR_susPot_RR "Rear Roll Damper Travel";
+CM_ SG_ 208 ATCCR_counterMsg208 "Counter Message 208";
 CM_ SG_ 150 VCU_throttlePosition2 "TPS2";
 CM_ SG_ 150 VCU_throttlePosition1 "TPS1";
 CM_ SG_ 150 VCU_throttlePosition "Final throttle position";
@@ -690,257 +793,267 @@ CM_ SG_ 155 VCU_assistedTorque "Torque after brake regen and TC";
 CM_ SG_ 155 VCU_driveSpeed "Front wheel speed";
 CM_ SG_ 155 VCU_counterMsg155 "Counter Message 155";
 CM_ SG_ 156 VCU_counterMsg156 "Counter Message 156";
-CM_ SG_ 500 BMS_packSOC "state of charge calc from bms";
-CM_ SG_ 500 BMS_packCurrent "pack current from bms";
-CM_ SG_ 500 BMS_packmVoltage "BMS summed mVoltage of pack";
-CM_ SG_ 500 BMS_counterMsg500 "Counter Message 300";
-CM_ SG_ 501 BMS_module3Volt "module 3 mVoltage";
-CM_ SG_ 501 BMS_module2Volt "module 2 mVoltage";
-CM_ SG_ 501 BMS_module1Volt "module 1 mVoltage";
-CM_ SG_ 501 BMS_counterMsg501 "Counter Message 301";
-CM_ SG_ 502 BMS_module5Volt "module 5 mVoltage";
-CM_ SG_ 502 BMS_module4Volt "module 4 mVoltage";
-CM_ SG_ 502 BMS_counterMsg502 "Counter Message 302";
-CM_ SG_ 503 BMS_module1Cell3Volt "module 1 cellment 3 mVoltage";
-CM_ SG_ 503 BMS_module1Cell2Volt "module 1 cellment 2 mVoltage";
-CM_ SG_ 503 BMS_module1Cell1Volt "module 1 cellment 1 mVoltage";
-CM_ SG_ 503 BMS_counterMsg503 "Counter Message 303";
-CM_ SG_ 504 BMS_module1Cell6Volt "module 1 cellment 6 mVoltage";
-CM_ SG_ 504 BMS_module1Cell5Volt "module 1 cellment 5 mVoltage";
-CM_ SG_ 504 BMS_module1Cell4Volt "module 1 cellment 4 mVoltage";
-CM_ SG_ 504 BMS_counterMsg504 "Counter Message 304";
-CM_ SG_ 505 BMS_module1Cell9Volt "module 1 cellment 9 mVoltage";
-CM_ SG_ 505 BMS_module1Cell8Volt "module 1 cellment 8 mVoltage";
-CM_ SG_ 505 BMS_module1Cell7Volt "module 1 cellment 7 mVoltage";
-CM_ SG_ 505 BMS_counterMsg505 "Counter Message 305";
-CM_ SG_ 506 BMS_module1Cell12Volt "module 1 cellment 12 mVoltage";
-CM_ SG_ 506 BMS_module1Cell11Volt "module 1 cellment 11 mVoltage";
-CM_ SG_ 506 BMS_module1Cell10Volt "module 1 cellment 10 mVoltage";
-CM_ SG_ 506 BMS_counterMsg506 "Counter Message 306";
-CM_ SG_ 507 BMS_module1Cell15Volt "module 1 cellment 15 mVoltage";
-CM_ SG_ 507 BMS_module1Cell14Volt "module 1 cellment 14 mVoltage";
-CM_ SG_ 507 BMS_module1Cell13Volt "module 1 cellment 13 mVoltage";
-CM_ SG_ 507 BMS_counterMsg507 "Counter Message 307";
-CM_ SG_ 508 BMS_module1Cell18Volt "module 1 cellment 18 mVoltage";
-CM_ SG_ 508 BMS_module1Cell17Volt "module 1 cellment 17 mVoltage";
-CM_ SG_ 508 BMS_module1Cell16Volt "module 1 cellment 16 mVoltage";
-CM_ SG_ 508 BMS_counterMsg508 "Counter Message 308";
-CM_ SG_ 509 BMS_module1Cell3Temp "module 1 cellment 3 temperature";
-CM_ SG_ 509 BMS_module1Cell2Temp "module 1 cellment 2 temperature";
-CM_ SG_ 509 BMS_module1Cell1Temp "module 1 cellment 1 temperature";
-CM_ SG_ 509 BMS_counterMsg509 "Counter Message 309";
-CM_ SG_ 510 BMS_module1Cell6Temp "module 1 cellment 6 temperature";
-CM_ SG_ 510 BMS_module1Cell5Temp "module 1 cellment 5 temperature";
-CM_ SG_ 510 BMS_module1Cell4Temp "module 1 cellment 4 temperature";
-CM_ SG_ 510 BMS_counterMsg510 "Counter Message 310";
-CM_ SG_ 511 BMS_module1Cell9Temp "module 1 cellment 9 temperature";
-CM_ SG_ 511 BMS_module1Cell8Temp "module 1 cellment 8 temperature";
-CM_ SG_ 511 BMS_module1Cell7Temp "module 1 cellment 7 temperature";
-CM_ SG_ 511 BMS_counterMsg511 "Counter Message 311";
-CM_ SG_ 512 BMS_module1Cell12Temp "module 1 cellment 12 temperature";
-CM_ SG_ 512 BMS_module1Cell11Temp "module 1 cellment 11 temperature";
-CM_ SG_ 512 BMS_module1Cell10Temp "module 1 cellment 10 temperature";
-CM_ SG_ 512 BMS_counterMsg512 "Counter Message 312";
-CM_ SG_ 513 BMS_module1Cell15Temp "module 1 cellment 15 temperature";
-CM_ SG_ 513 BMS_module1Cell14Temp "module 1 cellment 14 temperature";
-CM_ SG_ 513 BMS_module1Cell13Temp "module 1 cellment 13 temperature";
-CM_ SG_ 513 BMS_counterMsg513 "Counter Message 313";
-CM_ SG_ 514 BMS_module1Cell18Temp "module 1 cellment 18 temperature";
-CM_ SG_ 514 BMS_module1Cell17Temp "module 1 cellment 17 temperature";
-CM_ SG_ 514 BMS_module1Cell16Temp "module 1 cellment 16 temperature";
-CM_ SG_ 514 BMS_counterMsg514 "Counter Message 314";
-CM_ SG_ 515 BMS_module2Cell3Volt "module 2 cellment 3 mVoltage";
-CM_ SG_ 515 BMS_module2Cell2Volt "module 2 cellment 2 mVoltage";
-CM_ SG_ 515 BMS_module2Cell1Volt "module 2 cellment 1 mVoltage";
-CM_ SG_ 515 BMS_counterMsg515 "Counter Message 315";
-CM_ SG_ 516 BMS_module2Cell6Volt "module 2 cellment 6 mVoltage";
-CM_ SG_ 516 BMS_module2Cell5Volt "module 2 cellment 5 mVoltage";
-CM_ SG_ 516 BMS_module2Cell4Volt "module 2 cellment 4 mVoltage";
-CM_ SG_ 516 BMS_counterMsg516 "Counter Message 316";
-CM_ SG_ 517 BMS_module2Cell9Volt "module 2 cellment 9 mVoltage";
-CM_ SG_ 517 BMS_module2Cell8Volt "module 2 cellment 8 mVoltage";
-CM_ SG_ 517 BMS_module2Cell7Volt "module 2 cellment 7 mVoltage";
-CM_ SG_ 517 BMS_counterMsg517 "Counter Message 317";
-CM_ SG_ 518 BMS_module2Cell12Volt "module 2 cellment 12 mVoltage";
-CM_ SG_ 518 BMS_module2Cell11Volt "module 2 cellment 11 mVoltage";
-CM_ SG_ 518 BMS_module2Cell10Volt "module 2 cellment 10 mVoltage";
-CM_ SG_ 518 BMS_counterMsg518 "Counter Message 318";
-CM_ SG_ 519 BMS_module2Cell15Volt "module 2 cellment 15 mVoltage";
-CM_ SG_ 519 BMS_module2Cell14Volt "module 2 cellment 14 mVoltage";
-CM_ SG_ 519 BMS_module2Cell13Volt "module 2 cellment 13 mVoltage";
-CM_ SG_ 519 BMS_counterMsg519 "Counter Message 319";
-CM_ SG_ 520 BMS_module2Cell18Volt "module 2 cellment 18 mVoltage";
-CM_ SG_ 520 BMS_module2Cell17Volt "module 2 cellment 17 mVoltage";
-CM_ SG_ 520 BMS_module2Cell16Volt "module 2 cellment 16 mVoltage";
-CM_ SG_ 520 BMS_counterMsg520 "Counter Message 320";
-CM_ SG_ 521 BMS_module2Cell3Temp "module 2 cellment 3 temperature";
-CM_ SG_ 521 BMS_module2Cell2Temp "module 2 cellment 2 temperature";
-CM_ SG_ 521 BMS_module2Cell1Temp "module 2 cellment 1 temperature";
-CM_ SG_ 521 BMS_counterMsg521 "Counter Message 321";
-CM_ SG_ 522 BMS_module2Cell6Temp "module 2 cellment 6 temperature";
-CM_ SG_ 522 BMS_module2Cell5Temp "module 2 cellment 5 temperature";
-CM_ SG_ 522 BMS_module2Cell4Temp "module 2 cellment 4 temperature";
-CM_ SG_ 522 BMS_counterMsg522 "Counter Message 322";
-CM_ SG_ 523 BMS_module2Cell9Temp "module 2 cellment 9 temperature";
-CM_ SG_ 523 BMS_module2Cell8Temp "module 2 cellment 8 temperature";
-CM_ SG_ 523 BMS_module2Cell7Temp "module 2 cellment 7 temperature";
-CM_ SG_ 523 BMS_counterMsg523 "Counter Message 323";
-CM_ SG_ 524 BMS_module2Cell12Temp "module 2 cellment 12 temperature";
-CM_ SG_ 524 BMS_module2Cell11Temp "module 2 cellment 11 temperature";
-CM_ SG_ 524 BMS_module2Cell10Temp "module 2 cellment 10 temperature";
-CM_ SG_ 524 BMS_counterMsg524 "Counter Message 324";
-CM_ SG_ 525 BMS_module2Cell15Temp "module 2 cellment 15 temperature";
-CM_ SG_ 525 BMS_module2Cell14Temp "module 2 cellment 14 temperature";
-CM_ SG_ 525 BMS_Module2Cell13Temp "module 2 cellment 13 temperature";
-CM_ SG_ 525 BMS_counterMsg525 "Counter Message 325";
-CM_ SG_ 526 BMS_module2Cell18Temp "module 2 cellment 18 temperature";
-CM_ SG_ 526 BMS_module2Cell17Temp "module 2 cellment 17 temperature";
-CM_ SG_ 526 BMS_module2Cell16Temp "module 2 cellment 16 temperature";
-CM_ SG_ 526 BMS_counterMsg526 "Counter Message 326";
-CM_ SG_ 527 BMS_module3Cell3Volt "module 3 cellment 3 mVoltage";
-CM_ SG_ 527 BMS_module3Cell2Volt "module 3 cellment 2 mVoltage";
-CM_ SG_ 527 BMS_module3Cell1Volt "module 3 cellment 1 mVoltage";
-CM_ SG_ 527 BMS_counterMsg527 "Counter Message 327";
-CM_ SG_ 528 BMS_module3Cell6Volt "module 3 cellment 6 mVoltage";
-CM_ SG_ 528 BMS_module3Cell5Volt "module 3 cellment 5 mVoltage";
-CM_ SG_ 528 BMS_module3Cell4Volt "module 3 cellment 4 mVoltage";
-CM_ SG_ 528 BMS_counterMsg528 "Counter Message 328";
-CM_ SG_ 529 BMS_module3Cell9Volt "module 3 cellment 9 mVoltage";
-CM_ SG_ 529 BMS_module3Cell8Volt "module 3 cellment 8 mVoltage";
-CM_ SG_ 529 BMS_module3Cell7Volt "module 3 cellment 7 mVoltage";
-CM_ SG_ 529 BMS_counterMsg529 "Counter Message 329";
-CM_ SG_ 530 BMS_module3Cell12Volt "module 3 cellment 12 mVoltage";
-CM_ SG_ 530 BMS_module3Cell11Volt "module 3 cellment 11 mVoltage";
-CM_ SG_ 530 BMS_module3Cell10Volt "module 3 cellment 10 mVoltage";
-CM_ SG_ 530 BMS_counterMsg530 "Counter Message 330";
-CM_ SG_ 531 BMS_module3Cell15Volt "module 3 cellment 15 mVoltage";
-CM_ SG_ 531 BMS_module3Cell14Volt "module 3 cellment 14 mVoltage";
-CM_ SG_ 531 BMS_module3Cell13Volt "module 3 cellment 13 mVoltage";
-CM_ SG_ 531 BMS_counterMsg531 "Counter Message 331";
-CM_ SG_ 532 BMS_module3Cell18Volt "module 3 cellment 18 mVoltage";
-CM_ SG_ 532 BMS_module3Cell17Volt "module 3 cellment 17 mVoltage";
-CM_ SG_ 532 BMS_module3Cell16Volt "module 3 cellment 16 mVoltage";
-CM_ SG_ 532 BMS_counterMsg532 "Counter Message 332";
-CM_ SG_ 533 BMS_module3Cell3Temp "module 3 cellment 3 temperature";
-CM_ SG_ 533 BMS_module3Cell2Temp "module 3 cellment 2 temperature";
-CM_ SG_ 533 BMS_module3Cell1Temp "module 3 cellment 1 temperature";
-CM_ SG_ 533 BMS_counterMsg533 "Counter Message 333";
-CM_ SG_ 534 BMS_module3Cell6Temp "module 3 cellment 6 temperature";
-CM_ SG_ 534 BMS_module3Cell5Temp "module 3 cellment 5 temperature";
-CM_ SG_ 534 BMS_module3Cell4Temp "module 3 cellment 4 temperature";
-CM_ SG_ 534 BMS_counterMsg534 "Counter Message 334";
-CM_ SG_ 535 BMS_module3Cell9Temp "module 3 cellment 9 temperature";
-CM_ SG_ 535 BMS_module3Cell8Temp "module 3 cellment 8 temperature";
-CM_ SG_ 535 BMS_module3Cell7Temp "module 3 cellment 7 temperature";
-CM_ SG_ 535 BMS_counterMsg535 "Counter Message 335";
-CM_ SG_ 536 BMS_module3Cell12Temp "module 3 cellment 12 temperature";
-CM_ SG_ 536 BMS_module3Cell11Temp "module 3 cellment 11 temperature";
-CM_ SG_ 536 BMS_module3Cell10Temp "module 3 cellment 10 temperature";
-CM_ SG_ 536 BMS_counterMsg536 "Counter Message 336";
-CM_ SG_ 537 BMS_module3Cell15Temp "module 3 cellment 15 temperature";
-CM_ SG_ 537 BMS_module3Cell14Temp "module 3 cellment 14 temperature";
-CM_ SG_ 537 BMS_module3Cell13Temp "module 3 cellment 13 temperature";
-CM_ SG_ 537 BMS_counterMsg537 "Counter Message 337";
-CM_ SG_ 538 BMS_module3Cell18Temp "module 3 cellment 18 temperature";
-CM_ SG_ 538 BMS_module3Cell17Temp "module 3 cellment 17 temperature";
-CM_ SG_ 538 BMS_module3Cell16Temp "module 3 cellment 16 temperature";
-CM_ SG_ 538 BMS_counterMsg538 "Counter Message 338";
-CM_ SG_ 539 BMS_module4Cell3Volt "module 4 cellment 3 mVoltage";
-CM_ SG_ 539 BMS_module4Cell2Volt "module 4 cellment 2 mVoltage";
-CM_ SG_ 539 BMS_module4Cell1Volt "module 4 cellment 1 mVoltage";
-CM_ SG_ 539 BMS_counterMsg539 "Counter Message 339";
-CM_ SG_ 540 BMS_module4Cell6Volt "module 4 cellment 6 mVoltage";
-CM_ SG_ 540 BMS_module4Cell5Volt "module 4 cellment 5 mVoltage";
-CM_ SG_ 540 BMS_module4Cell4Volt "module 4 cellment 4 mVoltage";
-CM_ SG_ 540 BMS_counterMsg540 "Counter Message 340";
-CM_ SG_ 541 BMS_module4cCell9Volt "module 4 cellment 9 mVoltage";
-CM_ SG_ 541 BMS_module4Cell8Volt "module 4 cellment 8 mVoltage";
-CM_ SG_ 541 BMS_module4Cell7Volt "module 4 cellment 7 mVoltage";
-CM_ SG_ 541 BMS_counterMsg541 "Counter Message 341";
-CM_ SG_ 542 BMS_module4Cell12Volt "module 4 cellment 12 mVoltage";
-CM_ SG_ 542 BMS_module4Cell11Volt "module 4 cellment 11 mVoltage";
-CM_ SG_ 542 BMS_module4Cell10Volt "module 4 cellment 10 mVoltage";
-CM_ SG_ 542 BMS_counterMsg542 "Counter Message 342";
-CM_ SG_ 543 BMS_module4Cell15Volt "module 4 cellment 15 mVoltage";
-CM_ SG_ 543 BMS_module4Cell14Volt "module 4 cellment 14 mVoltage";
-CM_ SG_ 543 BMS_module4Cell13Volt "module 4 cellment 13 mVoltage";
-CM_ SG_ 543 BMS_counterMsg543 "Counter Message 343";
-CM_ SG_ 544 BMS_module4Cell18Volt "module 4 cellment 18 mVoltage";
-CM_ SG_ 544 BMS_module4Cell17Volt "module 4 cellment 17 mVoltage";
-CM_ SG_ 544 BMS_module4Cell16Volt "module 4 cellment 16 mVoltage";
-CM_ SG_ 544 BMS_counterMsg544 "Counter Message 344";
-CM_ SG_ 545 BMS_module4Cell3Temp "module 4 cellment 3 temperature";
-CM_ SG_ 545 BMS_module4Cell2Temp "module 4 cellment 2 temperature";
-CM_ SG_ 545 BMS_module4Cell1Temp "module 4 cellment 1 temperature";
-CM_ SG_ 545 BMS_counterMsg545 "Counter Message 345";
-CM_ SG_ 546 BMS_module4Cell6Temp "module 4 cellment 6 temperature";
-CM_ SG_ 546 BMS_module4Cell5Temp "module 4 cellment 5 temperature";
-CM_ SG_ 546 BMS_module4Cell4Temp "module 4 cellment 4 temperature";
-CM_ SG_ 546 BMS_counterMsg546 "Counter Message 346";
-CM_ SG_ 547 BMS_module4Cell9Temp "module 4 cellment 9 temperature";
-CM_ SG_ 547 BMS_module4Cell8Temp "module 4 cellment 8 temperature";
-CM_ SG_ 547 BMS_module4Cell7Temp "module 4 cellment 7 temperature";
-CM_ SG_ 547 BMS_counterMsg547 "Counter Message 347";
-CM_ SG_ 548 BMS_module4Cell12Temp "module 4 cellment 12 temperature";
-CM_ SG_ 548 BMS_module4Cell11Temp "module 4 cellment 11 temperature";
-CM_ SG_ 548 BMS_module4Cell10Temp "module 4 cellment 10 temperature";
-CM_ SG_ 548 BMS_counterMsg548 "Counter Message 348";
-CM_ SG_ 549 BMS_module4Cell15Temp "module 4 cellment 15 temperature";
-CM_ SG_ 549 BMS_module4Cell14Temp "module 4 cellment 14 temperature";
-CM_ SG_ 549 BMS_module4Cell13Temp "module 4 cellment 13 temperature";
-CM_ SG_ 549 BMS_counterMsg549 "Counter Message 349";
-CM_ SG_ 550 BMS_module4Cell18Temp "module 4 cellment 18 temperature";
-CM_ SG_ 550 BMS_module4Cell17Temp "module 4 cellment 17 temperature";
-CM_ SG_ 550 BMS_module4Cell16Temp "module 4 cellment 16 temperature";
-CM_ SG_ 550 BMS_counterMsg550 "Counter Message 350";
-CM_ SG_ 551 BMS_module5Cell3Volt "module 5 cellment 3 mVoltage";
-CM_ SG_ 551 BMS_module5Cell2Volt "module 5 cellment 2 mVoltage";
-CM_ SG_ 551 BMS_module5Cell1Volt "module 5 cellment 1 mVoltage";
-CM_ SG_ 551 BMS_counterMsg551 "Counter Message 351";
-CM_ SG_ 552 BMS_module5Cell6Volt "module 5 cellment 6 mVoltage";
-CM_ SG_ 552 BMS_module5Cell5Volt "module 5 cellment 5 mVoltage";
-CM_ SG_ 552 BMS_module5Cell4Volt "module 5 cellment 4 mVoltage";
-CM_ SG_ 552 BMS_counterMsg552 "Counter Message 352";
-CM_ SG_ 553 BMS_module5Cell9Volt "module 5 cellment 9 mVoltage";
-CM_ SG_ 553 BMS_module5Cell8Volt "module 5 cellment 8 mVoltage";
-CM_ SG_ 553 BMS_module5Cell7Volt "module 5 cellment 7 mVoltage";
-CM_ SG_ 553 BMS_counterMsg553 "Counter Message 353";
-CM_ SG_ 554 BMS_module5Cell12Volt "module 5 cellment 12 mVoltage";
-CM_ SG_ 554 BMS_module5Cell11Volt "module 5 cellment 11 mVoltage";
-CM_ SG_ 554 BMS_module5Cell10Volt "module 5 cellment 10 mVoltage";
-CM_ SG_ 554 BMS_counterMsg554 "Counter Message 354";
-CM_ SG_ 555 BMS_module5Cell15Volt "module 5 cellment 15 mVoltage";
-CM_ SG_ 555 BMS_module5Cell14Volt "module 5 cellment 14 mVoltage";
-CM_ SG_ 555 BMS_module5Cell13Volt "module 5 cellment 13 mVoltage";
-CM_ SG_ 555 BMS_counterMsg555 "Counter Message 355";
-CM_ SG_ 556 BMS_module5Cell18Volt "module 5 cellment 18 mVoltage";
-CM_ SG_ 556 BMS_module5Cell17Volt "module 5 cellment 17 mVoltage";
-CM_ SG_ 556 BMS_module5Cell16Volt "module 5 cellment 16 mVoltage";
-CM_ SG_ 556 BMS_counterMsg556 "Counter Message 356";
-CM_ SG_ 557 BMS_module5Cell3Temp "module 5 cellment 3 temperature";
-CM_ SG_ 557 BMS_module5Cell2Temp "module 5 cellment 2 temperature";
-CM_ SG_ 557 BMS_module5Cell1Temp "module 5 cellment 1 temperature";
-CM_ SG_ 557 BMS_counterMsg557 "Counter Message 357";
-CM_ SG_ 558 BMS_module5Cell6Temp "module 5 cellment 6 temperature";
-CM_ SG_ 558 BMS_module5Cell5Temp "module 5 cellment 5 temperature";
-CM_ SG_ 558 BMS_module5Cell4Temp "module 5 cellment 4 temperature";
-CM_ SG_ 558 BMS_counterMsg558 "Counter Message 358";
-CM_ SG_ 559 BMS_module5Cell9Temp "module 5 cellment 9 temperature";
-CM_ SG_ 559 BMS_module5Cell8Temp "module 5 cellment 8 temperature";
-CM_ SG_ 559 BMS_module5Cell7Temp "module 5 cellment 7 temperature";
-CM_ SG_ 559 BMS_counterMsg559 "Counter Message 359";
-CM_ SG_ 560 BMS_module5Cell12Temp "module 5 cellment 12 temperature";
-CM_ SG_ 560 BMS_module5Cell11Temp "module 5 cellment 11 temperature";
-CM_ SG_ 560 BMS_module5Cell10Temp "module 5 cellment 10 temperature";
-CM_ SG_ 560 BMS_counterMsg560 "Counter Message 360";
-CM_ SG_ 561 BMS_module5Cell15Temp "module 5 cellment 15 temperature";
-CM_ SG_ 561 BMS_module5Cell14Temp "module 5 cellment 14 temperature";
-CM_ SG_ 561 BMS_module5Cell13Temp "module 5 cellment 13 temperature";
-CM_ SG_ 561 BMS_counterMsg561 "Counter Message 361";
-CM_ SG_ 562 BMS_module5Cell18Temp "module 5 cellment 18 temperature";
-CM_ SG_ 562 BMS_module5Cell17Temp "module 5 cellment 17 temperature";
-CM_ SG_ 562 BMS_module5Cell16Temp "module 5 cellment 16 temperature";
-CM_ SG_ 562 BMS_counterMsg562 "Counter Message 362";
+CM_ SG_ 500 BMS_packSOC "BMS SOC";
+CM_ SG_ 500 BMS_packCurrent "BMS Pack Current";
+CM_ SG_ 500 BMS_packmVoltage "BMS Pack Voltage";
+CM_ SG_ 500 BMS_counterMsg500 "Counter Message 500";
+CM_ SG_ 501 BMS_module3Volt "Module 3 Voltage";
+CM_ SG_ 501 BMS_module2Volt "Module 2 Voltage";
+CM_ SG_ 501 BMS_module1Volt "Module 1 Voltage";
+CM_ SG_ 501 BMS_counterMsg501 "Counter Message 501";
+CM_ SG_ 502 BMS_module5Volt "Module 5 Voltage";
+CM_ SG_ 502 BMS_module4Volt "Module 4 Voltage";
+CM_ SG_ 502 BMS_counterMsg502 "Counter Message 502";
+CM_ SG_ 503 BMS_module1Cell3Volt "Module 1 Cell 3 Voltage";
+CM_ SG_ 503 BMS_module1Cell2Volt "Module 1 Cell 2 Voltage";
+CM_ SG_ 503 BMS_module1Cell1Volt "Module 1 Cell 1 Voltage";
+CM_ SG_ 503 BMS_counterMsg503 "Counter Message 503";
+CM_ SG_ 504 BMS_module1Cell6Volt "Module 1 Cell 6 Voltage";
+CM_ SG_ 504 BMS_module1Cell5Volt "Module 1 Cell 5 Voltage";
+CM_ SG_ 504 BMS_module1Cell4Volt "Module 1 Cell 4 Voltage";
+CM_ SG_ 504 BMS_counterMsg504 "Counter Message 504";
+CM_ SG_ 505 BMS_module1Cell9Volt "Module 1 Cell 9 Voltage";
+CM_ SG_ 505 BMS_module1Cell8Volt "Module 1 Cell 8 Voltage";
+CM_ SG_ 505 BMS_module1Cell7Volt "Module 1 Cell 7 Voltage";
+CM_ SG_ 505 BMS_counterMsg505 "Counter Message 505";
+CM_ SG_ 506 BMS_module1Cell12Volt "Module 1 Cell 12 Voltage";
+CM_ SG_ 506 BMS_module1Cell11Volt "Module 1 Cell 11 Voltage";
+CM_ SG_ 506 BMS_module1Cell10Volt "Module 1 Cell 10 Voltage";
+CM_ SG_ 506 BMS_counterMsg506 "Counter Message 506";
+CM_ SG_ 507 BMS_module1Cell15Volt "Module 1 Cell 15 Voltage";
+CM_ SG_ 507 BMS_module1Cell14Volt "Module 1 Cell 14 Voltage";
+CM_ SG_ 507 BMS_module1Cell13Volt "Module 1 Cell 13 Voltage";
+CM_ SG_ 507 BMS_counterMsg507 "Counter Message 507";
+CM_ SG_ 508 BMS_module1Cell18Volt "Module 1 Cell 18 Voltage";
+CM_ SG_ 508 BMS_module1Cell17Volt "Module 1 Cell 17 Voltage";
+CM_ SG_ 508 BMS_module1Cell16Volt "Module 1 Cell 16 Voltage";
+CM_ SG_ 508 BMS_counterMsg508 "Counter Message 508";
+CM_ SG_ 509 BMS_module1Cell3Temp "Module 1 Cell 3 Temperature";
+CM_ SG_ 509 BMS_module1Cell2Temp "Module 1 Cell 2 Temperature";
+CM_ SG_ 509 BMS_module1Cell1Temp "Module 1 Cell 1 Temperature";
+CM_ SG_ 509 BMS_counterMsg509 "Counter Message 509";
+CM_ SG_ 510 BMS_module1Cell6Temp "Module 1 Cell 6 Temperature";
+CM_ SG_ 510 BMS_module1Cell5Temp "Module 1 Cell 5 Temperature";
+CM_ SG_ 510 BMS_module1Cell4Temp "Module 1 Cell 4 Temperature";
+CM_ SG_ 510 BMS_counterMsg510 "Counter Message 510";
+CM_ SG_ 511 BMS_module1Cell9Temp "Module 1 Cell 9 Temperature";
+CM_ SG_ 511 BMS_module1Cell8Temp "Module 1 Cell 8 Temperature";
+CM_ SG_ 511 BMS_module1Cell7Temp "Module 1 Cell 7 Temperature";
+CM_ SG_ 511 BMS_counterMsg511 "Counter Message 511";
+CM_ SG_ 512 BMS_module1Cell12Temp "Module 1 Cell 12 Temperature";
+CM_ SG_ 512 BMS_module1Cell11Temp "Module 1 Cell 11 Temperature";
+CM_ SG_ 512 BMS_module1Cell10Temp "Module 1 Cell 10 Temperature";
+CM_ SG_ 512 BMS_counterMsg512 "Counter Message 512";
+CM_ SG_ 513 BMS_module1Cell15Temp "Module 1 Cell 15 Temperature";
+CM_ SG_ 513 BMS_module1Cell14Temp "Module 1 Cell 14 Temperature";
+CM_ SG_ 513 BMS_module1Cell13Temp "Module 1 Cell 13 Temperature";
+CM_ SG_ 513 BMS_counterMsg513 "Counter Message 513";
+CM_ SG_ 514 BMS_module1Cell18Temp "Module 1 Cell 18 Temperature";
+CM_ SG_ 514 BMS_module1Cell17Temp "Module 1 Cell 17 Temperature";
+CM_ SG_ 514 BMS_module1Cell16Temp "Module 1 Cell 16 Temperature";
+CM_ SG_ 514 BMS_counterMsg514 "Counter Message 514";
+CM_ SG_ 515 BMS_module2Cell3Volt "Module 2 Cell 3 Voltage";
+CM_ SG_ 515 BMS_module2Cell2Volt "Module 2 Cell 2 Voltage";
+CM_ SG_ 515 BMS_module2Cell1Volt "Module 2 Cell 1 Voltage";
+CM_ SG_ 515 BMS_counterMsg515 "Counter Message 515";
+CM_ SG_ 516 BMS_module2Cell6Volt "Module 2 Cell 6 Voltage";
+CM_ SG_ 516 BMS_module2Cell5Volt "Module 2 Cell 5 Voltage";
+CM_ SG_ 516 BMS_module2Cell4Volt "Module 2 Cell 4 Voltage";
+CM_ SG_ 516 BMS_counterMsg516 "Counter Message 516";
+CM_ SG_ 517 BMS_module2Cell9Volt "Module 2 Cell 9 Voltage";
+CM_ SG_ 517 BMS_module2Cell8Volt "Module 2 Cell 8 Voltage";
+CM_ SG_ 517 BMS_module2Cell7Volt "Module 2 Cell 7 Voltage";
+CM_ SG_ 517 BMS_counterMsg517 "Counter Message 517";
+CM_ SG_ 518 BMS_module2Cell12Volt "Module 2 Cell 12 Voltage";
+CM_ SG_ 518 BMS_module2Cell11Volt "Module 2 Cell 11 Voltage";
+CM_ SG_ 518 BMS_module2Cell10Volt "Module 2 Cell 10 Voltage";
+CM_ SG_ 518 BMS_counterMsg518 "Counter Message 518";
+CM_ SG_ 519 BMS_module2Cell15Volt "Module 2 Cell 15 Voltage";
+CM_ SG_ 519 BMS_module2Cell14Volt "Module 2 Cell 14 Voltage";
+CM_ SG_ 519 BMS_module2Cell13Volt "Module 2 Cell 13 Voltage";
+CM_ SG_ 519 BMS_counterMsg519 "Counter Message 519";
+CM_ SG_ 520 BMS_module2Cell18Volt "Module 2 Cell 18 Voltage";
+CM_ SG_ 520 BMS_module2Cell17Volt "Module 2 Cell 17 Voltage";
+CM_ SG_ 520 BMS_module2Cell16Volt "Module 2 Cell 16 Voltage";
+CM_ SG_ 520 BMS_counterMsg520 "Counter Message 520";
+CM_ SG_ 521 BMS_module2Cell3Temp "Module 2 Cell 3 Temperature";
+CM_ SG_ 521 BMS_module2Cell2Temp "Module 2 Cell 2 Temperature";
+CM_ SG_ 521 BMS_module2Cell1Temp "Module 2 Cell 1 Temperature";
+CM_ SG_ 521 BMS_counterMsg521 "Counter Message 521";
+CM_ SG_ 522 BMS_module2Cell6Temp "Module 2 Cell 6 Temperature";
+CM_ SG_ 522 BMS_module2Cell5Temp "Module 2 Cell 5 Temperature";
+CM_ SG_ 522 BMS_module2Cell4Temp "Module 2 Cell 4 Temperature";
+CM_ SG_ 522 BMS_counterMsg522 "Counter Message 522";
+CM_ SG_ 523 BMS_module2Cell9Temp "Module 2 Cell 9 Temperature";
+CM_ SG_ 523 BMS_module2Cell8Temp "Module 2 Cell 8 Temperature";
+CM_ SG_ 523 BMS_module2Cell7Temp "Module 2 Cell 7 Temperature";
+CM_ SG_ 523 BMS_counterMsg523 "Counter Message 523";
+CM_ SG_ 524 BMS_module2Cell12Temp "Module 2 Cell 12 Temperature";
+CM_ SG_ 524 BMS_module2Cell11Temp "Module 2 Cell 11 Temperature";
+CM_ SG_ 524 BMS_module2Cell10Temp "Module 2 Cell 10 Temperature";
+CM_ SG_ 524 BMS_counterMsg524 "Counter Message 524";
+CM_ SG_ 525 BMS_module2Cell15Temp "Module 2 Cell 15 Temperature";
+CM_ SG_ 525 BMS_module2Cell14Temp "Module 2 Cell 14 Temperature";
+CM_ SG_ 525 BMS_Module2Cell13Temp "Module 2 Cell 13 Temperature";
+CM_ SG_ 525 BMS_counterMsg525 "Counter Message 525";
+CM_ SG_ 526 BMS_module2Cell18Temp "Module 2 Cell 18 Temperature";
+CM_ SG_ 526 BMS_module2Cell17Temp "Module 2 Cell 17 Temperature";
+CM_ SG_ 526 BMS_module2Cell16Temp "Module 2 Cell 16 Temperature";
+CM_ SG_ 526 BMS_counterMsg526 "Counter Message 526";
+CM_ SG_ 527 BMS_module3Cell3Volt "Module 3 Cell 3 Voltage";
+CM_ SG_ 527 BMS_module3Cell2Volt "Module 3 Cell 2 Voltage";
+CM_ SG_ 527 BMS_module3Cell1Volt "Module 3 Cell 1 Voltage";
+CM_ SG_ 527 BMS_counterMsg527 "Counter Message 527";
+CM_ SG_ 528 BMS_module3Cell6Volt "Module 3 Cell 6 Voltage";
+CM_ SG_ 528 BMS_module3Cell5Volt "Module 3 Cell 5 Voltage";
+CM_ SG_ 528 BMS_module3Cell4Volt "Module 3 Cell 4 Voltage";
+CM_ SG_ 528 BMS_counterMsg528 "Counter Message 528";
+CM_ SG_ 529 BMS_module3Cell9Volt "Module 3 Cell 9 Voltage";
+CM_ SG_ 529 BMS_module3Cell8Volt "Module 3 Cell 8 Voltage";
+CM_ SG_ 529 BMS_module3Cell7Volt "Module 3 Cell 7 Voltage";
+CM_ SG_ 529 BMS_counterMsg529 "Counter Message 529";
+CM_ SG_ 530 BMS_module3Cell12Volt "Module 3 Cell 12 Voltage";
+CM_ SG_ 530 BMS_module3Cell11Volt "Module 3 Cell 11 Voltage";
+CM_ SG_ 530 BMS_module3Cell10Volt "Module 3 Cell 10 Voltage";
+CM_ SG_ 530 BMS_counterMsg530 "Counter Message 530";
+CM_ SG_ 531 BMS_module3Cell15Volt "Module 3 Cell 15 Voltage";
+CM_ SG_ 531 BMS_module3Cell14Volt "Module 3 Cell 14 Voltage";
+CM_ SG_ 531 BMS_module3Cell13Volt "Module 3 Cell 13 Voltage";
+CM_ SG_ 531 BMS_counterMsg531 "Counter Message 531";
+CM_ SG_ 532 BMS_module3Cell18Volt "Module 3 Cell 18 Voltage";
+CM_ SG_ 532 BMS_module3Cell17Volt "Module 3 Cell 17 Voltage";
+CM_ SG_ 532 BMS_module3Cell16Volt "Module 3 Cell 16 Voltage";
+CM_ SG_ 532 BMS_counterMsg532 "Counter Message 532";
+CM_ SG_ 533 BMS_module3Cell3Temp "Module 3 Cell 3 Temperature";
+CM_ SG_ 533 BMS_module3Cell2Temp "Module 3 Cell 2 Temperature";
+CM_ SG_ 533 BMS_module3Cell1Temp "Module 3 Cell 1 Temperature";
+CM_ SG_ 533 BMS_counterMsg533 "Counter Message 533";
+CM_ SG_ 534 BMS_module3Cell6Temp "Module 3 Cell 6 Temperature";
+CM_ SG_ 534 BMS_module3Cell5Temp "Module 3 Cell 5 Temperature";
+CM_ SG_ 534 BMS_module3Cell4Temp "Module 3 Cell 4 Temperature";
+CM_ SG_ 534 BMS_counterMsg534 "Counter Message 534";
+CM_ SG_ 535 BMS_module3Cell9Temp "Module 3 Cell 9 Temperature";
+CM_ SG_ 535 BMS_module3Cell8Temp "Module 3 Cell 8 Temperature";
+CM_ SG_ 535 BMS_module3Cell7Temp "Module 3 Cell 7 Temperature";
+CM_ SG_ 535 BMS_counterMsg535 "Counter Message 535";
+CM_ SG_ 536 BMS_module3Cell12Temp "Module 3 Cell 12 Temperature";
+CM_ SG_ 536 BMS_module3Cell11Temp "Module 3 Cell 11 Temperature";
+CM_ SG_ 536 BMS_module3Cell10Temp "Module 3 Cell 10 Temperature";
+CM_ SG_ 536 BMS_counterMsg536 "Counter Message 536";
+CM_ SG_ 537 BMS_module3Cell15Temp "Module 3 Cell 15 Temperature";
+CM_ SG_ 537 BMS_module3Cell14Temp "Module 3 Cell 14 Temperature";
+CM_ SG_ 537 BMS_module3Cell13Temp "Module 3 Cell 13 Temperature";
+CM_ SG_ 537 BMS_counterMsg537 "Counter Message 537";
+CM_ SG_ 538 BMS_module3Cell18Temp "Module 3 Cell 18 Temperature";
+CM_ SG_ 538 BMS_module3Cell17Temp "Module 3 Cell 17 Temperature";
+CM_ SG_ 538 BMS_module3Cell16Temp "Module 3 Cell 16 Temperature";
+CM_ SG_ 538 BMS_counterMsg538 "Counter Message 538";
+CM_ SG_ 539 BMS_module4Cell3Volt "Module 4 Cell 3 Voltage";
+CM_ SG_ 539 BMS_module4Cell2Volt "Module 4 Cell 2 Voltage";
+CM_ SG_ 539 BMS_module4Cell1Volt "Module 4 Cell 1 Voltage";
+CM_ SG_ 539 BMS_counterMsg539 "Counter Message 539";
+CM_ SG_ 540 BMS_module4Cell6Volt "Module 4 Cell 6 Voltage";
+CM_ SG_ 540 BMS_module4Cell5Volt "Module 4 Cell 5 Voltage";
+CM_ SG_ 540 BMS_module4Cell4Volt "Module 4 Cell 4 Voltage";
+CM_ SG_ 540 BMS_counterMsg540 "Counter Message 540";
+CM_ SG_ 541 BMS_module4cCell9Volt "Module 4 Cell 9 Voltage";
+CM_ SG_ 541 BMS_module4Cell8Volt "Module 4 Cell 8 Voltage";
+CM_ SG_ 541 BMS_module4Cell7Volt "Module 4 Cell 7 Voltage";
+CM_ SG_ 541 BMS_counterMsg541 "Counter Message 541";
+CM_ SG_ 542 BMS_module4Cell12Volt "Module 4 Cell 12 Voltage";
+CM_ SG_ 542 BMS_module4Cell11Volt "Module 4 Cell 11 Voltage";
+CM_ SG_ 542 BMS_module4Cell10Volt "Module 4 Cell 10 Voltage";
+CM_ SG_ 542 BMS_counterMsg542 "Counter Message 542";
+CM_ SG_ 543 BMS_module4Cell15Volt "Module 4 Cell 15 Voltage";
+CM_ SG_ 543 BMS_module4Cell14Volt "Module 4 Cell 14 Voltage";
+CM_ SG_ 543 BMS_module4Cell13Volt "Module 4 Cell 13 Voltage";
+CM_ SG_ 543 BMS_counterMsg543 "Counter Message 543";
+CM_ SG_ 544 BMS_module4Cell18Volt "Module 4 Cell 18 Voltage";
+CM_ SG_ 544 BMS_module4Cell17Volt "Module 4 Cell 17 Voltage";
+CM_ SG_ 544 BMS_module4Cell16Volt "Module 4 Cell 16 Voltage";
+CM_ SG_ 544 BMS_counterMsg544 "Counter Message 544";
+CM_ SG_ 545 BMS_module4Cell3Temp "Module 4 Cell 3 Temperature";
+CM_ SG_ 545 BMS_module4Cell2Temp "Module 4 Cell 2 Temperature";
+CM_ SG_ 545 BMS_module4Cell1Temp "Module 4 Cell 1 Temperature";
+CM_ SG_ 545 BMS_counterMsg545 "Counter Message 545";
+CM_ SG_ 546 BMS_module4Cell6Temp "Module 4 Cell 6 Temperature";
+CM_ SG_ 546 BMS_module4Cell5Temp "Module 4 Cell 5 Temperature";
+CM_ SG_ 546 BMS_module4Cell4Temp "Module 4 Cell 4 Temperature";
+CM_ SG_ 546 BMS_counterMsg546 "Counter Message 546";
+CM_ SG_ 547 BMS_module4Cell9Temp "Module 4 Cell 9 Temperature";
+CM_ SG_ 547 BMS_module4Cell8Temp "Module 4 Cell 8 Temperature";
+CM_ SG_ 547 BMS_module4Cell7Temp "Module 4 Cell 7 Temperature";
+CM_ SG_ 547 BMS_counterMsg547 "Counter Message 547";
+CM_ SG_ 548 BMS_module4Cell12Temp "Module 4 Cell 12 Temperature";
+CM_ SG_ 548 BMS_module4Cell11Temp "Module 4 Cell 11 Temperature";
+CM_ SG_ 548 BMS_module4Cell10Temp "Module 4 Cell 10 Temperature";
+CM_ SG_ 548 BMS_counterMsg548 "Counter Message 548";
+CM_ SG_ 549 BMS_module4Cell15Temp "Module 4 Cell 15 Temperature";
+CM_ SG_ 549 BMS_module4Cell14Temp "Module 4 Cell 14 Temperature";
+CM_ SG_ 549 BMS_module4Cell13Temp "Module 4 Cell 13 Temperature";
+CM_ SG_ 549 BMS_counterMsg549 "Counter Message 549";
+CM_ SG_ 550 BMS_module4Cell18Temp "Module 4 Cell 18 Temperature";
+CM_ SG_ 550 BMS_module4Cell17Temp "Module 4 Cell 17 Temperature";
+CM_ SG_ 550 BMS_module4Cell16Temp "Module 4 Cell 16 Temperature";
+CM_ SG_ 550 BMS_counterMsg550 "Counter Message 550";
+CM_ SG_ 551 BMS_module5Cell3Volt "Module 5 Cell 3 Voltage";
+CM_ SG_ 551 BMS_module5Cell2Volt "Module 5 Cell 2 Voltage";
+CM_ SG_ 551 BMS_module5Cell1Volt "Module 5 Cell 1 Voltage";
+CM_ SG_ 551 BMS_counterMsg551 "Counter Message 551";
+CM_ SG_ 552 BMS_module5Cell6Volt "Module 5 Cell 6 Voltage";
+CM_ SG_ 552 BMS_module5Cell5Volt "Module 5 Cell 5 Voltage";
+CM_ SG_ 552 BMS_module5Cell4Volt "Module 5 Cell 4 Voltage";
+CM_ SG_ 552 BMS_counterMsg552 "Counter Message 552";
+CM_ SG_ 553 BMS_module5Cell9Volt "Module 5 Cell 9 Voltage";
+CM_ SG_ 553 BMS_module5Cell8Volt "Module 5 Cell 8 Voltage";
+CM_ SG_ 553 BMS_module5Cell7Volt "Module 5 Cell 7 Voltage";
+CM_ SG_ 553 BMS_counterMsg553 "Counter Message 553";
+CM_ SG_ 554 BMS_module5Cell12Volt "Module 5 Cell 12 Voltage";
+CM_ SG_ 554 BMS_module5Cell11Volt "Module 5 Cell 11 Voltage";
+CM_ SG_ 554 BMS_module5Cell10Volt "Module 5 Cell 10 Voltage";
+CM_ SG_ 554 BMS_counterMsg554 "Counter Message 554";
+CM_ SG_ 555 BMS_module5Cell15Volt "Module 5 Cell 15 Voltage";
+CM_ SG_ 555 BMS_module5Cell14Volt "Module 5 Cell 14 Voltage";
+CM_ SG_ 555 BMS_module5Cell13Volt "Module 5 Cell 13 Voltage";
+CM_ SG_ 555 BMS_counterMsg555 "Counter Message 555";
+CM_ SG_ 556 BMS_module5Cell18Volt "Module 5 Cell 18 Voltage";
+CM_ SG_ 556 BMS_module5Cell17Volt "Module 5 Cell 17 Voltage";
+CM_ SG_ 556 BMS_module5Cell16Volt "Module 5 Cell 16 Voltage";
+CM_ SG_ 556 BMS_counterMsg556 "Counter Message 556";
+CM_ SG_ 557 BMS_module5Cell3Temp "Module 5 Cell 3 Temperature";
+CM_ SG_ 557 BMS_module5Cell2Temp "Module 5 Cell 2 Temperature";
+CM_ SG_ 557 BMS_module5Cell1Temp "Module 5 Cell 1 Temperature";
+CM_ SG_ 557 BMS_counterMsg557 "Counter Message 557";
+CM_ SG_ 558 BMS_module5Cell6Temp "Module 5 Cell 6 Temperature";
+CM_ SG_ 558 BMS_module5Cell5Temp "Module 5 Cell 5 Temperature";
+CM_ SG_ 558 BMS_module5Cell4Temp "Module 5 Cell 4 Temperature";
+CM_ SG_ 558 BMS_counterMsg558 "Counter Message 558";
+CM_ SG_ 559 BMS_module5Cell9Temp "Module 5 Cell 9 Temperature";
+CM_ SG_ 559 BMS_module5Cell8Temp "Module 5 Cell 8 Temperature";
+CM_ SG_ 559 BMS_module5Cell7Temp "Module 5 Cell 7 Temperature";
+CM_ SG_ 559 BMS_counterMsg559 "Counter Message 559";
+CM_ SG_ 560 BMS_module5Cell12Temp "Module 5 Cell 12 Temperature";
+CM_ SG_ 560 BMS_module5Cell11Temp "Module 5 Cell 11 Temperature";
+CM_ SG_ 560 BMS_module5Cell10Temp "Module 5 Cell 10 Temperature";
+CM_ SG_ 560 BMS_counterMsg560 "Counter Message 560";
+CM_ SG_ 561 BMS_module5Cell15Temp "Module 5 Cell 15 Temperature";
+CM_ SG_ 561 BMS_module5Cell14Temp "Module 5 Cell 14 Temperature";
+CM_ SG_ 561 BMS_module5Cell13Temp "Module 5 Cell 13 Temperature";
+CM_ SG_ 561 BMS_counterMsg561 "Counter Message 561";
+CM_ SG_ 562 BMS_module5Cell18Temp "Module 5 Cell 18 Temperature";
+CM_ SG_ 562 BMS_module5Cell17Temp "Module 5 Cell 17 Temperature";
+CM_ SG_ 562 BMS_module5Cell16Temp "Module 5 Cell 16 Temperature";
+CM_ SG_ 562 BMS_counterMsg562 "Counter Message 562";
+CM_ SG_ 563 BMS_module1voltageBMSS "Module 1 Voltage from BMS-S to BMS-M";
+CM_ SG_ 563 BMS_counterMsg563 "Counter Message 563";
+CM_ SG_ 564 BMS_module2voltageBMSS "Module 2 Voltage from BMS-S to BMS-M";
+CM_ SG_ 564 BMS_counterMsg564 "Counter Message 564";
+CM_ SG_ 565 BMS_module3voltageBMSS "Module 3 Voltage from BMS-S to BMS-M";
+CM_ SG_ 565 BMS_counterMsg565 "Counter Message 565";
+CM_ SG_ 566 BMS_module4voltageBMSS "Module 4 Voltage from BMS-S to BMS-M";
+CM_ SG_ 566 BMS_counterMsg566 "Counter Message 566";
+CM_ SG_ 567 BMS_module5voltageBMSS "Module 5 Voltage from BMS-S to BMS-M";
+CM_ SG_ 567 BMS_counterMsg567 "Counter Message 567";
 CM_ SG_ 250 DD_teensyTemp "Teensy Board Temp";
 CM_ SG_ 250 DD_boardTemp "Board Temp";
 CM_ SG_ 250 DD_counterMsg250 "Counter Message 250";
@@ -956,8 +1069,7 @@ CM_ SG_ 451 MM52_ax "Acceleration X Axis";
 CM_ SG_ 451 MM52_rollRate "Roll Rate";
 CM_ SG_ 400 PDM_coolingOverrideActive "Cooling Override State";
 CM_ SG_ 400 PDM_vehicleState "0 = off, 1 = on, 2 = cooldown";
-CM_ SG_ 400 PDM_brakelightVoltAvg "Brakelight Average Voltage";
-CM_ SG_ 400 PDM_boardTemp "Board Temperature";
+CM_ SG_ 400 PDM_teensyTemp "Board Temperature";
 CM_ SG_ 400 PDM_counterMsg400 "Counter Message 400";
 CM_ SG_ 401 PDM_pdmCurrentMin "PDM Minimum Current";
 CM_ SG_ 401 PDM_pdmCurrentMax "PDM Maximum Current";
@@ -967,54 +1079,85 @@ CM_ SG_ 402 PDM_pdmVoltMin "PDM Minimum Voltage";
 CM_ SG_ 402 PDM_pdmVoltMax "PDM Maximum Voltage";
 CM_ SG_ 402 PDM_pdmVoltAvg "PDM Average Voltage";
 CM_ SG_ 402 PDM_counterMsg402 "Counter Message 402";
-CM_ SG_ 403 PDM_fanRightCurrentMin "Right Fan Minimum Current";
-CM_ SG_ 403 PDM_fanRightCurrentMax "Right Fan Maximum Current";
-CM_ SG_ 403 PDM_fanRightCurrentAvg "Right Fan Average Current";
+CM_ SG_ 403 PDM_ch1CurrentMin "Channel 1 Minimum Current";
+CM_ SG_ 403 PDM_ch1CurrentMax "Channel 1 Maximum Current";
+CM_ SG_ 403 PDM_ch1CurrentAvg "Channel 1 Average Current";
 CM_ SG_ 403 PDM_counterMsg403 "Counter Message 403";
-CM_ SG_ 404 PDM_fanRightVoltMin "Right Fan Minimum Voltage";
-CM_ SG_ 404 PDM_fanRightVoltMax "Right Fan Maximum Voltage";
-CM_ SG_ 404 PDM_fanRightVoltAvg "Right Fan Average Voltage";
+CM_ SG_ 404 PDM_ch1VoltMin "Channel 1 Minimum Voltage";
+CM_ SG_ 404 PDM_ch1VoltMax "Channel 1 Maximum Voltage";
+CM_ SG_ 404 PDM_ch1VoltAvg "Channel 1 Average Voltage";
 CM_ SG_ 404 PDM_counterMsg404 "Counter Message 404";
-CM_ SG_ 405 PDM_fanLeftCurrentMin "Left Fan Minimum Current";
-CM_ SG_ 405 PDM_fanLeftCurrentMax "Left Fan Maximum Current";
-CM_ SG_ 405 PDM_fanLeftCurrentAvg "Left Fan Average Current";
+CM_ SG_ 405 PDM_ch2CurrentMin "Channel 2 Minimum Current";
+CM_ SG_ 405 PDM_ch2CurrentMax "Channel 2 Maximum Current";
+CM_ SG_ 405 PDM_ch2CurrentAvg "Channel 2 Average Current";
 CM_ SG_ 405 PDM_counterMsg405 "Counter Message 405";
-CM_ SG_ 406 PDM_fanLeftVoltMin "Left Fan Minimum Voltage";
-CM_ SG_ 406 PDM_fanLeftVoltMax "Left Fan Maximum Voltage";
-CM_ SG_ 406 PDM_fanLeftVoltAvg "Left Fan Average Voltage";
+CM_ SG_ 406 PDM_ch2VoltMin "Channel 2 Minimum Voltage";
+CM_ SG_ 406 PDM_ch2VoltMax "Channel 2 Maximum Voltage";
+CM_ SG_ 406 PDM_ch2VoltAvg "Channel 2 Average Voltage";
 CM_ SG_ 406 PDM_counterMsg406 "Counter Message 406";
-CM_ SG_ 407 PDM_wpCurrentMin "Water Pump Minimum Current";
-CM_ SG_ 407 PDM_wpCurrentMax "Water Pump Maximum Current";
-CM_ SG_ 407 PDM_wpCurrentAvg "Water Pump Average Current";
+CM_ SG_ 407 PDM_ch3CurrentMin "Channel 3 Minimum Current";
+CM_ SG_ 407 PDM_ch3CurrentMax "Channel 3 Maximum Current";
+CM_ SG_ 407 PDM_ch3CurrentAvg "Channel 3 Average Current";
 CM_ SG_ 407 PDM_counterMsg407 "Counter Message 407";
-CM_ SG_ 408 PDM_wpVoltMin "Water Pump Minimum Voltage";
-CM_ SG_ 408 PDM_wpVoltMax "Water Pump Maximum Voltage";
-CM_ SG_ 408 PDM_wpVoltAvg "Water Pump Average Voltage";
+CM_ SG_ 408 PDM_ch3VoltMin "Channel 3 Minimum Voltage";
+CM_ SG_ 408 PDM_ch3VoltMax "Channel 3 Maximum Voltage";
+CM_ SG_ 408 PDM_ch3VoltAvg "Channel 3 Average Voltage";
 CM_ SG_ 408 PDM_counterMsg408 "Counter Message 408";
-CM_ SG_ 409 PDM_teensyTemp "Teensy Board Temperature";
-CM_ SG_ 409 PDM_wpDutyCycle "Water Pump Duty Cycle";
-CM_ SG_ 409 PDM_fanRightDutyCycle "Right Fan Duty Cycle";
-CM_ SG_ 409 PDM_fanLeftDutyCycle "Left Fan Duty Cycle";
+CM_ SG_ 409 PDM_ch4CurrentMin "Channel 4 Minimum Current";
+CM_ SG_ 409 PDM_ch4CurrentMax "Channel 4 Maximum Current";
+CM_ SG_ 409 PDM_ch4CurrentAvg "Channel 4 Average Current";
 CM_ SG_ 409 PDM_counterMsg409 "Counter Message 409";
-CM_ SG_ 410 PDM_uptime "PDM Teensy Uptime";
-CM_ SG_ 411 PDM_glvVoltMin "GLV Minimum Voltage";
-CM_ SG_ 411 PDM_glvVoltMax "GLV Maximum Voltage";
-CM_ SG_ 411 PDM_glvVoltAvg "GLV Average Voltage";
+CM_ SG_ 410 PDM_ch4VoltMin "Channel 4 Minimum Voltage";
+CM_ SG_ 410 PDM_ch4VoltMax "Channel 4 Maximum Voltage";
+CM_ SG_ 410 PDM_ch4VoltAvg "Channel 4 Average Voltage";
+CM_ SG_ 410 PDM_counterMsg410 "Counter Message 410";
+CM_ SG_ 411 PDM_ch5CurrentMin "Channel 5 Minimum Current";
+CM_ SG_ 411 PDM_ch5CurrentMax "Channel 5 Maximum Current";
+CM_ SG_ 411 PDM_ch5CurrentAvg "Channel 5 Average Current";
 CM_ SG_ 411 PDM_counterMsg411 "Counter Message 411";
-CM_ SG_ 412 PDM_dataVoltMin "Data Minimum Voltage";
-CM_ SG_ 412 PDM_dataVoltMax "Data Maximum Voltage";
-CM_ SG_ 412 PDM_dataVoltAvg "Data Average Voltage";
+CM_ SG_ 412 PDM_ch5VoltMin "Channel 5 Minimum Voltage";
+CM_ SG_ 412 PDM_ch5VoltMax "Channel 5 Maximum Voltage";
+CM_ SG_ 412 PDM_ch5VoltAvg "Channel 5 Average Voltage";
 CM_ SG_ 412 PDM_counterMsg412 "Counter Message 412";
-CM_ SG_ 413 PDM_keepAliveVoltMin "Keep Alive Minimum Voltage";
-CM_ SG_ 413 PDM_keepAliveVoltMax "Keep Alive Maximum Voltage";
-CM_ SG_ 413 PDM_keepAliveVoltAvg "Keep Alive Average Voltage";
+CM_ SG_ 413 PDM_ch6CurrentMin "Channel 6 Minimum Current";
+CM_ SG_ 413 PDM_ch6CurrentMax "Channel 6 Maximum Current";
+CM_ SG_ 413 PDM_ch6CurrentAvg "Channel 6 Average Current";
 CM_ SG_ 413 PDM_counterMsg413 "Counter Message 413";
-CM_ SG_ 414 PDM_runtimeMinutes "Runtime Minutes";
-CM_ SG_ 414 PDM_runtimeHours "Runtime Hours";
-CM_ SG_ 414 PDM_carMiles "Car Miles";
+CM_ SG_ 414 PDM_ch6VoltMin "Channel 6 Minimum Voltage";
+CM_ SG_ 414 PDM_ch6VoltMax "Channel 6 Maximum Voltage";
+CM_ SG_ 414 PDM_ch6VoltAvg "Channel 6 Average Voltage";
 CM_ SG_ 414 PDM_counterMsg414 "Counter Message 414";
+CM_ SG_ 415 PDM_ch7CurrentMin "Channel 7 Minimum Current";
+CM_ SG_ 415 PDM_ch7CurrentMax "Channel 7 Maximum Current";
+CM_ SG_ 415 PDM_ch7CurrentAvg "Channel 7 Average Current";
+CM_ SG_ 415 PDM_counterMsg415 "Counter Message 415";
+CM_ SG_ 416 PDM_ch7VoltMin "Channel 7 Minimum Voltage";
+CM_ SG_ 416 PDM_ch7VoltMax "Channel 7 Maximum Voltage";
+CM_ SG_ 416 PDM_ch7VoltAvg "Channel 7 Average Voltage";
+CM_ SG_ 416 PDM_counterMsg416 "Counter Message 416";
+CM_ SG_ 417 PDM_ch8CurrentMin "Channel 8 Minimum Current";
+CM_ SG_ 417 PDM_ch8CurrentMax "Channel 8 Maximum Current";
+CM_ SG_ 417 PDM_ch8CurrentAvg "Channel 8 Average Current";
+CM_ SG_ 417 PDM_counterMsg417 "Counter Message 417";
+CM_ SG_ 418 PDM_ch8VoltMin "Channel 8 Minimum Voltage";
+CM_ SG_ 418 PDM_ch8VoltMax "Channel 8 Maximum Voltage";
+CM_ SG_ 418 PDM_ch8VoltAvg "Channel 8 Average Voltage";
+CM_ SG_ 418 PDM_counterMsg418 "Counter Message 418";
+CM_ SG_ 419 PDM_brakelightCurrentMin "Brakelight Minimum Current";
+CM_ SG_ 419 PDM_brakelightCurrentMax "Brakelight Maximum Current";
+CM_ SG_ 419 PDM_brakelightCurrentAvg "Brakelight Average Current";
+CM_ SG_ 419 PDM_counterMsg419 "Counter Message 419";
+CM_ SG_ 420 PDM_brakelightVoltMin "Brakelight Minimum Voltage";
+CM_ SG_ 420 PDM_brakelightVoltMax "Brakelight Maximum Voltage";
+CM_ SG_ 420 PDM_brakelightVoltAvg "Brakelight Average Voltage";
+CM_ SG_ 420 PDM_counterMsg420 "Counter Message 420";
+CM_ SG_ 421 PDM_wp2DutyCycle "Water Pump 2 Duty Cycle";
+CM_ SG_ 421 PDM_wp1DutyCycle "Water Pump 1 Duty Cycle";
+CM_ SG_ 421 PDM_fanRightDutyCycle "Right Fan Duty Cycle";
+CM_ SG_ 421 PDM_fanLeftDutyCycle "Left Fan Duty Cycle";
+CM_ SG_ 421 PDM_counterMsg421 "Counter Message 421";
+CM_ SG_ 422 PDM_uptime "PDM Teensy Uptime";
 BA_DEF_  "MultiplexExtEnabled" ENUM  "No","Yes";
 BA_DEF_  "BusType" STRING ;
 BA_DEF_DEF_  "MultiplexExtEnabled" "No";
 BA_DEF_DEF_  "BusType" "CAN";
-

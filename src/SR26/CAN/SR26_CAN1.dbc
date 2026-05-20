@@ -1,42 +1,41 @@
 VERSION ""
 
-
 NS_ : 
-	NS_DESC_
-	CM_
-	BA_DEF_
-	BA_
-	VAL_
-	CAT_DEF_
-	CAT_
-	FILTER
-	BA_DEF_DEF_
-	EV_DATA_
-	ENVVAR_DATA_
-	SGTYPE_
-	SGTYPE_VAL_
-	BA_DEF_SGTYPE_
-	BA_SGTYPE_
-	SIG_TYPE_REF_
-	VAL_TABLE_
-	SIG_GROUP_
-	SIG_VALTYPE_
-	SIGTYPE_VALTYPE_
-	BO_TX_BU_
-	BA_DEF_REL_
-	BA_REL_
-	BA_DEF_DEF_REL_
-	BU_SG_REL_
-	BU_EV_REL_
-	BU_BO_REL_
-	SG_MUL_VAL_
+    NS_DESC_
+    CM_
+    BA_DEF_
+    BA_
+    VAL_
+    CAT_DEF_
+    CAT_
+    FILTER
+    BA_DEF_DEF_
+    EV_DATA_
+    ENVVAR_DATA_
+    SGTYPE_
+    SGTYPE_VAL_
+    BA_DEF_SGTYPE_
+    BA_SGTYPE_
+    SIG_TYPE_REF_
+    VAL_TABLE_
+    SIG_GROUP_
+    SIG_VALTYPE_
+    SIGTYPE_VALTYPE_
+    BO_TX_BU_
+    BA_DEF_REL_
+    BA_REL_
+    BA_DEF_DEF_REL_
+    BU_SG_REL_
+    BU_EV_REL_
+    BU_BO_REL_
+    SG_MUL_VAL_
 
 BS_:
 
 BU_: VCU PM C50 LWS DCDC
 
 
-BO_ 402690000 VCU_18008FD0: 8 VCU
+BO_ 2550173648 VCU_18008FD0: 8 VCU
  SG_ VCU_dcdcProtect : 2|2@1+ (1,0) [0|0] "" Vector__XXX
  SG_ VCU_dcdcEnable : 0|2@1+ (1,0) [0|0] "" Vector__XXX
 
@@ -226,30 +225,30 @@ BO_ 688 LWS_688: 8 LWS
  SG_ LWS_speed : 16|8@1+ (4,0) [0|1016] "deg/s" Vector__XXX
  SG_ LWS_angle : 0|16@1- (0.1,0) [-780|780] "deg" Vector__XXX
 
-BO_ 402772111 DCDC_1801D08F: 8 DCDC
- SG_ DCDC_temperature : 55|16@0- (0.1,0) [-3276.8|3276.7] "degC" Vector__XXX
- SG_ DCDC_outputOverCurrent : 46|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_outputUnderVoltage : 45|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_outputOverVoltage : 44|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_inputUnderVoltage : 43|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_inputOverVoltage : 42|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_overTempError : 41|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_tempWarning : 40|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_hvilError : 39|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_fanControl2 : 38|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_shutOffError : 37|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_fanControl1 : 36|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_canError : 35|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_hardwareFault : 34|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_status : 33|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_ready : 32|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ DCDC_currentOutput : 23|16@0+ (0.1,0) [0|6553.5] "A" Vector__XXX
- SG_ DCDC_voltageOutput : 7|16@0+ (0.1,0) [0|6553.5] "V" Vector__XXX
+BO_ 2550255759 DCDC_1801D08F: 8 DCDC
+ SG_ DCDC_temperature : 56|8@1- (0.1,0) [0|0] "degC" Vector__XXX
+ SG_ DCDC_outputOverCurrent : 46|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_outputUnderVoltage : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_outputOverVoltage : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_inputUnderVoltage : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_inputOverVoltage : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_overTempError : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_tempWarning : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_hvilError : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_fanControl2 : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_shutOffError : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_fanControl1 : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_canError : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_hardwareFault : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_status : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_ready : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DCDC_currentOutput : 16|16@1+ (0.1,0) [0|0] "A" Vector__XXX
+ SG_ DCDC_voltageOutput : 0|16@1+ (0.1,0) [0|0] "V" Vector__XXX
 
 
 
-CM_ SG_ 402690000 VCU_dcdcProtect "Protect command - once commanded, converter won't work until restart (decimal); 1: protection confirmed";
-CM_ SG_ 402690000 VCU_dcdcEnable "Enable command (decimal); 1: enable, 2: disable ";
+CM_ SG_ 2550173648 VCU_dcdcProtect "Protect command - once commanded, converter won't work until restart (decimal); 1: protection confirmed";
+CM_ SG_ 2550173648 VCU_dcdcEnable "Enable command (decimal); 1: enable, 2: disable ";
 CM_ SG_ 192 VCU_torqueLimitCommand "Torque Limit - set to 0 to keep default";
 CM_ SG_ 192 VCU_counterMsg192 "Counter Message 192 (reserved for future use/other models)";
 CM_ SG_ 192 VCU_speedModeEnable "0 = No Change Mode, 1 = Change to Speed Mode from Torque Mode";
@@ -369,24 +368,24 @@ CM_ SG_ 688 LWS_cal "Consult truth table";
 CM_ SG_ 688 LWS_ok "Consult truth table";
 CM_ SG_ 688 LWS_speed "Angular Speed";
 CM_ SG_ 688 LWS_angle "Steering Wheel Angle";
-CM_ SG_ 402772111 DCDC_temperature "DCDC temperature";
-CM_ SG_ 402772111 DCDC_outputOverCurrent "DCDC output over current; 0: no error, 1: error";
-CM_ SG_ 402772111 DCDC_outputUnderVoltage "DCDC output under voltage; 0: no error, 1: error";
-CM_ SG_ 402772111 DCDC_outputOverVoltage "DCDC output over voltage; 0: no error, 1: error";
-CM_ SG_ 402772111 DCDC_inputUnderVoltage "DCDC input under voltage; 0: no error, 1: error";
-CM_ SG_ 402772111 DCDC_inputOverVoltage "DCDC input over voltage; 0: no error, 1: error";
-CM_ SG_ 402772111 DCDC_overTempError "DCDC over temp error; 0: no error, 1: error";
-CM_ SG_ 402772111 DCDC_tempWarning "DCDC over temp warning; 0: no warning, 1: warning";
-CM_ SG_ 402772111 DCDC_hvilError "High Voltage Interlock error; 0: no error, 1: error";
-CM_ SG_ 402772111 DCDC_fanControl2 "DCDC fan control; 0: off, 1: on";
-CM_ SG_ 402772111 DCDC_shutOffError "DCDC shut off error; 0: no error, 1: error ";
-CM_ SG_ 402772111 DCDC_fanControl1 "DCDC fan control; 0: off, 1: on";
-CM_ SG_ 402772111 DCDC_canError "DCDC CAN error; 0: no error, 1: error";
-CM_ SG_ 402772111 DCDC_hardwareFault "DCDC hardware error; 0: no error, 1: error";
-CM_ SG_ 402772111 DCDC_status "DCDC state; 0: stopped, 1: working";
-CM_ SG_ 402772111 DCDC_ready "DCDC initialization status; 0: incomplete, 1: complete";
-CM_ SG_ 402772111 DCDC_currentOutput "DCDC output current";
-CM_ SG_ 402772111 DCDC_voltageOutput "DCDC output voltage";
+CM_ SG_ 2550255759 DCDC_temperature "DCDC temperature";
+CM_ SG_ 2550255759 DCDC_outputOverCurrent "DCDC output over current; 0: no error, 1: error";
+CM_ SG_ 2550255759 DCDC_outputUnderVoltage "DCDC output under voltage; 0: no error, 1: error";
+CM_ SG_ 2550255759 DCDC_outputOverVoltage "DCDC output over voltage; 0: no error, 1: error";
+CM_ SG_ 2550255759 DCDC_inputUnderVoltage "DCDC input under voltage; 0: no error, 1: error";
+CM_ SG_ 2550255759 DCDC_inputOverVoltage "DCDC input over voltage; 0: no error, 1: error";
+CM_ SG_ 2550255759 DCDC_overTempError "DCDC over temp error; 0: no error, 1: error";
+CM_ SG_ 2550255759 DCDC_tempWarning "DCDC over temp warning; 0: no warning, 1: warning";
+CM_ SG_ 2550255759 DCDC_hvilError "High Voltage Interlock error; 0: no error, 1: error";
+CM_ SG_ 2550255759 DCDC_fanControl2 "DCDC fan control; 0: off, 1: on";
+CM_ SG_ 2550255759 DCDC_shutOffError "DCDC shut off error; 0: no error, 1: error ";
+CM_ SG_ 2550255759 DCDC_fanControl1 "DCDC fan control; 0: off, 1: on";
+CM_ SG_ 2550255759 DCDC_canError "DCDC CAN error; 0: no error, 1: error";
+CM_ SG_ 2550255759 DCDC_hardwareFault "DCDC hardware error; 0: no error, 1: error";
+CM_ SG_ 2550255759 DCDC_status "DCDC state; 0: stopped, 1: working";
+CM_ SG_ 2550255759 DCDC_ready "DCDC initialization status; 0: incomplete, 1: complete";
+CM_ SG_ 2550255759 DCDC_currentOutput "DCDC output current";
+CM_ SG_ 2550255759 DCDC_voltageOutput "DCDC output voltage";
 BA_DEF_  "MultiplexExtEnabled" ENUM  "No","Yes";
 BA_DEF_  "BusType" STRING ;
 BA_DEF_DEF_  "MultiplexExtEnabled" "No";
