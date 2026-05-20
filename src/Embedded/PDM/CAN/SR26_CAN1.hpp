@@ -8,8 +8,8 @@
     
 ******************************************************************************/
 
-#ifndef OUTPUT_HPP
-#define OUTPUT_HPP
+#ifndef CAN1_HPP
+#define CAN1_HPP
 
 #include <FlexCAN_T4.h>
 #include <StateCAN.h>

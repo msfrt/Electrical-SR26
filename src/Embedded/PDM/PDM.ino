@@ -1,7 +1,3 @@
-#include <PWMControl.h>
-
-// Dave Yonkers, 2022
-
 #include <EasyTimer.h>
 #include <PWMControl.h>
 #include <ReadADC.h>
@@ -21,90 +17,126 @@ static CAN_message_t rxmsg;
 #define NUM_TX_MAILBOXES 30
 #define MAX_CAN_FRAME_READ_PER_CYCLE 5  // Limit per loop iteration
 
-// Global Variable Definitions
-const int GLO_read_resolution_bits = 12;
-const int GLO_max_analog_write_pwm = 255;
+#define READ_RESOLUTION_BITS 12
+// const int GLO_max_analog_write_pwm = 255;
 
-const int GLO_brakelight_teensy_pin = 32;
-const int VCU_brakelight = 0;
-//const int GLO_data_circuit_teensy_pin = 5;
-const int GLO_NeoPixel_teensy_pin = 2;
+#define WAKE_PIN 0
 
-// New pin definitions
-const int PIN_INPUT_CTRL = 0;
-const int PIN_OUTPUT_CTRL = 20;
+#define CHANNEL1_PIN 3
+#define CHANNEL2_PIN 4
+#define CHANNEL3_PIN 5
+#define CHANNEL4_PIN 6
+#define CHANNEL5_PIN 7
+#define CHANNEL6_PIN 20
+#define CHANNEL7_PIN 19
+#define CHANNEL8_PIN 18
 
-// eFuse / DigiPot mux pins (SN74HCT138 address + enable)
-const int mux0 = 41;
-const int mux1 = 40;
-const int mux2 = 39;
-const int mux_en = 38;
+#define CHANNEL7_PWM_PIN 15
+#define CHANNEL8_PWM_PIN 14
+
+#define BRAKELIGHT_PIN 32
+
+#define MUX0 41
+#define MUX1 40
+#define MUX2 39
+#define MUX_EN 38
 
 // DigiPot SPI settings (MAX5424)
-static const uint32_t DPOT_SPI_HZ = 1000000; // 1 MHz (<= 5 MHz max for MAX5424)
+#define DPOT_SPI_HZ 1000000 // 1 MHz (<= 5 MHz max for MAX5424)
 
 // Select which DPOT/efuse channel (0..7)
 void select_efuse(uint8_t ch) {
   ch &= 0x07;
-  digitalWrite(mux0, (ch >> 0) & 1);
-  digitalWrite(mux1, (ch >> 1) & 1);
-  digitalWrite(mux2, (ch >> 2) & 1);
+  digitalWrite(MUX0, (ch >> 0) & 1);
+  digitalWrite(MUX1, (ch >> 1) & 1);
+  digitalWrite(MUX2, (ch >> 2) & 1);
 }
 
 // Set MAX5424 wiper position (0..255) on a given channel (0..7)
-void set_digipot_position(uint8_t channel, int pos) {
-  if (pos < 0) pos = 0;
-  if (pos > 255) pos = 255;
+// void set_digipot_position(uint8_t channel, int pos) {
+//   if (pos < 0) pos = 0;
+//   if (pos > 255) pos = 255;
 
-  //select_efuse(channel);
+//   //select_efuse(channel);
 
-  // Enable decoder so selected CS becomes active (assumes active-low CS)
-  digitalWrite(mux_en, HIGH);
-  pinMode(3, OUTPUT);
-  digitalWrite(3, HIGH);
-  pinMode(4, OUTPUT);
-  digitalWrite(4, HIGH);
-  pinMode(5, OUTPUT);
-  digitalWrite(5, HIGH);
-  pinMode(6, OUTPUT);
-  digitalWrite(6, HIGH);
-  pinMode(7, OUTPUT);
-  digitalWrite(7, HIGH);
+//   // Enable decoder so selected CS becomes active (assumes active-low CS)
+//   digitalWrite(mux_en, HIGH);
+//   pinMode(3, OUTPUT);
+//   digitalWrite(3, HIGH);
+//   pinMode(4, OUTPUT);
+//   digitalWrite(4, HIGH);
+//   pinMode(5, OUTPUT);
+//   digitalWrite(5, HIGH);
+//   pinMode(6, OUTPUT);
+//   digitalWrite(6, HIGH);
+//   pinMode(7, OUTPUT);
+//   digitalWrite(7, HIGH);
 
-  pinMode(32, OUTPUT);
-  digitalWrite(32, HIGH);
+//   pinMode(32, OUTPUT);
+//   digitalWrite(32, HIGH);
 
-  // Serial.println("run");
+//   SPI1.beginTransaction(SPISettings(DPOT_SPI_HZ, MSBFIRST, SPI_MODE0));
+//   SPI1.transfer((uint8_t)0x00);           // C1C0 = 00 -> write wiper register
+//   SPI1.transfer((uint8_t)0xFA);           // D7..D0
+//   SPI1.endTransaction();
+
+//   // Disable decoder to de-assert CS
+//   digitalWrite(mux_en, LOW);
+// }
+
+void digipot_setup() {
+
+  // eFuse / DPOT mux pins
+  pinMode(MUX0, OUTPUT);
+  pinMode(MUX1, OUTPUT);
+  pinMode(MUX2, OUTPUT);
+  pinMode(MUX_EN, OUTPUT);
+
+  digitalWrite(MUX_EN, HIGH);
+  digitalWrite(MUX0, LOW);
+  digitalWrite(MUX1, HIGH);
+  digitalWrite(MUX2, HIGH);
 
   SPI1.beginTransaction(SPISettings(DPOT_SPI_HZ, MSBFIRST, SPI_MODE0));
   SPI1.transfer((uint8_t)0x00);           // C1C0 = 00 -> write wiper register
   SPI1.transfer((uint8_t)0xFA);           // D7..D0
   SPI1.endTransaction();
 
-  // Serial.println("run2");
+  digitalWrite(MUX_EN, LOW);
 
-  // Disable decoder to de-assert CS
-  digitalWrite(mux_en, LOW);
 }
 
-int GLO_NeoPixel_brightness_percent = 10;
-Adafruit_NeoPixel GLO_obd_neopixel(1, GLO_NeoPixel_teensy_pin, NEO_GRB + NEO_KHZ800);
+void channel_enable(){
 
-BoardTempDiode board_temp(21, GLO_read_resolution_bits, 28.1, 594);
-EasyTimer board_temp_sample_timer(50);
+  digitalWrite(MUX_EN, HIGH);
+  pinMode(CHANNEL1_PIN, OUTPUT);
+  digitalWrite(CHANNEL1_PIN, HIGH);
+  pinMode(CHANNEL2_PIN, OUTPUT);
+  digitalWrite(CHANNEL2_PIN, HIGH);
+  pinMode(CHANNEL3_PIN, OUTPUT);
+  digitalWrite(CHANNEL3_PIN, HIGH);
+  pinMode(CHANNEL4_PIN, OUTPUT);
+  digitalWrite(CHANNEL4_PIN, HIGH);
+  pinMode(CHANNEL5_PIN, OUTPUT);
+  digitalWrite(CHANNEL5_PIN, HIGH);
 
-/*
-// EEPROM
-const int eeprom_cs_pin = 9;
-EEPROM_25LC128 eeprom(eeprom_cs_pin);
-*/
+  // wake switch is handled in harness
+  pinMode(CHANNEL6_PIN, OUTPUT);
+  digitalWrite(CHANNEL6_PIN, HIGH);
+
+  pinMode(CHANNEL7_PIN, OUTPUT);
+  digitalWrite(CHANNEL7_PIN, HIGH);
+  pinMode(CHANNEL8_PIN, OUTPUT);
+  digitalWrite(CHANNEL8_PIN, HIGH);
+
+  pinMode(BRAKELIGHT_PIN, OUTPUT);
+  digitalWrite(BRAKELIGHT_PIN, HIGH);
+
+}
 
 // Timer Definitions
 EasyTimer engine_time_update_timer(1);
 EasyTimer odometer_update_timer(2);
-
-// EEPROM Signals
-#include "EEPROM_sigs.hpp"
 
 // Sensor Sampling Definitions
 #include "sensors.hpp"
@@ -121,11 +153,11 @@ EasyTimer odometer_update_timer(2);
 #include "misc_fcns.hpp"
 
 // On-Board Diagnostics
-#include "obd.hpp"
+// #include "obd.hpp"
 
 // Debugging Timer
-EasyTimer debug(2);
-const bool GLO_debug = false;
+// EasyTimer debug(2);
+// const bool GLO_debug = false;
 
 // Global fan and wp Speed Signal (Controlled by CAN)
 int fan_signalL = 3; // Default value
@@ -134,67 +166,34 @@ int wp_signal1 = 3;
 int wp_signal2 = 3;
 
 void setup() { //high 18 low 26
-  analogReadResolution(GLO_read_resolution_bits);
-
-  // pin 0 input, pin 20 output
-  pinMode(PIN_INPUT_CTRL, INPUT_PULLUP);
-  pinMode(PIN_OUTPUT_CTRL, OUTPUT);
-  digitalWrite(PIN_OUTPUT_CTRL, LOW);
-
-  // eFuse / DPOT mux pins
-  pinMode(mux0, OUTPUT);
-  pinMode(mux1, OUTPUT);
-  pinMode(mux2, OUTPUT);
-  pinMode(mux_en, OUTPUT);
-
-  digitalWrite(mux_en, HIGH);
-  digitalWrite(mux0, LOW);
-  digitalWrite(mux1, HIGH);
-  digitalWrite(mux2, HIGH);
-
-  // begin OBD Neopixel
-  GLO_obd_neopixel.begin();
-  GLO_obd_neopixel.setBrightness(map(GLO_NeoPixel_brightness_percent, 0, 100, 0, 255));
-  GLO_obd_neopixel.setPixelColor(0, 255, 0, 0); // red
-  GLO_obd_neopixel.show();
+  analogReadResolution(READ_RESOLUTION_BITS);
 
   // Initialize serial communication
   Serial.begin(112500);
 
-  //initialize the CAN Bus and set its baud rate to 1Mb
   can1.begin();
-  // can1.setBaudRate(1000000);
   can1.setBaudRate(500000);
   can2.begin();
   can2.setBaudRate(1000000);
+  
   set_mailboxes();
 
   // initialize the ADC sensors
   initialize_ADCs();
+  // Serial.println("ADCs Initialized");
 
-  // initialize SPI communication
-  Serial.println("before spi begin");
-
-  SPI1.setSCK(27);
-  pinMode(26, OUTPUT);
-  SPI1.setMOSI(26);
+  SPI.begin();
   SPI1.begin();
+  // Serial.println("SPI Began");
 
-  Serial.println("after spi begin");
+  channel_enable();
+  // Serial.println("Channels Enabled");
 
-  // initialize brakelight pin
-  pinMode(GLO_brakelight_teensy_pin, OUTPUT);
-
-  GLO_obd_neopixel.setPixelColor(0, 0, 255, 0); // green
-  GLO_obd_neopixel.show();
-
-  // board temp initialization
-  board_temp.begin();
+  digipot_setup();
+  // Serial.println("Digipots Setup");
 
   // neat brakelight animation
   brakelight_start();
-
-  set_digipot_position(4, 254);
 }
 
 // placeholder function for undefined
@@ -206,9 +205,6 @@ void odometer(float speed, int mileage) {
   Serial.println("Odometer update (placeholder function)");
 }
 
-const bool testMode = true;
-const int testNum = 1;
-
 int lastCounter = VCU_counterMsg201.can_value();
 float lastT = 0.0;
 bool vcu_timeout = false;
@@ -216,92 +212,56 @@ bool has_received_vcu_msg = false;
 float elapsed = 0;
 
 void loop() {
-  // pin 0 controls pin 20
-  // with INPUT_PULLUP:
-  // pin 20 goes HIGH when pin 0 is pulled LOW
-  if (digitalRead(PIN_INPUT_CTRL) == LOW) {
-    digitalWrite(PIN_OUTPUT_CTRL, HIGH);
-  } else {
-    digitalWrite(PIN_OUTPUT_CTRL, LOW);
-  }
 
-  
+  sample_ADCs();
 
-  //sample_ADCs();
-  // if (board_temp_sample_timer.isup()) board_temp.sample();
+  // if (debug.isup()){
+  //   // Serial.println("Imon_pdm: ");
+  //   // Serial.println(Imon_pdm.avg());
+
+  //   Serial.println("pdm_volt_sens: ");
+  //   Serial.println(pdm_volt_sens.avg());
+
+  //   // Serial.println("brakelight_volt_sens: ");
+  //   // Serial.println(brakelight_volt_sens.avg());
+
+  //   // Serial.println("Imon_brakelight: ");
+  //   // Serial.println(Imon_brakelight.avg());
+    
+  //   Serial.println("volt_ch6: ");
+  //   Serial.println(volt_ch6.avg());
+
+  //   Serial.println("Imon_ch6: ");
+  //   Serial.println(Imon_ch6.avg());
+  // }
+
   read_CAN();
 
   brakelight_run();
-  // digitalWrite(GLO_brakelight_teensy_pin, LOW);
-  // Serial.print("brakelight volt sens: ");
-  // Serial.println(brakelight_volt_sens.avg());
-/*
-  Serial.print("brakelight volt sens: ");
-  Serial.println(brakelight_volt_sens.avg());
-  Serial.print("pdm curr sens: ");
-  Serial.println(Imon_pdm.avg());
-  Serial.print("volt ch1 sens: ");
-  Serial.println(volt_ch1.avg());
-  Serial.println("");
-*/
 
-  // static EasyTimer efuse_on_off(1);
-
-  // static bool efuse_on = true;
-
-  /*
-  if (efuse_on_off.isup()) {
-    if (efuse_on) {
-      digitalWrite(7, LOW);
-      Serial.println("LOW");
-      efuse_on = false;
-    } else {
-      digitalWrite(7, HIGH);
-      Serial.println("HIGH");
-      efuse_on = true;
-    }
-
+  elapsed = (millis() - lastT);
+  if (has_received_vcu_msg == false) {
+    elapsed = 0;
   }
-  */
+  if (VCU_counterMsg201.can_value() != lastCounter) {
+    lastT = millis();
+    lastCounter = VCU_counterMsg201.can_value();
+    has_received_vcu_msg = true;
+  }
 
-  // elapsed = (millis() - lastT);
-  // if (has_received_vcu_msg == false) {
-  //   elapsed = 0;
-  // }
-  // if (VCU_counterMsg201.can_value() != lastCounter) {
-  //   lastT = millis();
-  //   lastCounter = VCU_counterMsg201.can_value();
-  //   has_received_vcu_msg = true;
-  // }
-
-  // if (elapsed > 300 && has_received_vcu_msg == true) {
-  //   vcu_timeout = true;
-  //   Serial.println("timeout");
-  // }
+  if (elapsed > 300 && has_received_vcu_msg == true) {
+    vcu_timeout = true;
+    // Serial.println("timeout");
+  }
 
   // if (vcu_timeout == true) {
   //   Serial.println("timeout");
   // }
 
-  // if (testMode) {
-  //   if (testNum == 1) {
-  //     //Serial.println(PDM_fanRightDutyCycle.can_value());
-  //     PDM_fanRightDutyCycle.set_can_value(100);
-  //     fan_signalL = PDM_fanRightDutyCycle.can_value();
-  //     send_can2();
-  //   } else if (testNum == 2) {
-  //     fan_signalL = vcu_timeout ? 0 : VCU_radFanLDuty.can_value() / 10.0;
-  //     fan_signalR = vcu_timeout ? 0 : VCU_radFanRDuty.can_value() / 10.0;
-  //     wp_signal1   = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
-  //     wp_signal2   = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
-  //     send_can2();
-  //   }
-  // } else {
-  //   send_can2();
-  // }
-
-  // wp_signal1 = 100;
-  // wp_signal2 = 100;
+  fan_signalL = vcu_timeout ? 0 : VCU_radFanLDuty.can_value() / 10.0;
+  fan_signalR = vcu_timeout ? 0 : VCU_radFanRDuty.can_value() / 10.0;
+  wp_signal1 = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
+  wp_signal2 = vcu_timeout ? 0 : VCU_waterPumpDuty.can_value() / 10.0;
 
   updateFanSpeed(fan_signalL, fan_signalR, wp_signal1, wp_signal2);
 
@@ -310,25 +270,75 @@ void loop() {
   wp1_override = wp_signal1;
   wp2_override = wp_signal2;
 
-  fan_left.set_pwm(2);
-  fan_right.set_pwm(2);
+  // water_pump1.set_pwm(0,0,2, 80);
+  // water_pump1.set_pwm(0,0,2, 80);
+
+  // fan_left.set_pwm(0, 0, 2, 100);
+  // fan_right.set_pwm(0, 0, 2, 100);
+  send_can2();
 }
 
 void set_mailboxes() {
-  // can2.setMaxMB(64);
-  // can2.enableFIFO();
-  // can2.setMB(MB4, RX, STD);
-  // can2.setMB(MB5, RX, STD);
-  // can2.setMB(MB6, RX, STD);
-  // can2.setMB(MB7, RX, STD);
-  // can2.setMB(MB8, RX, STD);
-  // can2.setMB(MB9, RX, STD);
-  // can2.setMB(MB10, RX, STD);
-  // can2.setMB(MB11, RX, STD);
-  // can2.setMB(MB12, RX, EXT);
-  // can2.setMB(MB13, RX, EXT);
-  // can2.setMB(MB14, RX, EXT);
-  // can2.setMB(MB15, RX, EXT);
+  // to view mailbox status, you can use the member function mailboxStatus().
+  // Don't put it in a fast loop, though, because you may actually affect how
+  // the chips moves things around
+
+  can1.setMaxMB(64);  // use all mailboxes of course
+  can2.setMaxMB(64);
+
+  for (int i = 0; i < NUM_RX_STD_MAILBOXES; i++) {
+    can1.setMB((FLEXCAN_MAILBOX)i, RX, STD);
+    can2.setMB((FLEXCAN_MAILBOX)i, RX, STD);
+  }
+  for (int i = NUM_RX_STD_MAILBOXES;
+       i < (NUM_RX_STD_MAILBOXES + NUM_RX_EXT_MAILBOXES); i++) {
+    can1.setMB((FLEXCAN_MAILBOX)i, RX, EXT);
+    can2.setMB((FLEXCAN_MAILBOX)i, RX, EXT);
+  }
+  for (int i = (NUM_RX_STD_MAILBOXES + NUM_RX_EXT_MAILBOXES);
+       i < (NUM_RX_STD_MAILBOXES + NUM_RX_EXT_MAILBOXES + NUM_TX_MAILBOXES);
+       i++) {
+    can1.setMB((FLEXCAN_MAILBOX)i, TX, STD);
+    can2.setMB((FLEXCAN_MAILBOX)i, TX, STD);
+  }
+
+  // be sure to assign at least one mailbox to each message that you want to
+  // read. filtering allows us to avoid using clock cycles to read messages that
+  // we have no interest in. it also reserves a slot for messages as they are
+  // recieved.
+  can1.setMBFilter(REJECT_ALL);
+  can1.setMBFilter(MB0, VCU_radFanLDuty.get_msg_id());
+  can1.setMBFilter(MB1, VCU_brakeLightCmd.get_msg_id());
+  can1.setMBFilter(MB2, 0);
+  can1.setMBFilter(MB3, 0);
+  can1.setMBFilter(MB4, 0);
+  can1.setMBFilter(MB5, 0);
+  can1.setMBFilter(MB6, 0);
+  can1.setMBFilter(MB7, 0);
+  can1.setMBFilter(MB8, 0);
+  can1.setMBFilter(MB9, 0);
+  can1.setMBFilter(MB10, 0);
+  can1.setMBFilter(MB11, 0);
+  can1.setMBFilter(MB12, 0);
+  can1.setMBFilter(MB13, 0);
+  can1.setMBFilter(MB14, 0);
+
+  can2.setMBFilter(REJECT_ALL);
+  can2.setMBFilter(MB0, 0);
+  can2.setMBFilter(MB1, 0);
+  can2.setMBFilter(MB2, 0);
+  can2.setMBFilter(MB3, 0); 
+  can2.setMBFilter(MB4, 0);
+  can2.setMBFilter(MB5, 0);
+  can2.setMBFilter(MB6, 0);
+  can2.setMBFilter(MB7, 0);
+  can2.setMBFilter(MB8, 0);
+  can2.setMBFilter(MB9, 0);
+  can2.setMBFilter(MB10, 0);
+  can2.setMBFilter(MB11, 0);
+  can2.setMBFilter(MB12, 0);
+  can2.setMBFilter(MB13, 0);
+  can2.setMBFilter(MB14, 0);
 }
 
 void read_CAN() {
@@ -339,8 +349,8 @@ void read_CAN() {
     count++;
   }
 
-  // while (can2.read(rxmsg) && count < MAX_CAN_FRAME_READ_PER_CYCLE) {
-  //   decode_SR26_CAN2(rxmsg);
-  //   count++;
-  // }
+  while (can2.read(rxmsg) && count < MAX_CAN_FRAME_READ_PER_CYCLE) {
+    decode_SR26_CAN2(rxmsg);
+    count++;
+  }
 }
