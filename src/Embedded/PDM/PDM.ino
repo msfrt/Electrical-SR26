@@ -29,7 +29,7 @@ const int GLO_max_analog_write_pwm = 255;
 const int GLO_brakelight_teensy_pin = 32;
 const int VCU_brakelight = 0;
 //const int GLO_data_circuit_teensy_pin = 5;
-const int GLO_NeoPixel_teensy_pin = 2;
+// const int GLO_NeoPixel_teensy_pin = 2;
 
 // New pin definitions
 const int PIN_INPUT_CTRL = 0;
@@ -88,11 +88,11 @@ void set_digipot_position(uint8_t channel, int pos) {
   digitalWrite(mux_en, LOW);
 }
 
-int GLO_NeoPixel_brightness_percent = 10;
-Adafruit_NeoPixel GLO_obd_neopixel(1, GLO_NeoPixel_teensy_pin, NEO_GRB + NEO_KHZ800);
+// int GLO_NeoPixel_brightness_percent = 10;
+// Adafruit_NeoPixel GLO_obd_neopixel(1, GLO_NeoPixel_teensy_pin, NEO_GRB + NEO_KHZ800);
 
-BoardTempDiode board_temp(21, GLO_read_resolution_bits, 28.1, 594);
-EasyTimer board_temp_sample_timer(50);
+// BoardTempDiode board_temp(21, GLO_read_resolution_bits, 28.1, 594);
+// EasyTimer board_temp_sample_timer(50);
 
 /*
 // EEPROM
@@ -105,7 +105,7 @@ EasyTimer engine_time_update_timer(1);
 EasyTimer odometer_update_timer(2);
 
 // EEPROM Signals
-#include "EEPROM_sigs.hpp"
+// #include "EEPROM_sigs.hpp"
 
 // Sensor Sampling Definitions
 #include "sensors.hpp"
@@ -122,7 +122,7 @@ EasyTimer odometer_update_timer(2);
 #include "misc_fcns.hpp"
 
 // On-Board Diagnostics
-#include "obd.hpp"
+// #include "obd.hpp"
 
 // Debugging Timer
 EasyTimer debug(2);
@@ -154,10 +154,10 @@ void setup() { //high 18 low 26
   digitalWrite(mux2, HIGH);
 
   // begin OBD Neopixel
-  GLO_obd_neopixel.begin();
-  GLO_obd_neopixel.setBrightness(map(GLO_NeoPixel_brightness_percent, 0, 100, 0, 255));
-  GLO_obd_neopixel.setPixelColor(0, 255, 0, 0); // red
-  GLO_obd_neopixel.show();
+  // GLO_obd_neopixel.begin();
+  // GLO_obd_neopixel.setBrightness(map(GLO_NeoPixel_brightness_percent, 0, 100, 0, 255));
+  // GLO_obd_neopixel.setPixelColor(0, 255, 0, 0); // red
+  // GLO_obd_neopixel.show();
 
   // Initialize serial communication
   Serial.begin(112500);
@@ -174,23 +174,25 @@ void setup() { //high 18 low 26
   initialize_ADCs();
 
   // initialize SPI communication
-  Serial.println("before spi begin");
+  // Serial.println("before spi begin");
+
+  SPI.begin();
 
   SPI1.setSCK(27);
   pinMode(26, OUTPUT);
   SPI1.setMOSI(26);
   SPI1.begin();
 
-  Serial.println("after spi begin");
+  // Serial.println("after spi begin");
 
   // initialize brakelight pin
   pinMode(GLO_brakelight_teensy_pin, OUTPUT);
 
-  GLO_obd_neopixel.setPixelColor(0, 0, 255, 0); // green
-  GLO_obd_neopixel.show();
+  // GLO_obd_neopixel.setPixelColor(0, 0, 255, 0); // green
+  // GLO_obd_neopixel.show();
 
   // board temp initialization
-  board_temp.begin();
+  // board_temp.begin();
 
   // neat brakelight animation
   brakelight_start();
@@ -226,13 +228,27 @@ void loop() {
     digitalWrite(PIN_OUTPUT_CTRL, LOW);
   }
 
-  
+  sample_ADCs();
 
-  //sample_ADCs();
+  if (debug.isup()){
+    Serial.println("Imon_pdm: ");
+    Serial.println(Imon_pdm.avg());
+
+    Serial.println("pdm_volt_sens: ");
+    Serial.println(pdm_volt_sens.avg());
+
+    Serial.println("brakelight_volt_sens: ");
+    Serial.println(brakelight_volt_sens.avg());
+
+    Serial.println("Imon_brakelight: ");
+    Serial.println(Imon_brakelight.avg());
+  }
+
   // if (board_temp_sample_timer.isup()) board_temp.sample();
   read_CAN();
 
-  brakelight_run();
+  // brakelight_run();
+  digitalWrite(GLO_brakelight_teensy_pin, HIGH);
   // digitalWrite(GLO_brakelight_teensy_pin, LOW);
   // Serial.print("brakelight volt sens: ");
   // Serial.println(brakelight_volt_sens.avg());
