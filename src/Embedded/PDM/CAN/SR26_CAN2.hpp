@@ -8,8 +8,8 @@
     
 ******************************************************************************/
 
-#ifndef CAN2_HPP
-#define CAN2_HPP
+#ifndef SR26_CAN2_HPP
+#define SR26_CAN2_HPP
 
 #include <FlexCAN_T4.h>
 #include <StateCAN.h>
@@ -138,380 +138,400 @@ StateSignal VCU_counterMsg156(4, false, 1, 0.0, 0, 15, 0.0, -1, 156);
 
 // Message: BMS_500 [0x1f4]
 StateSignal BMS_counterMsg500(8, false, 1, 0.0, 0, 15, 0.0, -1, 500);
-StateSignal BMS_packmVoltage(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 500);
-StateSignal BMS_packCurrent(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 500);
-StateSignal BMS_packSOC(16, false, 1, 0.0, 0, 15, 0.0, -1, 500);
+StateSignal BMS_packmVoltage(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 500);
+StateSignal BMS_packCurrent(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 500);
+StateSignal BMS_packSOC(16, false, 1, 0.0, 0, 100, 0.0, -1, 500);
 
 // Message: BMS_501 [0x1f5]
 StateSignal BMS_counterMsg501(8, false, 1, 0.0, 0, 15, 0.0, -1, 501);
-StateSignal BMS_module1Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 501);
-StateSignal BMS_module2Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 501);
-StateSignal BMS_module3Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 501);
+StateSignal BMS_module1Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 501);
+StateSignal BMS_module2Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 501);
+StateSignal BMS_module3Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 501);
 
 // Message: BMS_502 [0x1f6]
 StateSignal BMS_counterMsg502(8, false, 1, 0.0, 0, 15, 0.0, -1, 502);
-StateSignal BMS_module4Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 502);
-StateSignal BMS_module5Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 502);
+StateSignal BMS_module4Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 502);
+StateSignal BMS_module5Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 502);
 
 // Message: BMS_503 [0x1f7]
 StateSignal BMS_counterMsg503(8, false, 1, 0.0, 0, 15, 0.0, -1, 503);
-StateSignal BMS_module1Cell1Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 503);
-StateSignal BMS_module1Cell2Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 503);
-StateSignal BMS_module1Cell3Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 503);
+StateSignal BMS_module1Cell1Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 503);
+StateSignal BMS_module1Cell2Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 503);
+StateSignal BMS_module1Cell3Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 503);
 
 // Message: BMS_504 [0x1f8]
 StateSignal BMS_counterMsg504(8, false, 1, 0.0, 0, 15, 0.0, -1, 504);
-StateSignal BMS_module1Cell4Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 504);
-StateSignal BMS_module1Cell5Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 504);
-StateSignal BMS_module1Cell6Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 504);
+StateSignal BMS_module1Cell4Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 504);
+StateSignal BMS_module1Cell5Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 504);
+StateSignal BMS_module1Cell6Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 504);
 
 // Message: BMS_505 [0x1f9]
 StateSignal BMS_counterMsg505(8, false, 1, 0.0, 0, 15, 0.0, -1, 505);
-StateSignal BMS_module1Cell7Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 505);
-StateSignal BMS_module1Cell8Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 505);
-StateSignal BMS_module1Cell9Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 505);
+StateSignal BMS_module1Cell7Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 505);
+StateSignal BMS_module1Cell8Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 505);
+StateSignal BMS_module1Cell9Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 505);
 
 // Message: BMS_506 [0x1fa]
 StateSignal BMS_counterMsg506(8, false, 1, 0.0, 0, 15, 0.0, -1, 506);
-StateSignal BMS_module1Cell10Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 506);
-StateSignal BMS_module1Cell11Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 506);
-StateSignal BMS_module1Cell12Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 506);
+StateSignal BMS_module1Cell10Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 506);
+StateSignal BMS_module1Cell11Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 506);
+StateSignal BMS_module1Cell12Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 506);
 
 // Message: BMS_507 [0x1fb]
 StateSignal BMS_counterMsg507(8, false, 1, 0.0, 0, 15, 0.0, -1, 507);
-StateSignal BMS_module1Cell13Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 507);
-StateSignal BMS_module1Cell14Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 507);
-StateSignal BMS_module1Cell15Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 507);
+StateSignal BMS_module1Cell13Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 507);
+StateSignal BMS_module1Cell14Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 507);
+StateSignal BMS_module1Cell15Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 507);
 
 // Message: BMS_508 [0x1fc]
 StateSignal BMS_counterMsg508(8, false, 1, 0.0, 0, 15, 0.0, -1, 508);
-StateSignal BMS_module1Cell16Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 508);
-StateSignal BMS_module1Cell17Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 508);
-StateSignal BMS_module1Cell18Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 508);
+StateSignal BMS_module1Cell16Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 508);
+StateSignal BMS_module1Cell17Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 508);
+StateSignal BMS_module1Cell18Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 508);
 
 // Message: BMS_509 [0x1fd]
 StateSignal BMS_counterMsg509(8, false, 1, 0.0, 0, 15, 0.0, -1, 509);
-StateSignal BMS_module1Cell1Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 509);
-StateSignal BMS_module1Cell2Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 509);
-StateSignal BMS_module1Cell3Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 509);
+StateSignal BMS_module1Cell1Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 509);
+StateSignal BMS_module1Cell2Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 509);
+StateSignal BMS_module1Cell3Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 509);
 
 // Message: BMS_510 [0x1fe]
 StateSignal BMS_counterMsg510(8, false, 1, 0.0, 0, 15, 0.0, -1, 510);
-StateSignal BMS_module1Cell4Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 510);
-StateSignal BMS_module1Cell5Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 510);
-StateSignal BMS_module1Cell6Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 510);
+StateSignal BMS_module1Cell4Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 510);
+StateSignal BMS_module1Cell5Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 510);
+StateSignal BMS_module1Cell6Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 510);
 
 // Message: BMS_511 [0x1ff]
 StateSignal BMS_counterMsg511(8, false, 1, 0.0, 0, 15, 0.0, -1, 511);
-StateSignal BMS_module1Cell7Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 511);
-StateSignal BMS_module1Cell8Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 511);
-StateSignal BMS_module1Cell9Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 511);
+StateSignal BMS_module1Cell7Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 511);
+StateSignal BMS_module1Cell8Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 511);
+StateSignal BMS_module1Cell9Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 511);
 
 // Message: BMS_512 [0x200]
 StateSignal BMS_counterMsg512(8, false, 1, 0.0, 0, 15, 0.0, -1, 512);
-StateSignal BMS_module1Cell10Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 512);
-StateSignal BMS_module1Cell11Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 512);
-StateSignal BMS_module1Cell12Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 512);
+StateSignal BMS_module1Cell10Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 512);
+StateSignal BMS_module1Cell11Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 512);
+StateSignal BMS_module1Cell12Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 512);
 
 // Message: BMS_513 [0x201]
 StateSignal BMS_counterMsg513(8, false, 1, 0.0, 0, 15, 0.0, -1, 513);
-StateSignal BMS_module1Cell13Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 513);
-StateSignal BMS_module1Cell14Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 513);
-StateSignal BMS_module1Cell15Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 513);
+StateSignal BMS_module1Cell13Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 513);
+StateSignal BMS_module1Cell14Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 513);
+StateSignal BMS_module1Cell15Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 513);
 
 // Message: BMS_514 [0x202]
 StateSignal BMS_counterMsg514(8, false, 1, 0.0, 0, 15, 0.0, -1, 514);
-StateSignal BMS_module1Cell16Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 514);
-StateSignal BMS_module1Cell17Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 514);
-StateSignal BMS_module1Cell18Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 514);
+StateSignal BMS_module1Cell16Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 514);
+StateSignal BMS_module1Cell17Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 514);
+StateSignal BMS_module1Cell18Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 514);
 
 // Message: BMS_515 [0x203]
 StateSignal BMS_counterMsg515(8, false, 1, 0.0, 0, 15, 0.0, -1, 515);
-StateSignal BMS_module2Cell1Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 515);
-StateSignal BMS_module2Cell2Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 515);
-StateSignal BMS_module2Cell3Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 515);
+StateSignal BMS_module2Cell1Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 515);
+StateSignal BMS_module2Cell2Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 515);
+StateSignal BMS_module2Cell3Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 515);
 
 // Message: BMS_516 [0x204]
 StateSignal BMS_counterMsg516(8, false, 1, 0.0, 0, 15, 0.0, -1, 516);
-StateSignal BMS_module2Cell4Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 516);
-StateSignal BMS_module2Cell5Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 516);
-StateSignal BMS_module2Cell6Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 516);
+StateSignal BMS_module2Cell4Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 516);
+StateSignal BMS_module2Cell5Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 516);
+StateSignal BMS_module2Cell6Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 516);
 
 // Message: BMS_517 [0x205]
 StateSignal BMS_counterMsg517(8, false, 1, 0.0, 0, 15, 0.0, -1, 517);
-StateSignal BMS_module2Cell7Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 517);
-StateSignal BMS_module2Cell8Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 517);
-StateSignal BMS_module2Cell9Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 517);
+StateSignal BMS_module2Cell7Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 517);
+StateSignal BMS_module2Cell8Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 517);
+StateSignal BMS_module2Cell9Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 517);
 
 // Message: BMS_518 [0x206]
 StateSignal BMS_counterMsg518(8, false, 1, 0.0, 0, 15, 0.0, -1, 518);
-StateSignal BMS_module2Cell10Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 518);
-StateSignal BMS_module2Cell11Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 518);
-StateSignal BMS_module2Cell12Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 518);
+StateSignal BMS_module2Cell10Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 518);
+StateSignal BMS_module2Cell11Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 518);
+StateSignal BMS_module2Cell12Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 518);
 
 // Message: BMS_519 [0x207]
 StateSignal BMS_counterMsg519(8, false, 1, 0.0, 0, 15, 0.0, -1, 519);
-StateSignal BMS_module2Cell13Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 519);
-StateSignal BMS_module2Cell14Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 519);
-StateSignal BMS_module2Cell15Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 519);
+StateSignal BMS_module2Cell13Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 519);
+StateSignal BMS_module2Cell14Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 519);
+StateSignal BMS_module2Cell15Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 519);
 
 // Message: BMS_520 [0x208]
 StateSignal BMS_counterMsg520(8, false, 1, 0.0, 0, 15, 0.0, -1, 520);
-StateSignal BMS_module2Cell16Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 520);
-StateSignal BMS_module2Cell17Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 520);
-StateSignal BMS_module2Cell18Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 520);
+StateSignal BMS_module2Cell16Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 520);
+StateSignal BMS_module2Cell17Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 520);
+StateSignal BMS_module2Cell18Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 520);
 
 // Message: BMS_521 [0x209]
 StateSignal BMS_counterMsg521(8, false, 1, 0.0, 0, 15, 0.0, -1, 521);
-StateSignal BMS_module2Cell1Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 521);
-StateSignal BMS_module2Cell2Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 521);
-StateSignal BMS_module2Cell3Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 521);
+StateSignal BMS_module2Cell1Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 521);
+StateSignal BMS_module2Cell2Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 521);
+StateSignal BMS_module2Cell3Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 521);
 
 // Message: BMS_522 [0x20a]
 StateSignal BMS_counterMsg522(8, false, 1, 0.0, 0, 15, 0.0, -1, 522);
-StateSignal BMS_module2Cell4Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 522);
-StateSignal BMS_module2Cell5Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 522);
-StateSignal BMS_module2Cell6Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 522);
+StateSignal BMS_module2Cell4Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 522);
+StateSignal BMS_module2Cell5Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 522);
+StateSignal BMS_module2Cell6Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 522);
 
 // Message: BMS_523 [0x20b]
 StateSignal BMS_counterMsg523(8, false, 1, 0.0, 0, 15, 0.0, -1, 523);
-StateSignal BMS_module2Cell7Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 523);
-StateSignal BMS_module2Cell8Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 523);
-StateSignal BMS_module2Cell9Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 523);
+StateSignal BMS_module2Cell7Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 523);
+StateSignal BMS_module2Cell8Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 523);
+StateSignal BMS_module2Cell9Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 523);
 
 // Message: BMS_524 [0x20c]
 StateSignal BMS_counterMsg524(8, false, 1, 0.0, 0, 15, 0.0, -1, 524);
-StateSignal BMS_module2Cell10Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 524);
-StateSignal BMS_module2Cell11Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 524);
-StateSignal BMS_module2Cell12Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 524);
+StateSignal BMS_module2Cell10Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 524);
+StateSignal BMS_module2Cell11Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 524);
+StateSignal BMS_module2Cell12Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 524);
 
 // Message: BMS_525 [0x20d]
 StateSignal BMS_counterMsg525(8, false, 1, 0.0, 0, 15, 0.0, -1, 525);
-StateSignal BMS_Module2Cell13Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 525);
-StateSignal BMS_module2Cell14Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 525);
-StateSignal BMS_module2Cell15Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 525);
+StateSignal BMS_Module2Cell13Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 525);
+StateSignal BMS_module2Cell14Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 525);
+StateSignal BMS_module2Cell15Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 525);
 
 // Message: BMS_526 [0x20e]
 StateSignal BMS_counterMsg526(8, false, 1, 0.0, 0, 15, 0.0, -1, 526);
-StateSignal BMS_module2Cell16Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 526);
-StateSignal BMS_module2Cell17Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 526);
-StateSignal BMS_module2Cell18Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 526);
+StateSignal BMS_module2Cell16Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 526);
+StateSignal BMS_module2Cell17Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 526);
+StateSignal BMS_module2Cell18Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 526);
 
 // Message: BMS_527 [0x20f]
 StateSignal BMS_counterMsg527(8, false, 1, 0.0, 0, 15, 0.0, -1, 527);
-StateSignal BMS_module3Cell1Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 527);
-StateSignal BMS_module3Cell2Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 527);
-StateSignal BMS_module3Cell3Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 527);
+StateSignal BMS_module3Cell1Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 527);
+StateSignal BMS_module3Cell2Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 527);
+StateSignal BMS_module3Cell3Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 527);
 
 // Message: BMS_528 [0x210]
 StateSignal BMS_counterMsg528(8, false, 1, 0.0, 0, 15, 0.0, -1, 528);
-StateSignal BMS_module3Cell4Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 528);
-StateSignal BMS_module3Cell5Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 528);
-StateSignal BMS_module3Cell6Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 528);
+StateSignal BMS_module3Cell4Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 528);
+StateSignal BMS_module3Cell5Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 528);
+StateSignal BMS_module3Cell6Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 528);
 
 // Message: BMS_529 [0x211]
 StateSignal BMS_counterMsg529(8, false, 1, 0.0, 0, 15, 0.0, -1, 529);
-StateSignal BMS_module3Cell7Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 529);
-StateSignal BMS_module3Cell8Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 529);
-StateSignal BMS_module3Cell9Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 529);
+StateSignal BMS_module3Cell7Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 529);
+StateSignal BMS_module3Cell8Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 529);
+StateSignal BMS_module3Cell9Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 529);
 
 // Message: BMS_530 [0x212]
 StateSignal BMS_counterMsg530(8, false, 1, 0.0, 0, 15, 0.0, -1, 530);
-StateSignal BMS_module3Cell10Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 530);
-StateSignal BMS_module3Cell11Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 530);
-StateSignal BMS_module3Cell12Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 530);
+StateSignal BMS_module3Cell10Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 530);
+StateSignal BMS_module3Cell11Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 530);
+StateSignal BMS_module3Cell12Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 530);
 
 // Message: BMS_531 [0x213]
 StateSignal BMS_counterMsg531(8, false, 1, 0.0, 0, 15, 0.0, -1, 531);
-StateSignal BMS_module3Cell13Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 531);
-StateSignal BMS_module3Cell14Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 531);
-StateSignal BMS_module3Cell15Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 531);
+StateSignal BMS_module3Cell13Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 531);
+StateSignal BMS_module3Cell14Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 531);
+StateSignal BMS_module3Cell15Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 531);
 
 // Message: BMS_532 [0x214]
 StateSignal BMS_counterMsg532(8, false, 1, 0.0, 0, 15, 0.0, -1, 532);
-StateSignal BMS_module3Cell16Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 532);
-StateSignal BMS_module3Cell17Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 532);
-StateSignal BMS_module3Cell18Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 532);
+StateSignal BMS_module3Cell16Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 532);
+StateSignal BMS_module3Cell17Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 532);
+StateSignal BMS_module3Cell18Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 532);
 
 // Message: BMS_533 [0x215]
 StateSignal BMS_counterMsg533(8, false, 1, 0.0, 0, 15, 0.0, -1, 533);
-StateSignal BMS_module3Cell1Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 533);
-StateSignal BMS_module3Cell2Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 533);
-StateSignal BMS_module3Cell3Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 533);
+StateSignal BMS_module3Cell1Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 533);
+StateSignal BMS_module3Cell2Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 533);
+StateSignal BMS_module3Cell3Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 533);
 
 // Message: BMS_534 [0x216]
 StateSignal BMS_counterMsg534(8, false, 1, 0.0, 0, 15, 0.0, -1, 534);
-StateSignal BMS_module3Cell4Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 534);
-StateSignal BMS_module3Cell5Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 534);
-StateSignal BMS_module3Cell6Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 534);
+StateSignal BMS_module3Cell4Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 534);
+StateSignal BMS_module3Cell5Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 534);
+StateSignal BMS_module3Cell6Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 534);
 
 // Message: BMS_535 [0x217]
 StateSignal BMS_counterMsg535(8, false, 1, 0.0, 0, 15, 0.0, -1, 535);
-StateSignal BMS_module3Cell7Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 535);
-StateSignal BMS_module3Cell8Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 535);
-StateSignal BMS_module3Cell9Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 535);
+StateSignal BMS_module3Cell7Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 535);
+StateSignal BMS_module3Cell8Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 535);
+StateSignal BMS_module3Cell9Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 535);
 
 // Message: BMS_536 [0x218]
 StateSignal BMS_counterMsg536(8, false, 1, 0.0, 0, 15, 0.0, -1, 536);
-StateSignal BMS_module3Cell10Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 536);
-StateSignal BMS_module3Cell11Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 536);
-StateSignal BMS_module3Cell12Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 536);
+StateSignal BMS_module3Cell10Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 536);
+StateSignal BMS_module3Cell11Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 536);
+StateSignal BMS_module3Cell12Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 536);
 
 // Message: BMS_537 [0x219]
 StateSignal BMS_counterMsg537(8, false, 1, 0.0, 0, 15, 0.0, -1, 537);
-StateSignal BMS_module3Cell13Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 537);
-StateSignal BMS_module3Cell14Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 537);
-StateSignal BMS_module3Cell15Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 537);
+StateSignal BMS_module3Cell13Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 537);
+StateSignal BMS_module3Cell14Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 537);
+StateSignal BMS_module3Cell15Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 537);
 
 // Message: BMS_538 [0x21a]
 StateSignal BMS_counterMsg538(8, false, 1, 0.0, 0, 15, 0.0, -1, 538);
-StateSignal BMS_module3Cell16Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 538);
-StateSignal BMS_module3Cell17Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 538);
-StateSignal BMS_module3Cell18Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 538);
+StateSignal BMS_module3Cell16Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 538);
+StateSignal BMS_module3Cell17Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 538);
+StateSignal BMS_module3Cell18Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 538);
 
 // Message: BMS_539 [0x21b]
 StateSignal BMS_counterMsg539(8, false, 1, 0.0, 0, 15, 0.0, -1, 539);
-StateSignal BMS_module4Cell1Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 539);
-StateSignal BMS_module4Cell2Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 539);
-StateSignal BMS_module4Cell3Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 539);
+StateSignal BMS_module4Cell1Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 539);
+StateSignal BMS_module4Cell2Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 539);
+StateSignal BMS_module4Cell3Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 539);
 
 // Message: BMS_540 [0x21c]
 StateSignal BMS_counterMsg540(8, false, 1, 0.0, 0, 15, 0.0, -1, 540);
-StateSignal BMS_module4Cell4Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 540);
-StateSignal BMS_module4Cell5Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 540);
-StateSignal BMS_module4Cell6Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 540);
+StateSignal BMS_module4Cell4Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 540);
+StateSignal BMS_module4Cell5Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 540);
+StateSignal BMS_module4Cell6Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 540);
 
 // Message: BMS_541 [0x21d]
 StateSignal BMS_counterMsg541(8, false, 1, 0.0, 0, 15, 0.0, -1, 541);
-StateSignal BMS_module4Cell7Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 541);
-StateSignal BMS_module4Cell8Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 541);
-StateSignal BMS_module4cCell9Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 541);
+StateSignal BMS_module4Cell7Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 541);
+StateSignal BMS_module4Cell8Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 541);
+StateSignal BMS_module4cCell9Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 541);
 
 // Message: BMS_542 [0x21e]
 StateSignal BMS_counterMsg542(8, false, 1, 0.0, 0, 15, 0.0, -1, 542);
-StateSignal BMS_module4Cell10Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 542);
-StateSignal BMS_module4Cell11Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 542);
-StateSignal BMS_module4Cell12Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 542);
+StateSignal BMS_module4Cell10Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 542);
+StateSignal BMS_module4Cell11Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 542);
+StateSignal BMS_module4Cell12Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 542);
 
 // Message: BMS_543 [0x21f]
 StateSignal BMS_counterMsg543(8, false, 1, 0.0, 0, 15, 0.0, -1, 543);
-StateSignal BMS_module4Cell13Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 543);
-StateSignal BMS_module4Cell14Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 543);
-StateSignal BMS_module4Cell15Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 543);
+StateSignal BMS_module4Cell13Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 543);
+StateSignal BMS_module4Cell14Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 543);
+StateSignal BMS_module4Cell15Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 543);
 
 // Message: BMS_544 [0x220]
 StateSignal BMS_counterMsg544(8, false, 1, 0.0, 0, 15, 0.0, -1, 544);
-StateSignal BMS_module4Cell16Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 544);
-StateSignal BMS_module4Cell17Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 544);
-StateSignal BMS_module4Cell18Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 544);
+StateSignal BMS_module4Cell16Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 544);
+StateSignal BMS_module4Cell17Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 544);
+StateSignal BMS_module4Cell18Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 544);
 
 // Message: BMS_545 [0x221]
 StateSignal BMS_counterMsg545(8, false, 1, 0.0, 0, 15, 0.0, -1, 545);
-StateSignal BMS_module4Cell1Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 545);
-StateSignal BMS_module4Cell2Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 545);
-StateSignal BMS_module4Cell3Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 545);
+StateSignal BMS_module4Cell1Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 545);
+StateSignal BMS_module4Cell2Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 545);
+StateSignal BMS_module4Cell3Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 545);
 
 // Message: BMS_546 [0x222]
 StateSignal BMS_counterMsg546(8, false, 1, 0.0, 0, 15, 0.0, -1, 546);
-StateSignal BMS_module4Cell4Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 546);
-StateSignal BMS_module4Cell5Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 546);
-StateSignal BMS_module4Cell6Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 546);
+StateSignal BMS_module4Cell4Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 546);
+StateSignal BMS_module4Cell5Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 546);
+StateSignal BMS_module4Cell6Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 546);
 
 // Message: BMS_547 [0x223]
 StateSignal BMS_counterMsg547(8, false, 1, 0.0, 0, 15, 0.0, -1, 547);
-StateSignal BMS_module4Cell7Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 547);
-StateSignal BMS_module4Cell8Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 547);
-StateSignal BMS_module4Cell9Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 547);
+StateSignal BMS_module4Cell7Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 547);
+StateSignal BMS_module4Cell8Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 547);
+StateSignal BMS_module4Cell9Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 547);
 
 // Message: BMS_548 [0x224]
 StateSignal BMS_counterMsg548(8, false, 1, 0.0, 0, 15, 0.0, -1, 548);
-StateSignal BMS_module4Cell10Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 548);
-StateSignal BMS_module4Cell11Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 548);
-StateSignal BMS_module4Cell12Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 548);
+StateSignal BMS_module4Cell10Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 548);
+StateSignal BMS_module4Cell11Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 548);
+StateSignal BMS_module4Cell12Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 548);
 
 // Message: BMS_549 [0x225]
 StateSignal BMS_counterMsg549(8, false, 1, 0.0, 0, 15, 0.0, -1, 549);
-StateSignal BMS_module4Cell13Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 549);
-StateSignal BMS_module4Cell14Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 549);
-StateSignal BMS_module4Cell15Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 549);
+StateSignal BMS_module4Cell13Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 549);
+StateSignal BMS_module4Cell14Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 549);
+StateSignal BMS_module4Cell15Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 549);
 
 // Message: BMS_550 [0x226]
 StateSignal BMS_counterMsg550(8, false, 1, 0.0, 0, 15, 0.0, -1, 550);
-StateSignal BMS_module4Cell16Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 550);
-StateSignal BMS_module4Cell17Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 550);
-StateSignal BMS_module4Cell18Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 550);
+StateSignal BMS_module4Cell16Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 550);
+StateSignal BMS_module4Cell17Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 550);
+StateSignal BMS_module4Cell18Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 550);
 
 // Message: BMS_551 [0x227]
 StateSignal BMS_counterMsg551(8, false, 1, 0.0, 0, 15, 0.0, -1, 551);
-StateSignal BMS_module5Cell1Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 551);
-StateSignal BMS_module5Cell2Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 551);
-StateSignal BMS_module5Cell3Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 551);
+StateSignal BMS_module5Cell1Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 551);
+StateSignal BMS_module5Cell2Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 551);
+StateSignal BMS_module5Cell3Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 551);
 
 // Message: BMS_552 [0x228]
 StateSignal BMS_counterMsg552(8, false, 1, 0.0, 0, 15, 0.0, -1, 552);
-StateSignal BMS_module5Cell4Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 552);
-StateSignal BMS_module5Cell5Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 552);
-StateSignal BMS_module5Cell6Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 552);
+StateSignal BMS_module5Cell4Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 552);
+StateSignal BMS_module5Cell5Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 552);
+StateSignal BMS_module5Cell6Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 552);
 
 // Message: BMS_553 [0x229]
 StateSignal BMS_counterMsg553(8, false, 1, 0.0, 0, 15, 0.0, -1, 553);
-StateSignal BMS_module5Cell7Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 553);
-StateSignal BMS_module5Cell8Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 553);
-StateSignal BMS_module5Cell9Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 553);
+StateSignal BMS_module5Cell7Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 553);
+StateSignal BMS_module5Cell8Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 553);
+StateSignal BMS_module5Cell9Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 553);
 
 // Message: BMS_554 [0x22a]
 StateSignal BMS_counterMsg554(8, false, 1, 0.0, 0, 15, 0.0, -1, 554);
-StateSignal BMS_module5Cell10Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 554);
-StateSignal BMS_module5Cell11Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 554);
-StateSignal BMS_module5Cell12Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 554);
+StateSignal BMS_module5Cell10Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 554);
+StateSignal BMS_module5Cell11Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 554);
+StateSignal BMS_module5Cell12Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 554);
 
 // Message: BMS_555 [0x22b]
 StateSignal BMS_counterMsg555(8, false, 1, 0.0, 0, 15, 0.0, -1, 555);
-StateSignal BMS_module5Cell13Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 555);
-StateSignal BMS_module5Cell14Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 555);
-StateSignal BMS_module5Cell15Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 555);
+StateSignal BMS_module5Cell13Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 555);
+StateSignal BMS_module5Cell14Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 555);
+StateSignal BMS_module5Cell15Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 555);
 
 // Message: BMS_556 [0x22c]
 StateSignal BMS_counterMsg556(8, false, 1, 0.0, 0, 15, 0.0, -1, 556);
-StateSignal BMS_module5Cell16Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 556);
-StateSignal BMS_module5Cell17Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 556);
-StateSignal BMS_module5Cell18Volt(16, false, 1, 0.0, -3276, 3276, 0.0, -1, 556);
+StateSignal BMS_module5Cell16Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 556);
+StateSignal BMS_module5Cell17Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 556);
+StateSignal BMS_module5Cell18Volt(16, true, 1000, 0.0, -32, 32, 0.0, -1, 556);
 
 // Message: BMS_557 [0x22d]
 StateSignal BMS_counterMsg557(8, false, 1, 0.0, 0, 15, 0.0, -1, 557);
-StateSignal BMS_module5Cell1Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 557);
-StateSignal BMS_module5Cell2Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 557);
-StateSignal BMS_module5Cell3Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 557);
+StateSignal BMS_module5Cell1Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 557);
+StateSignal BMS_module5Cell2Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 557);
+StateSignal BMS_module5Cell3Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 557);
 
 // Message: BMS_558 [0x22e]
 StateSignal BMS_counterMsg558(8, false, 1, 0.0, 0, 15, 0.0, -1, 558);
-StateSignal BMS_module5Cell4Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 558);
-StateSignal BMS_module5Cell5Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 558);
-StateSignal BMS_module5Cell6Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 558);
+StateSignal BMS_module5Cell4Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 558);
+StateSignal BMS_module5Cell5Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 558);
+StateSignal BMS_module5Cell6Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 558);
 
 // Message: BMS_559 [0x22f]
 StateSignal BMS_counterMsg559(8, false, 1, 0.0, 0, 15, 0.0, -1, 559);
-StateSignal BMS_module5Cell7Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 559);
-StateSignal BMS_module5Cell8Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 559);
-StateSignal BMS_module5Cell9Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 559);
+StateSignal BMS_module5Cell7Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 559);
+StateSignal BMS_module5Cell8Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 559);
+StateSignal BMS_module5Cell9Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 559);
 
 // Message: BMS_560 [0x230]
 StateSignal BMS_counterMsg560(8, false, 1, 0.0, 0, 15, 0.0, -1, 560);
-StateSignal BMS_module5Cell10Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 560);
-StateSignal BMS_module5Cell11Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 560);
-StateSignal BMS_module5Cell12Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 560);
+StateSignal BMS_module5Cell10Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 560);
+StateSignal BMS_module5Cell11Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 560);
+StateSignal BMS_module5Cell12Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 560);
 
 // Message: BMS_561 [0x231]
 StateSignal BMS_counterMsg561(8, false, 1, 0.0, 0, 15, 0.0, -1, 561);
-StateSignal BMS_module5Cell13Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 561);
-StateSignal BMS_module5Cell14Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 561);
-StateSignal BMS_module5Cell15Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 561);
+StateSignal BMS_module5Cell13Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 561);
+StateSignal BMS_module5Cell14Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 561);
+StateSignal BMS_module5Cell15Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 561);
 
 // Message: BMS_562 [0x232]
 StateSignal BMS_counterMsg562(8, false, 1, 0.0, 0, 15, 0.0, -1, 562);
-StateSignal BMS_module5Cell16Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 562);
-StateSignal BMS_module5Cell17Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 562);
-StateSignal BMS_module5Cell18Temp(16, false, 10, 0.0, -3276, 3276, 0.0, -1, 562);
+StateSignal BMS_module5Cell16Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 562);
+StateSignal BMS_module5Cell17Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 562);
+StateSignal BMS_module5Cell18Temp(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 562);
+
+// Message: BMS_563 [0x233]
+StateSignal BMS_counterMsg563(8, false, 1, 0.0, 0, 15, 0.0, -1, 563);
+StateSignal BMS_module1voltageBMSS(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 563);
+
+// Message: BMS_564 [0x234]
+StateSignal BMS_counterMsg564(8, false, 1, 0.0, 0, 15, 0.0, -1, 564);
+StateSignal BMS_module2voltageBMSS(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 564);
+
+// Message: BMS_565 [0x235]
+StateSignal BMS_counterMsg565(8, false, 1, 0.0, 0, 15, 0.0, -1, 565);
+StateSignal BMS_module3voltageBMSS(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 565);
+
+// Message: BMS_566 [0x236]
+StateSignal BMS_counterMsg566(8, false, 1, 0.0, 0, 15, 0.0, -1, 566);
+StateSignal BMS_module4voltageBMSS(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 566);
+
+// Message: BMS_567 [0x237]
+StateSignal BMS_counterMsg567(8, false, 1, 0.0, 0, 15, 0.0, -1, 567);
+StateSignal BMS_module5voltageBMSS(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 567);
 
 // Message: DD_250 [0xfa]
 StateSignal DD_counterMsg250(4, false, 1, 0.0, 0, 15, 0.0, -1, 250);
@@ -540,8 +560,7 @@ StateSignal MM52_az(16, false, -7849, 4.1745795, 0, 0, 0.0, -1, 451);
 
 // Message: PDM_400 [0x190]
 StateSignal PDM_counterMsg400(4, false, 1, 0.0, 0, 15, 0.0, -1, 400);
-StateSignal PDM_boardTemp(16, true, 10, 0.0, -5, 100, 0.0, -1, 400);
-StateSignal PDM_brakelightVoltAvg(16, true, 1000, 0.0, -5, 100, 0.0, -1, 400);
+StateSignal PDM_teensyTemp(16, true, 10, 0.0, -5, 100, 0.0, -1, 400);
 StateSignal PDM_vehicleState(8, true, 1, 0.0, 0, 3, 0.0, -1, 400);
 StateSignal PDM_coolingOverrideActive(1, false, 1, 0.0, 0, 0, 0.0, -1, 400);
 
@@ -559,73 +578,121 @@ StateSignal PDM_pdmVoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 402);
 
 // Message: PDM_403 [0x193]
 StateSignal PDM_counterMsg403(4, false, 1, 0.0, 0, 15, 0.0, -1, 403);
-StateSignal PDM_fanRightCurrentAvg(16, true, 100, 0.0, -5, 20, 0.0, -1, 403);
-StateSignal PDM_fanRightCurrentMax(16, true, 100, 0.0, -5, 20, 0.0, -1, 403);
-StateSignal PDM_fanRightCurrentMin(16, true, 100, 0.0, -5, 20, 0.0, -1, 403);
+StateSignal PDM_ch1CurrentAvg(16, true, 100, 0.0, -5, 20, 0.0, -1, 403);
+StateSignal PDM_ch1CurrentMax(16, true, 100, 0.0, -5, 20, 0.0, -1, 403);
+StateSignal PDM_ch1CurrentMin(16, true, 100, 0.0, -5, 20, 0.0, -1, 403);
 
 // Message: PDM_404 [0x194]
 StateSignal PDM_counterMsg404(4, false, 1, 0.0, 0, 15, 0.0, -1, 404);
-StateSignal PDM_fanRightVoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 404);
-StateSignal PDM_fanRightVoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 404);
-StateSignal PDM_fanRightVoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 404);
+StateSignal PDM_ch1VoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 404);
+StateSignal PDM_ch1VoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 404);
+StateSignal PDM_ch1VoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 404);
 
 // Message: PDM_405 [0x195]
 StateSignal PDM_counterMsg405(4, false, 1, 0.0, 0, 15, 0.0, -1, 405);
-StateSignal PDM_fanLeftCurrentAvg(16, true, 100, 0.0, -5, 20, 0.0, -1, 405);
-StateSignal PDM_fanLeftCurrentMax(16, true, 100, 0.0, -5, 20, 0.0, -1, 405);
-StateSignal PDM_fanLeftCurrentMin(16, true, 100, 0.0, -5, 20, 0.0, -1, 405);
+StateSignal PDM_ch2CurrentAvg(16, true, 100, 0.0, -5, 20, 0.0, -1, 405);
+StateSignal PDM_ch2CurrentMax(16, true, 100, 0.0, -5, 20, 0.0, -1, 405);
+StateSignal PDM_ch2CurrentMin(16, true, 100, 0.0, -5, 20, 0.0, -1, 405);
 
 // Message: PDM_406 [0x196]
 StateSignal PDM_counterMsg406(4, false, 1, 0.0, 0, 15, 0.0, -1, 406);
-StateSignal PDM_fanLeftVoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 406);
-StateSignal PDM_fanLeftVoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 406);
-StateSignal PDM_fanLeftVoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 406);
+StateSignal PDM_ch2VoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 406);
+StateSignal PDM_ch2VoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 406);
+StateSignal PDM_ch2VoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 406);
 
 // Message: PDM_407 [0x197]
 StateSignal PDM_counterMsg407(4, false, 1, 0.0, 0, 15, 0.0, -1, 407);
-StateSignal PDM_wpCurrentAvg(16, true, 100, 0.0, -5, 20, 0.0, -1, 407);
-StateSignal PDM_wpCurrentMax(16, true, 100, 0.0, -5, 20, 0.0, -1, 407);
-StateSignal PDM_wpCurrentMin(16, true, 100, 0.0, -5, 20, 0.0, -1, 407);
+StateSignal PDM_ch3CurrentAvg(16, true, 100, 0.0, -5, 20, 0.0, -1, 407);
+StateSignal PDM_ch3CurrentMax(16, true, 100, 0.0, -5, 20, 0.0, -1, 407);
+StateSignal PDM_ch3CurrentMin(16, true, 100, 0.0, -5, 20, 0.0, -1, 407);
 
 // Message: PDM_408 [0x198]
 StateSignal PDM_counterMsg408(4, false, 1, 0.0, 0, 15, 0.0, -1, 408);
-StateSignal PDM_wpVoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 408);
-StateSignal PDM_wpVoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 408);
-StateSignal PDM_wpVoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 408);
+StateSignal PDM_ch3VoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 408);
+StateSignal PDM_ch3VoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 408);
+StateSignal PDM_ch3VoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 408);
 
 // Message: PDM_409 [0x199]
 StateSignal PDM_counterMsg409(4, false, 1, 0.0, 0, 15, 0.0, -1, 409);
-StateSignal PDM_fanLeftDutyCycle(8, false, 1, 0.0, 0, 100, 0.0, -1, 409);
-StateSignal PDM_fanRightDutyCycle(8, false, 1, 0.0, 0, 100, 0.0, -1, 409);
-StateSignal PDM_wpDutyCycle(8, false, 1, 0.0, 0, 100, 0.0, -1, 409);
-StateSignal PDM_teensyTemp(16, true, 10, 0.0, -5, 100, 0.0, -1, 409);
+StateSignal PDM_ch4CurrentAvg(16, true, 100, 0.0, -5, 20, 0.0, -1, 409);
+StateSignal PDM_ch4CurrentMax(16, true, 100, 0.0, -5, 20, 0.0, -1, 409);
+StateSignal PDM_ch4CurrentMin(16, true, 100, 0.0, -5, 20, 0.0, -1, 409);
 
 // Message: PDM_410 [0x19a]
-StateSignal PDM_uptime(32, false, 1, 0.0, 0, 4294967295, 0.0, -1, 410);
+StateSignal PDM_counterMsg410(4, false, 1, 0.0, 0, 15, 0.0, -1, 410);
+StateSignal PDM_ch4VoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 410);
+StateSignal PDM_ch4VoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 410);
+StateSignal PDM_ch4VoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 410);
 
 // Message: PDM_411 [0x19b]
 StateSignal PDM_counterMsg411(4, false, 1, 0.0, 0, 15, 0.0, -1, 411);
-StateSignal PDM_glvVoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 411);
-StateSignal PDM_glvVoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 411);
-StateSignal PDM_glvVoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 411);
+StateSignal PDM_ch5CurrentAvg(16, true, 100, 0.0, -5, 20, 0.0, -1, 411);
+StateSignal PDM_ch5CurrentMax(16, true, 100, 0.0, -5, 20, 0.0, -1, 411);
+StateSignal PDM_ch5CurrentMin(16, true, 100, 0.0, -5, 20, 0.0, -1, 411);
 
 // Message: PDM_412 [0x19c]
 StateSignal PDM_counterMsg412(4, false, 1, 0.0, 0, 15, 0.0, -1, 412);
-StateSignal PDM_dataVoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 412);
-StateSignal PDM_dataVoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 412);
-StateSignal PDM_dataVoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 412);
+StateSignal PDM_ch5VoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 412);
+StateSignal PDM_ch5VoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 412);
+StateSignal PDM_ch5VoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 412);
 
 // Message: PDM_413 [0x19d]
 StateSignal PDM_counterMsg413(4, false, 1, 0.0, 0, 15, 0.0, -1, 413);
-StateSignal PDM_keepAliveVoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 413);
-StateSignal PDM_keepAliveVoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 413);
-StateSignal PDM_keepAliveVoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 413);
+StateSignal PDM_ch6CurrentAvg(16, true, 100, 0.0, -5, 20, 0.0, -1, 413);
+StateSignal PDM_ch6CurrentMax(16, true, 100, 0.0, -5, 20, 0.0, -1, 413);
+StateSignal PDM_ch6CurrentMin(16, true, 100, 0.0, -5, 20, 0.0, -1, 413);
 
 // Message: PDM_414 [0x19e]
 StateSignal PDM_counterMsg414(4, false, 1, 0.0, 0, 15, 0.0, -1, 414);
-StateSignal PDM_carMiles(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 414);
-StateSignal PDM_runtimeHours(16, true, 1, 0.0, -32768, 32767, 0.0, -1, 414);
-StateSignal PDM_runtimeMinutes(16, true, 1, 0.0, -32768, 32767, 0.0, -1, 414);
+StateSignal PDM_ch6VoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 414);
+StateSignal PDM_ch6VoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 414);
+StateSignal PDM_ch6VoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 414);
+
+// Message: PDM_415 [0x19f]
+StateSignal PDM_counterMsg415(4, false, 1, 0.0, 0, 15, 0.0, -1, 415);
+StateSignal PDM_ch7CurrentAvg(16, true, 100, 0.0, -5, 20, 0.0, -1, 415);
+StateSignal PDM_ch7CurrentMax(16, true, 100, 0.0, -5, 20, 0.0, -1, 415);
+StateSignal PDM_ch7CurrentMin(16, true, 100, 0.0, -5, 20, 0.0, -1, 415);
+
+// Message: PDM_416 [0x1a0]
+StateSignal PDM_counterMsg416(4, false, 1, 0.0, 0, 15, 0.0, -1, 416);
+StateSignal PDM_ch7VoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 416);
+StateSignal PDM_ch7VoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 416);
+StateSignal PDM_ch7VoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 416);
+
+// Message: PDM_417 [0x1a1]
+StateSignal PDM_counterMsg417(4, false, 1, 0.0, 0, 15, 0.0, -1, 417);
+StateSignal PDM_ch8CurrentAvg(16, true, 100, 0.0, -5, 20, 0.0, -1, 417);
+StateSignal PDM_ch8CurrentMax(16, true, 100, 0.0, -5, 20, 0.0, -1, 417);
+StateSignal PDM_ch8CurrentMin(16, true, 100, 0.0, -5, 20, 0.0, -1, 417);
+
+// Message: PDM_418 [0x1a2]
+StateSignal PDM_counterMsg418(4, false, 1, 0.0, 0, 15, 0.0, -1, 418);
+StateSignal PDM_ch8VoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 418);
+StateSignal PDM_ch8VoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 418);
+StateSignal PDM_ch8VoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 418);
+
+// Message: PDM_419 [0x1a3]
+StateSignal PDM_counterMsg419(4, false, 1, 0.0, 0, 15, 0.0, -1, 419);
+StateSignal PDM_brakelightCurrentAvg(16, true, 100, 0.0, -5, 20, 0.0, -1, 419);
+StateSignal PDM_brakelightCurrentMax(16, true, 100, 0.0, -5, 20, 0.0, -1, 419);
+StateSignal PDM_brakelightCurrentMin(16, true, 100, 0.0, -5, 20, 0.0, -1, 419);
+
+// Message: PDM_420 [0x1a4]
+StateSignal PDM_counterMsg420(4, false, 1, 0.0, 0, 15, 0.0, -1, 420);
+StateSignal PDM_brakelightVoltAvg(16, true, 1000, 0.0, -5, 20, 0.0, -1, 420);
+StateSignal PDM_brakelightVoltMax(16, true, 1000, 0.0, -5, 20, 0.0, -1, 420);
+StateSignal PDM_brakelightVoltMin(16, true, 1000, 0.0, -5, 20, 0.0, -1, 420);
+
+// Message: PDM_421 [0x1a5]
+StateSignal PDM_counterMsg421(4, false, 1, 0.0, 0, 15, 0.0, -1, 421);
+StateSignal PDM_fanLeftDutyCycle(8, false, 1, 0.0, 0, 100, 0.0, -1, 421);
+StateSignal PDM_fanRightDutyCycle(8, false, 1, 0.0, 0, 100, 0.0, -1, 421);
+StateSignal PDM_wp1DutyCycle(8, false, 1, 0.0, 0, 100, 0.0, -1, 421);
+StateSignal PDM_wp2DutyCycle(8, false, 1, 0.0, 0, 100, 0.0, -1, 421);
+
+// Message: PDM_422 [0x1a6]
+StateSignal PDM_uptime(32, false, 1, 0.0, 0, 4294967295, 0.0, -1, 422);
 
 
 
@@ -1732,6 +1799,61 @@ void read_BMS_562(const CAN_message_t &imsg) {
 }
 
 /*
+ * Decode a CAN frame for the message BMS_563
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_BMS_563(const CAN_message_t &imsg) {
+
+	BMS_counterMsg563.set_can_value((imsg.buf[0]));
+	BMS_module1voltageBMSS.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+
+}
+
+/*
+ * Decode a CAN frame for the message BMS_564
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_BMS_564(const CAN_message_t &imsg) {
+
+	BMS_counterMsg564.set_can_value((imsg.buf[0]));
+	BMS_module2voltageBMSS.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+
+}
+
+/*
+ * Decode a CAN frame for the message BMS_565
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_BMS_565(const CAN_message_t &imsg) {
+
+	BMS_counterMsg565.set_can_value((imsg.buf[0]));
+	BMS_module3voltageBMSS.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+
+}
+
+/*
+ * Decode a CAN frame for the message BMS_566
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_BMS_566(const CAN_message_t &imsg) {
+
+	BMS_counterMsg566.set_can_value((imsg.buf[0]));
+	BMS_module4voltageBMSS.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+
+}
+
+/*
+ * Decode a CAN frame for the message BMS_567
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_BMS_567(const CAN_message_t &imsg) {
+
+	BMS_counterMsg567.set_can_value((imsg.buf[0]));
+	BMS_module5voltageBMSS.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+
+}
+
+/*
  * Decode a CAN frame for the message DD_250
  * \param imsg A reference to the incoming CAN message frame
  */
@@ -1805,8 +1927,7 @@ void read_MM52_451(const CAN_message_t &imsg) {
 void read_PDM_400(const CAN_message_t &imsg) {
 
 	PDM_counterMsg400.set_can_value(((imsg.buf[0] & 0b00001111)));
-	PDM_boardTemp.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
-	PDM_brakelightVoltAvg.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_teensyTemp.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
 	PDM_vehicleState.set_can_value((imsg.buf[6]));
 	PDM_coolingOverrideActive.set_can_value(((imsg.buf[7] & 0b00000001)));
 
@@ -1845,9 +1966,9 @@ void read_PDM_402(const CAN_message_t &imsg) {
 void read_PDM_403(const CAN_message_t &imsg) {
 
 	PDM_counterMsg403.set_can_value(((imsg.buf[0] & 0b00001111)));
-	PDM_fanRightCurrentAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
-	PDM_fanRightCurrentMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
-	PDM_fanRightCurrentMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+	PDM_ch1CurrentAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch1CurrentMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch1CurrentMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
 
 }
 
@@ -1858,9 +1979,9 @@ void read_PDM_403(const CAN_message_t &imsg) {
 void read_PDM_404(const CAN_message_t &imsg) {
 
 	PDM_counterMsg404.set_can_value(((imsg.buf[0] & 0b00001111)));
-	PDM_fanRightVoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
-	PDM_fanRightVoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
-	PDM_fanRightVoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+	PDM_ch1VoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch1VoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch1VoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
 
 }
 
@@ -1871,9 +1992,9 @@ void read_PDM_404(const CAN_message_t &imsg) {
 void read_PDM_405(const CAN_message_t &imsg) {
 
 	PDM_counterMsg405.set_can_value(((imsg.buf[0] & 0b00001111)));
-	PDM_fanLeftCurrentAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
-	PDM_fanLeftCurrentMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
-	PDM_fanLeftCurrentMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+	PDM_ch2CurrentAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch2CurrentMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch2CurrentMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
 
 }
 
@@ -1884,9 +2005,9 @@ void read_PDM_405(const CAN_message_t &imsg) {
 void read_PDM_406(const CAN_message_t &imsg) {
 
 	PDM_counterMsg406.set_can_value(((imsg.buf[0] & 0b00001111)));
-	PDM_fanLeftVoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
-	PDM_fanLeftVoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
-	PDM_fanLeftVoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+	PDM_ch2VoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch2VoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch2VoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
 
 }
 
@@ -1897,9 +2018,9 @@ void read_PDM_406(const CAN_message_t &imsg) {
 void read_PDM_407(const CAN_message_t &imsg) {
 
 	PDM_counterMsg407.set_can_value(((imsg.buf[0] & 0b00001111)));
-	PDM_wpCurrentAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
-	PDM_wpCurrentMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
-	PDM_wpCurrentMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+	PDM_ch3CurrentAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch3CurrentMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch3CurrentMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
 
 }
 
@@ -1910,9 +2031,9 @@ void read_PDM_407(const CAN_message_t &imsg) {
 void read_PDM_408(const CAN_message_t &imsg) {
 
 	PDM_counterMsg408.set_can_value(((imsg.buf[0] & 0b00001111)));
-	PDM_wpVoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
-	PDM_wpVoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
-	PDM_wpVoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+	PDM_ch3VoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch3VoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch3VoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
 
 }
 
@@ -1923,10 +2044,9 @@ void read_PDM_408(const CAN_message_t &imsg) {
 void read_PDM_409(const CAN_message_t &imsg) {
 
 	PDM_counterMsg409.set_can_value(((imsg.buf[0] & 0b00001111)));
-	PDM_fanLeftDutyCycle.set_can_value((imsg.buf[2]));
-	PDM_fanRightDutyCycle.set_can_value((imsg.buf[3]));
-	PDM_wpDutyCycle.set_can_value((imsg.buf[4]));
-	PDM_teensyTemp.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+	PDM_ch4CurrentAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch4CurrentMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch4CurrentMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
 
 }
 
@@ -1936,7 +2056,10 @@ void read_PDM_409(const CAN_message_t &imsg) {
  */
 void read_PDM_410(const CAN_message_t &imsg) {
 
-	PDM_uptime.set_can_value((imsg.buf[0]) | (imsg.buf[1] << 8) | (imsg.buf[2] << 16) | (imsg.buf[3] << 24));
+	PDM_counterMsg410.set_can_value(((imsg.buf[0] & 0b00001111)));
+	PDM_ch4VoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch4VoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch4VoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
 
 }
 
@@ -1947,9 +2070,9 @@ void read_PDM_410(const CAN_message_t &imsg) {
 void read_PDM_411(const CAN_message_t &imsg) {
 
 	PDM_counterMsg411.set_can_value(((imsg.buf[0] & 0b00001111)));
-	PDM_glvVoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
-	PDM_glvVoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
-	PDM_glvVoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+	PDM_ch5CurrentAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch5CurrentMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch5CurrentMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
 
 }
 
@@ -1960,9 +2083,9 @@ void read_PDM_411(const CAN_message_t &imsg) {
 void read_PDM_412(const CAN_message_t &imsg) {
 
 	PDM_counterMsg412.set_can_value(((imsg.buf[0] & 0b00001111)));
-	PDM_dataVoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
-	PDM_dataVoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
-	PDM_dataVoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+	PDM_ch5VoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch5VoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch5VoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
 
 }
 
@@ -1973,9 +2096,9 @@ void read_PDM_412(const CAN_message_t &imsg) {
 void read_PDM_413(const CAN_message_t &imsg) {
 
 	PDM_counterMsg413.set_can_value(((imsg.buf[0] & 0b00001111)));
-	PDM_keepAliveVoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
-	PDM_keepAliveVoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
-	PDM_keepAliveVoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+	PDM_ch6CurrentAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch6CurrentMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch6CurrentMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
 
 }
 
@@ -1986,9 +2109,111 @@ void read_PDM_413(const CAN_message_t &imsg) {
 void read_PDM_414(const CAN_message_t &imsg) {
 
 	PDM_counterMsg414.set_can_value(((imsg.buf[0] & 0b00001111)));
-	PDM_carMiles.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
-	PDM_runtimeHours.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
-	PDM_runtimeMinutes.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+	PDM_ch6VoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch6VoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch6VoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+
+}
+
+/*
+ * Decode a CAN frame for the message PDM_415
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_PDM_415(const CAN_message_t &imsg) {
+
+	PDM_counterMsg415.set_can_value(((imsg.buf[0] & 0b00001111)));
+	PDM_ch7CurrentAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch7CurrentMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch7CurrentMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+
+}
+
+/*
+ * Decode a CAN frame for the message PDM_416
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_PDM_416(const CAN_message_t &imsg) {
+
+	PDM_counterMsg416.set_can_value(((imsg.buf[0] & 0b00001111)));
+	PDM_ch7VoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch7VoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch7VoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+
+}
+
+/*
+ * Decode a CAN frame for the message PDM_417
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_PDM_417(const CAN_message_t &imsg) {
+
+	PDM_counterMsg417.set_can_value(((imsg.buf[0] & 0b00001111)));
+	PDM_ch8CurrentAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch8CurrentMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch8CurrentMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+
+}
+
+/*
+ * Decode a CAN frame for the message PDM_418
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_PDM_418(const CAN_message_t &imsg) {
+
+	PDM_counterMsg418.set_can_value(((imsg.buf[0] & 0b00001111)));
+	PDM_ch8VoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_ch8VoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_ch8VoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+
+}
+
+/*
+ * Decode a CAN frame for the message PDM_419
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_PDM_419(const CAN_message_t &imsg) {
+
+	PDM_counterMsg419.set_can_value(((imsg.buf[0] & 0b00001111)));
+	PDM_brakelightCurrentAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_brakelightCurrentMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_brakelightCurrentMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+
+}
+
+/*
+ * Decode a CAN frame for the message PDM_420
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_PDM_420(const CAN_message_t &imsg) {
+
+	PDM_counterMsg420.set_can_value(((imsg.buf[0] & 0b00001111)));
+	PDM_brakelightVoltAvg.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	PDM_brakelightVoltMax.set_can_value((imsg.buf[4]) | (imsg.buf[5] << 8));
+	PDM_brakelightVoltMin.set_can_value((imsg.buf[6]) | (imsg.buf[7] << 8));
+
+}
+
+/*
+ * Decode a CAN frame for the message PDM_421
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_PDM_421(const CAN_message_t &imsg) {
+
+	PDM_counterMsg421.set_can_value(((imsg.buf[0] & 0b00001111)));
+	PDM_fanLeftDutyCycle.set_can_value((imsg.buf[2]));
+	PDM_fanRightDutyCycle.set_can_value((imsg.buf[3]));
+	PDM_wp1DutyCycle.set_can_value((imsg.buf[4]));
+	PDM_wp2DutyCycle.set_can_value((imsg.buf[5]));
+
+}
+
+/*
+ * Decode a CAN frame for the message PDM_422
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_PDM_422(const CAN_message_t &imsg) {
+
+	PDM_uptime.set_can_value((imsg.buf[0]) | (imsg.buf[1] << 8) | (imsg.buf[2] << 16) | (imsg.buf[3] << 24));
 
 }
 
@@ -2004,8 +2229,6 @@ void read_PDM_414(const CAN_message_t &imsg) {
 
 /*
  * Decode a CAN message for the bus captured in SR26_CAN2.dbc.
- * To more efficiently allocate microcontroller resources, simply comment
- * out unnecessary messages that do not need to be decoded.
  * \param imsg A reference to the incoming CAN frame
  */
 void decode_SR26_CAN2(const CAN_message_t &imsg) {
@@ -2352,6 +2575,26 @@ void decode_SR26_CAN2(const CAN_message_t &imsg) {
 			read_BMS_562(imsg);
 			break;
 
+		case 563:
+			read_BMS_563(imsg);
+			break;
+
+		case 564:
+			read_BMS_564(imsg);
+			break;
+
+		case 565:
+			read_BMS_565(imsg);
+			break;
+
+		case 566:
+			read_BMS_566(imsg);
+			break;
+
+		case 567:
+			read_BMS_567(imsg);
+			break;
+
 		case 250:
 			read_DD_250(imsg);
 			break;
@@ -2434,6 +2677,38 @@ void decode_SR26_CAN2(const CAN_message_t &imsg) {
 
 		case 414:
 			read_PDM_414(imsg);
+			break;
+
+		case 415:
+			read_PDM_415(imsg);
+			break;
+
+		case 416:
+			read_PDM_416(imsg);
+			break;
+
+		case 417:
+			read_PDM_417(imsg);
+			break;
+
+		case 418:
+			read_PDM_418(imsg);
+			break;
+
+		case 419:
+			read_PDM_419(imsg);
+			break;
+
+		case 420:
+			read_PDM_420(imsg);
+			break;
+
+		case 421:
+			read_PDM_421(imsg);
+			break;
+
+		case 422:
+			read_PDM_422(imsg);
 			break;
 
 	}

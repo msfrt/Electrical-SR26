@@ -8,11 +8,15 @@
     
 ******************************************************************************/
 
-#ifndef CAN1_HPP
-#define CAN1_HPP
+#ifndef SR26_CAN1_HPP
+#define SR26_CAN1_HPP
 
 #include <FlexCAN_T4.h>
 #include <StateCAN.h>
+
+// Message: VCU_18008FD0 [0x18008fd0]
+StateSignal VCU_dcdcEnable(2, false, 1, 0.0, 0, 0, 0.0, -1, 402690000);
+StateSignal VCU_dcdcProtect(2, false, 1, 0.0, 0, 0, 0.0, -1, 402690000);
 
 // Message: VCU_192 [0xc0]
 StateSignal VCU_torqueCommand(16, true, 10, 0.0, -3276, 3276, 0.0, -1, 192);
@@ -200,6 +204,26 @@ StateSignal LWS_ok(1, false, 1, 0.0, 0, 0, 0.0, -1, 688);
 StateSignal LWS_cal(1, false, 1, 0.0, 0, 0, 0.0, -1, 688);
 StateSignal LWS_trim(1, false, 1, 0.0, 0, 0, 0.0, -1, 688);
 
+// Message: DCDC_1801D08F [0x1801d08f]
+StateSignal DCDC_voltageOutput(16, false, 10, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_currentOutput(16, false, 10, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_ready(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_status(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_hardwareFault(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_canError(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_fanControl1(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_shutOffError(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_fanControl2(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_hvilError(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_tempWarning(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_overTempError(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_inputOverVoltage(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_inputUnderVoltage(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_outputOverVoltage(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_outputUnderVoltage(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_outputOverCurrent(1, false, 1, 0.0, 0, 0, 0.0, -1, 402772111);
+StateSignal DCDC_temperature(8, true, 10, 0.0, 0, 0, 0.0, -1, 402772111);
+
 
 
 
@@ -209,6 +233,17 @@ StateSignal LWS_trim(1, false, 1, 0.0, 0, 0, 0.0, -1, 688);
 
 ************************************************************************************/
 
+
+/*
+ * Decode a CAN frame for the message VCU_18008FD0
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_VCU_18008FD0(const CAN_message_t &imsg) {
+
+	VCU_dcdcEnable.set_can_value(((imsg.buf[0] & 0b00000011)));
+	VCU_dcdcProtect.set_can_value((((imsg.buf[0] & 0b00001100)) >> 2));
+
+}
 
 /*
  * Decode a CAN frame for the message VCU_192
@@ -599,6 +634,33 @@ void read_LWS_688(const CAN_message_t &imsg) {
 
 }
 
+/*
+ * Decode a CAN frame for the message DCDC_1801D08F
+ * \param imsg A reference to the incoming CAN message frame
+ */
+void read_DCDC_1801D08F(const CAN_message_t &imsg) {
+
+	DCDC_voltageOutput.set_can_value((imsg.buf[0]) | (imsg.buf[1] << 8));
+	DCDC_currentOutput.set_can_value((imsg.buf[2]) | (imsg.buf[3] << 8));
+	DCDC_ready.set_can_value(((imsg.buf[4] & 0b00000001)));
+	DCDC_status.set_can_value((((imsg.buf[4] & 0b00000010)) >> 1));
+	DCDC_hardwareFault.set_can_value((((imsg.buf[4] & 0b00000100)) >> 2));
+	DCDC_canError.set_can_value((((imsg.buf[4] & 0b00001000)) >> 3));
+	DCDC_fanControl1.set_can_value((((imsg.buf[4] & 0b00010000)) >> 4));
+	DCDC_shutOffError.set_can_value((((imsg.buf[4] & 0b00100000)) >> 5));
+	DCDC_fanControl2.set_can_value((((imsg.buf[4] & 0b01000000)) >> 6));
+	DCDC_hvilError.set_can_value((((imsg.buf[4] & 0b10000000)) >> 7));
+	DCDC_tempWarning.set_can_value(((imsg.buf[5] & 0b00000001)));
+	DCDC_overTempError.set_can_value((((imsg.buf[5] & 0b00000010)) >> 1));
+	DCDC_inputOverVoltage.set_can_value((((imsg.buf[5] & 0b00000100)) >> 2));
+	DCDC_inputUnderVoltage.set_can_value((((imsg.buf[5] & 0b00001000)) >> 3));
+	DCDC_outputOverVoltage.set_can_value((((imsg.buf[5] & 0b00010000)) >> 4));
+	DCDC_outputUnderVoltage.set_can_value((((imsg.buf[5] & 0b00100000)) >> 5));
+	DCDC_outputOverCurrent.set_can_value((((imsg.buf[5] & 0b01000000)) >> 6));
+	DCDC_temperature.set_can_value((imsg.buf[7]));
+
+}
+
 
 
 
@@ -611,13 +673,15 @@ void read_LWS_688(const CAN_message_t &imsg) {
 
 /*
  * Decode a CAN message for the bus captured in SR26_CAN1.dbc.
- * To more efficiently allocate microcontroller resources, simply comment
- * out unnecessary messages that do not need to be decoded.
  * \param imsg A reference to the incoming CAN frame
  */
 void decode_SR26_CAN1(const CAN_message_t &imsg) {
 
 	switch (imsg.id) {
+
+		case 402690000:
+			read_VCU_18008FD0(imsg);
+			break;
 
 		case 192:
 			read_VCU_192(imsg);
@@ -733,6 +797,10 @@ void decode_SR26_CAN1(const CAN_message_t &imsg) {
 
 		case 688:
 			read_LWS_688(imsg);
+			break;
+
+		case 402772111:
+			read_DCDC_1801D08F(imsg);
 			break;
 
 	}
