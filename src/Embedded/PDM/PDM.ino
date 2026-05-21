@@ -10,7 +10,7 @@
 
 // CAN Bus Declaration
 FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
-FlexCAN_T4<CAN2, RX_SIZE_256, TX_SIZE_16> can2;
+FlexCAN_T4<CAN3, RX_SIZE_256, TX_SIZE_16> can2;
 static CAN_message_t rxmsg;
 
 #define NUM_RX_STD_MAILBOXES 32
@@ -125,10 +125,12 @@ void channel_enable(){
   pinMode(CHANNEL6_PIN, OUTPUT);
   digitalWrite(CHANNEL6_PIN, HIGH);
 
+  // channel 7 and channel 8 currently not functional, use as spares
+
   pinMode(CHANNEL7_PIN, OUTPUT);
-  digitalWrite(CHANNEL7_PIN, HIGH);
+  digitalWrite(CHANNEL7_PIN, LOW);
   pinMode(CHANNEL8_PIN, OUTPUT);
-  digitalWrite(CHANNEL8_PIN, HIGH);
+  digitalWrite(CHANNEL8_PIN, LOW);
 
   pinMode(BRAKELIGHT_PIN, OUTPUT);
   digitalWrite(BRAKELIGHT_PIN, HIGH);
@@ -274,8 +276,8 @@ void loop() {
   // water_pump1.set_pwm(0,0,2, 80);
   // water_pump1.set_pwm(0,0,2, 80);
 
-  // fan_left.set_pwm(0, 0, 2, 100);
-  // fan_right.set_pwm(0, 0, 2, 100);
+  // fan_left.set_pwm(0, 0, 2, 0);
+  // fan_right.set_pwm(0, 0, 2, 0);
   send_can2();
 }
 

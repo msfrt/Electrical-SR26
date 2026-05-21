@@ -24,13 +24,15 @@ void send_PDM_400() {
 
   PDM_teensyTemp = tempmonGetTemp(); // built-in teensy function;
 
+  // Serial.println("Msg 400 Sent");
+
   msg.buf[0] = ctr.value();
   msg.buf[1] = 0;
-  msg.buf[2] = 0;
+  msg.buf[2] = PDM_teensyTemp.can_value();
   msg.buf[3] = 0;
   msg.buf[4] = 0;
   msg.buf[5] = 0;
-  msg.buf[6] = PDM_teensyTemp.can_value();
+  msg.buf[6] = 0;
   msg.buf[7] = 0;
 
   // should have cooling button go direct to PDM in the future I think
