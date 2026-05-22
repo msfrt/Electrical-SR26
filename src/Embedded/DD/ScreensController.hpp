@@ -100,7 +100,7 @@ ScreensController::ScreensController(ILI9341_t3n &left, ILI9341_t3n &right)
   speed_screen_ = new ScreenNumber(display_left_, VCU_vehicleState, "shift_state:");
 
   /* Info screen 1 */
-  info_screen_1_left_ = new ScreenInfo(display_left_);
+  // info_screen_1_left_ = new ScreenInfo(display_left_);
   /*
   info_screen_1_left_->SetSignal(1, &C50_gpsSpeed, "SPD:", "%3.1f");
   info_screen_1_left_->SetSignal(2, &VCU_brakeBias, "BIAS:", "%3.0f%");
@@ -109,31 +109,30 @@ ScreensController::ScreensController(ILI9341_t3n &left, ILI9341_t3n &right)
   */
   /* Info screen 3 */
   info_screen_1_left_ = new ScreenInfo(display_left_);
-  info_screen_1_left_->SetSignal(1, &VCU_driveSpeed, "MPH:", "%4.1f");
-  info_screen_1_left_->SetSignal(2, &ATCCR_coolT_Inv_Out, "COOLT:", "%4.1f");
-  info_screen_1_left_->SetSignal(3, &ATCCR_susPot_RL, "SP1:", "%4.1f");
-  info_screen_1_left_->SetSignal(4, &ATCCR_susPot_RL, "SP2:", "%4.1f");
+  info_screen_1_left_->SetSignal(1, &VCU_brakeBias, "MPH:", "%3.1f");
+  info_screen_1_left_->SetSignal(2, &VCU_brakePressureF, "BPF:", "%4.0f");
+  info_screen_1_left_->SetSignal(3, &VCU_brakePressureR, "BPR:", "%4.0f");
+  info_screen_1_left_->SetSignal(4, &VCU_throttlePosition, "TPS:", "%3.1f");
 
   info_screen_1_right_ = new ScreenInfo(display_right_);
   info_screen_1_right_->SetSignal(1, &PM_dcBusVolt, "HV:", "%4.1f");
   info_screen_1_right_->SetSignal(2, &PDM_pdmVoltAvg, "LV:", "%3.1f");
-  info_screen_1_right_->SetSignal(3, &VCU_brakeBias, "BIAS:", "%3.0f%");
-  info_screen_1_right_->SetSignal(4, &PM_commandedTorque, "CMDT:", "%3.0f%");
+  info_screen_1_right_->SetSignal(3, &PM_motorTemp, "MTRT:", "%3.1f");
+  info_screen_1_right_->SetSignal(4, &BMS_module5Cell9Temp, "CELT:", "%3.1f");
 
   /* Info screen 2 */
   info_screen_2_left_ = new ScreenInfo(display_left_);
-  info_screen_2_left_->SetSignal(1, &VCU_brakePressureF, "BPF:", "%4.1f");
-  info_screen_2_left_->SetSignal(2, &VCU_brakePressureR, "BPR:", "%4.1f");
+  info_screen_2_left_->SetSignal(1, &PM_dcBusCurrent, "AMP:", "%4.1f");
+  info_screen_2_left_->SetSignal(2, &PM_moduleATemp, "INVT:", "%3.1f");
   info_screen_2_left_->SetSignal(3, &VCU_throttlePosition, "TPS:", "%3.1f%");
   info_screen_2_left_->SetSignal(4, &PM_motorSpeed, "RPM:", "%4.0f");
-  // info_screen_2_left_->SetSignal(4, &ATCCR_shiftingPressure, "SFT:", "%3.1f");
 
   /* Info screen 3 */
   info_screen_3_left_ = new ScreenInfo(display_left_);
-  info_screen_3_left_->SetSignal(1, &PM_motorSpeed, "RPM:", "%4.0f");
-  info_screen_3_left_->SetSignal(2, &PM_motorTemp, "MT:", "%4.1f");
-  info_screen_3_left_->SetSignal(3, &PM_outputVolt, "OUTV:", "%4.1f");
-  info_screen_3_left_->SetSignal(4, &PM_commandedTorque, "CMDT:", "%3.0f");
+  info_screen_3_left_->SetSignal(1, &VCU_radFanLDuty, "FANL:", "%3.0f");
+  info_screen_3_left_->SetSignal(2, &VCU_radFanRDuty, "FANR:", "%3.0f");
+  info_screen_3_left_->SetSignal(3, &VCU_waterPumpDuty, "WP1:", "%3.0f");
+  info_screen_3_left_->SetSignal(4, &VCU_waterPumpDuty, "WP2:", "%3.0f");
   
   // keep the same screen on the right side
   info_screen_2_right_ = info_screen_1_right_;

@@ -9,8 +9,8 @@
 #include "Adafruit_GFX.h"
 #include "ILI9341_t3n.h"
 #include "SPI.h"
-#include<string>
-using std::string;
+// #include<string>
+// using std::string;
 #define SPI0_DISP1
 
 #define READ_RESOLUTION_BITS 12
@@ -366,35 +366,35 @@ void set_mailboxes() {
   // we have no interest in. it also reserves a slot for messages as they are
   // recieved.
   can1.setMBFilter(REJECT_ALL);
-  can1.setMBFilter(MB0, C50_gpsSpeed.get_msg_id());
+  can1.setMBFilter(MB0, PM_moduleATemp.get_msg_id());
   can1.setMBFilter(MB1, PM_motorSpeed.get_msg_id());
   can1.setMBFilter(MB2, PM_motorTemp.get_msg_id());
   can1.setMBFilter(MB3, PM_dcBusVolt.get_msg_id());
   can1.setMBFilter(MB4, PM_commandedTorque.get_msg_id());
   can1.setMBFilter(MB5, VCU_radFanLDuty.get_msg_id());
   can1.setMBFilter(MB6, VCU_radFanRDuty.get_msg_id());
-  can1.setMBFilter(MB7, ATCCF_wheelSpeedFL.get_msg_id());
-  can1.setMBFilter(MB8, ATCCF_wheelSpeedFR.get_msg_id());
-  can1.setMBFilter(MB9, ATCCR_coolT_Inv_Out.get_msg_id());
-  can1.setMBFilter(MB10, ATCCR_coolT_Inv_In.get_msg_id());
+  can1.setMBFilter(MB7, PM_dcBusCurrent.get_msg_id());
+  can1.setMBFilter(MB8, 0);
+  can1.setMBFilter(MB9, 0);
+  can1.setMBFilter(MB10, 0);
   can1.setMBFilter(MB11, 0);
   can1.setMBFilter(MB12, 0);
   can1.setMBFilter(MB13, 0);
   can1.setMBFilter(MB14, 0);
 
   can2.setMBFilter(REJECT_ALL);
-  can2.setMBFilter(MB0, 0);
-  can2.setMBFilter(MB1, 0);
-  can2.setMBFilter(MB2, VCU_brakePressureF.get_msg_id());
-  can2.setMBFilter(MB3, VCU_brakePressureR.get_msg_id()); 
-  can2.setMBFilter(MB4, PDM_fanRightDutyCycle.get_msg_id());
-  can2.setMBFilter(MB5, PDM_fanLeftDutyCycle.get_msg_id());
-  can2.setMBFilter(MB6, PDM_pdmVoltAvg.get_msg_id());
-  can2.setMBFilter(MB7, ATCCR_susPot_RL.get_msg_id());
-  can2.setMBFilter(MB8, VCU_brakeBias.get_msg_id());
-  can2.setMBFilter(MB9, VCU_driveSpeed.get_msg_id());
+  can2.setMBFilter(MB0, VCU_brakeBias.get_msg_id());
+  can2.setMBFilter(MB1, PDM_pdmVoltAvg.get_msg_id());
+  can2.setMBFilter(MB2, VCU_driveSpeed.get_msg_id());
+  can2.setMBFilter(MB3, PDM_fanLeftDutyCycle.get_msg_id()); 
+  can2.setMBFilter(MB4, 0);
+  can2.setMBFilter(MB5, 0);
+  can2.setMBFilter(MB6, 0);
+  can2.setMBFilter(MB7, 0);
+  can2.setMBFilter(MB8, 0);
+  can2.setMBFilter(MB9, 0);
   can2.setMBFilter(MB10, 0);
-  can2.setMBFilter(MB11, ATCCR_susPot_RL.get_msg_id());
+  can2.setMBFilter(MB11, 0);
   can2.setMBFilter(MB12, 0);
   can2.setMBFilter(MB13, 0);
   can2.setMBFilter(MB14, 0);
