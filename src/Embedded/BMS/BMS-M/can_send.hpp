@@ -25,7 +25,7 @@ void send_BMS_1806E5F4() {
   msg.len = 8;
 
   msg.buf[0] = 0x0E; // max accumulator voltage (V)
-  msg.buf[1] = 0xC4; // 0x0EC4 is 378V
+  msg.buf[1] = 0x10; // 0x0EC4 is 378V, 0E10 is 360V
   msg.buf[2] = 0x00; // charging current limit (A)
   msg.buf[3] = 0x64; // 0x0064 is 10A
   msg.buf[4] = 0x00;
@@ -53,6 +53,7 @@ void send_BMS_500() {
   msg.buf[6] = BMS_packSOC.can_value();
   msg.buf[7] = BMS_packSOC.can_value() >> 8;
 
+  Serial.println("Sent BMS message");
   can2.write(msg);
 }
 // send message definitions

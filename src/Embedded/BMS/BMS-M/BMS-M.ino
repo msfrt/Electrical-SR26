@@ -71,9 +71,9 @@ void setup(){
 
 void loop(){
 
-    //         runOperational();
-    //         delay(500); // send every 1sec
-    //         send_BMS_1806E5F4();
+            // runOperational();
+            // delay(500); // send every 1sec
+            // send_BMS_1806E5F4();
     //         Serial.print("h");
     //         break;
 
@@ -81,27 +81,27 @@ void loop(){
     adc1.sample(sens0, sens1, sens2, sens3); // read TS current sensor 
 
     read_CAN();
-    Serial.print("d");
+    // Serial.print("d");
     if (VCU_vehicleState.can_value() == 0) {
-        printf("VCU-ShifterState = 0\n");
+        // printf("VCU-ShifterState = 0\n");
         runDischarge();
     } else if(VCU_vehicleState.can_value() == 1){
-        printf("VCU-ShifterState = 1\n");
+        // printf("VCU-ShifterState = 1\n");
         runPrecharge();
     } else if(VCU_vehicleState.can_value() == 2){
-        printf("VCU-ShifterState = 2\n");
+        // printf("VCU-ShifterState = 2\n");
         runOperational();
     } else if(VCU_vehicleState.can_value() == 3){
-        printf("VCU-ShifterState = 3\n");
+        // printf("VCU-ShifterState = 3\n");
         runOperational();
     } else if(VCU_vehicleState.can_value() == 4){
-        printf("VCU-ShifterState = 4\n");
+        // printf("VCU-ShifterState = 4\n");
         runDischarge();
     } else if(VCU_vehicleState.can_value() == 5){
-        printf("VCU-ShifterState = 5\n");
+        // printf("VCU-ShifterState = 5\n");
         runDischarge();
     } else if(VCU_vehicleState.can_value() == 6){
-        printf("VCU-ShifterState = 6\n");
+        // printf("VCU-ShifterState = 6\n");
         runDischarge();
     } 
     sumPackVoltage();
