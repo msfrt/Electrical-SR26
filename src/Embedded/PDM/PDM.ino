@@ -118,8 +118,11 @@ void channel_enable(){
   digitalWrite(CHANNEL3_PIN, HIGH);
   pinMode(CHANNEL4_PIN, OUTPUT);
   digitalWrite(CHANNEL4_PIN, HIGH);
+  
+  // accumulator 12V splice on this channel, but not used for accumulator things
+  // shutdown circuit on this channel
   pinMode(CHANNEL5_PIN, OUTPUT);
-  digitalWrite(CHANNEL5_PIN, HIGH);
+  digitalWrite(CHANNEL5_PIN, LOW); // initialize as low, then go high after a while 
 
   // wake switch is handled in harness
   pinMode(CHANNEL6_PIN, OUTPUT);
@@ -214,29 +217,19 @@ bool vcu_timeout = false;
 bool has_received_vcu_msg = false;
 float elapsed = 0;
 
+// used for power staging
+float TSSI_last = 0.0;
+float TSSI_elapsed = 0;
+
 void loop() {
 
+  // channel startup delay to allow for initialization 
+  TSSI_elapsed = (millis() - TSSI_last);
+  if (TSSI_elapsed > 10000){
+    digitalWrite(CHANNEL5_PIN, HIGH);
+  }
+
   sample_ADCs();
-
-  // if (debug.isup()){
-  //   // Serial.println("Imon_pdm: ");
-  //   // Serial.println(Imon_pdm.avg());
-
-  //   Serial.println("pdm_volt_sens: ");
-  //   Serial.println(pdm_volt_sens.avg());
-
-  //   // Serial.println("brakelight_volt_sens: ");
-  //   // Serial.println(brakelight_volt_sens.avg());
-
-  //   // Serial.println("Imon_brakelight: ");
-  //   // Serial.println(Imon_brakelight.avg());
-    
-  //   Serial.println("volt_ch6: ");
-  //   Serial.println(volt_ch6.avg());
-
-  //   Serial.println("Imon_ch6: ");
-  //   Serial.println(Imon_ch6.avg());
-  // }
 
   read_CAN();
 
