@@ -9,7 +9,7 @@
 #include "CAN/SR26_CAN2.hpp"
 
 
-const int MODULE_2 = 5; // BMS-S select, 1-5
+const int MODULE_2 = 1; // BMS-S select, 1-5
 
 static CAN_message_t msg;
 

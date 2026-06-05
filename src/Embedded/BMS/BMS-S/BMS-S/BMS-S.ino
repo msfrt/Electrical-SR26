@@ -17,7 +17,7 @@ static CAN_message_t rxmsg;
 #define NUM_TX_MAILBOXES 30
 #define MAX_CAN_FRAME_READ_PER_CYCLE 5  // Limit per loop iteration
 
-const int MODULE = 5; // BMS-S select, 1-5
+const int MODULE = 1; // BMS-S select, 1-5
 
 void setup() {
   BQ_UART_SERIAL.begin(1000000);
@@ -533,12 +533,19 @@ BMSErrorCode_t bqUpdateTemperatures() {
 
         if (status == BMS_OK) {
             uint16_t raw_val = (uint16_t)((tempBuf[0] << 8) | tempBuf[1]);
-            float voltage_mv = raw_val * 0.1f; // 100uV resolution
+            // float voltage_mv = raw_val * 0.1f; // 100uV resolution
+            float voltage_v = (raw_val * 0.1f) / 1000.0f;
 
-            // 4. Simple conversion logic 
-            // Using your 626.2mV = 20C reference. 
-            // Adjust the scaling factor (0.1) based on your specific NTC Beta value
-            cellTemperatures[i] = 20.0f + (626.2f - voltage_mv) * 0.1f; 
+            cellTemperatures[i] = (((155.35203f * voltage_v 
+                                  - 1381.39248f) * voltage_v 
+                                  + 4484.86765f) * voltage_v 
+                                  - 6407.60322f) * voltage_v 
+                                  + 3457.41389f; 
+
+            // Serial.println("Raw: ");
+            // Serial.println(raw_val);
+            // Serial.println("Volt: ");
+            // Serial.println(voltage_v);
         } else {
             cellTemperatures[i] = -99.0f; // Error indicator
         }
