@@ -29,9 +29,7 @@ void log_test1() {
   Serial.print(" | 1-7: ");
   Serial.println(test17.avg());
   Serial.println("");
-}
 
-void log_test2() {
   Serial.print("2-0: ");
   Serial.print(test20.avg());
   Serial.print(" | 2-1: ");
@@ -49,9 +47,7 @@ void log_test2() {
   Serial.print(" | 2-7: ");
   Serial.println(test27.avg());
   Serial.println("");
-}
 
-void log_test3() {
   Serial.print("3-0: ");
   Serial.print(test30.avg());
   Serial.print(" | 3-1: ");
@@ -69,9 +65,7 @@ void log_test3() {
   Serial.print(" | 3-7: ");
   Serial.println(test37.avg());
   Serial.println("");
-}
 
-void log_test4() {
   Serial.print("4-0: ");
   Serial.print(test40.avg());
   Serial.print(" | 4-1: ");
@@ -89,9 +83,7 @@ void log_test4() {
   Serial.print(" | 4-7: ");
   Serial.println(test47.avg());
   Serial.println("");
-}
 
-void log_test5() {
   Serial.print("5-0: ");
   Serial.print(test50.avg());
   Serial.print(" | 5-1: ");
@@ -109,9 +101,7 @@ void log_test5() {
   Serial.print(" | 5-7: ");
   Serial.println(test57.avg());
   Serial.println("");
-}
 
-void log_test6() {
   Serial.print("6-0: ");
   Serial.print(test60.avg());
   Serial.print(" | 6-1: ");
@@ -131,6 +121,26 @@ void log_test6() {
   Serial.println("");
 }
 
+void log_test2() {
+  
+}
+
+void log_test3() {
+  
+}
+
+void log_test4() {
+  
+}
+
+void log_test5() {
+  
+}
+
+void log_test6() {
+  
+}
+
 void log_test_sens() {
 
   static EasyTimer log_timer1(1); // 200Hz
@@ -140,27 +150,27 @@ void log_test_sens() {
 
   static EasyTimer log_timer2(1); // 200Hz
   if (log_timer2.isup()){
-    log_test2();
+    //log_test2();
   }
 
   static EasyTimer log_timer3(1); // 200Hz
   if (log_timer3.isup()){
-    log_test3();
+    //log_test3();
   }
 
   static EasyTimer log_timer4(1); // 200Hz
   if (log_timer4.isup()){
-    log_test4();
+    //log_test4();
   }
 
   static EasyTimer log_timer5(1); // 200Hz
   if (log_timer5.isup()){
-    log_test5();
+    //log_test5();
   }
 
   static EasyTimer log_timer6(1); // 200Hz
   if (log_timer6.isup()){
-    log_test6();
+    //log_test6();
   }
 
 }
