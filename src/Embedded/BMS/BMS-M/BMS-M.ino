@@ -8,10 +8,8 @@
 #include "CAN/SR26_CAN2.hpp"
 #include "CAN/elcon.hpp"
 
-
 #include "ReadADC.h"
 #include <SPI.h>
-
 
 #define NUM_RX_STD_MAILBOXES 32
 #define NUM_RX_EXT_MAILBOXES 2
@@ -19,9 +17,11 @@
 #define MAX_CAN_FRAME_READ_PER_CYCLE 5  // Limit per loop iteration
 #define BMS_STATUS_SWITCH 9 
 
+#define PACK_VOLTAGE_UPPER_LIMIT 378 // 4.2V for all 90 cells
+#define PACK_VOLTAGE_LOWER_LIMIT 225 // 2.5V for all 90 cells
 
-int IS_CHARGING = 0;  // 0 = not charging, 1 = charging, temporary
-
+bool CHARGING = false;
+bool VALID_VOLTAGE_RANGE = false;
 
 // CAN Bus Declaration
 FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
@@ -31,7 +31,7 @@ static CAN_message_t rxmsg;
 
 #include "can_send.hpp"
 
-int val =0;
+int val = 0;
 
 //adc declaration
 ADCChip adc1(10);
@@ -39,8 +39,6 @@ ADCSensor sens0(0, 0, 1);
 ADCSensor sens1(1, 0, 1);
 ADCSensor sens2(2, 0, 1);
 ADCSensor sens3(3, 0, 1);
-
-
 
 void setup(){
   // Initialize serial communication
@@ -61,54 +59,66 @@ void setup(){
     can3.begin();
     can3.setBaudRate(250000);
     set_mailboxes();
-    digitalWrite(BMS_STATUS_SWITCH, HIGH); // set BMS status good
-    // if (IS_CHARGING = 1) { // close contactors early before sending CAN to charger
-    //     runOperational();
-    //     delay(1000);
-    // }
-}
 
+    // BMS status should update with battery voltage and temperature
+    digitalWrite(BMS_STATUS_SWITCH, HIGH); // set BMS status good
+
+}
 
 void loop(){
 
-            // runOperational();
-            // delay(500); // send every 1sec
-            // send_BMS_1806E5F4();
-    //         Serial.print("h");
-    //         break;
-
-    
     adc1.sample(sens0, sens1, sens2, sens3); // read TS current sensor 
 
     read_CAN();
-    // Serial.print("d");
+
+    /////////////// CHARGING FLAG /////////////////
+    if (OutputVoltage.value() <= PACK_VOLTAGE_UPPER_LIMIT && 
+        OutputVoltage.value() >= PACK_VOLTAGE_LOWER_LIMIT){
+        
+        VALID_VOLTAGE_RANGE = true;
+    } else {
+        VALID_VOLTAGE_RANGE = false;
+    }
+
+    if (VCU_vehicleState.can_value() == 0 && VALID_VOLTAGE_RANGE){
+        CHARGING = true;
+    } else {
+        CHARGING = false;
+    }
+    /////////////// CHARGING FLAG /////////////////
+
+    ///////////// CONTACTOR STATES ///////////////
     if (VCU_vehicleState.can_value() == 0) {
-        // printf("VCU-ShifterState = 0\n");
-        runDischarge();
+        if (CHARGING){
+            runOperational();
+        } else {
+            runDischarge();
+        }
     } else if(VCU_vehicleState.can_value() == 1){
-        // printf("VCU-ShifterState = 1\n");
         runPrecharge();
     } else if(VCU_vehicleState.can_value() == 2){
-        // printf("VCU-ShifterState = 2\n");
         runOperational();
     } else if(VCU_vehicleState.can_value() == 3){
-        // printf("VCU-ShifterState = 3\n");
         runOperational();
     } else if(VCU_vehicleState.can_value() == 4){
-        // printf("VCU-ShifterState = 4\n");
         runDischarge();
     } else if(VCU_vehicleState.can_value() == 5){
-        // printf("VCU-ShifterState = 5\n");
         runDischarge();
     } else if(VCU_vehicleState.can_value() == 6){
-        // printf("VCU-ShifterState = 6\n");
         runDischarge();
-    } 
+    }
+    ///////////// CONTACTOR STATES ///////////////
+
     sumPackVoltage();
-    send_can2();
+    send_can2(); // summed info CANbus
+    send_can3(); // charger CANbus
+    
 }
 
 void set_mailboxes() {
+
+    // should implement a mailbox on CAN1
+
     can2.setMaxMB(64);
     can2.enableFIFO();
     can2.setMB(MB4, RX, STD);
@@ -153,15 +163,12 @@ void read_CAN() {
         decode_SR26_CAN2(rxmsg);
         count++;
     }
-        while (can3.read(rxmsg) && count < MAX_CAN_FRAME_READ_PER_CYCLE) {
+    
+    while (can3.read(rxmsg) && count < MAX_CAN_FRAME_READ_PER_CYCLE) {
         decode_elcon(rxmsg);
         count++;
     }
 }
-
-
-
-
 
 void sumPackVoltage(){
     float module1Volt = 0;
@@ -241,8 +248,6 @@ float get_battery_percentage(float voltage) {
 
     return 0.0f;
 }
-
-
 
 void checkVoltFault(){
 

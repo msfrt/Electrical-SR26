@@ -1,21 +1,10 @@
 #ifndef CAN_MESSAGES_HPP
 #define CAN_MESSAGES_HPP
 
-
-
 #include <FlexCAN_T4.h>
 #include <EasyTimer.h>
 
-
-
-
-
 static CAN_message_t msg;
-
-
-
-
-
 
 //charging message
 void send_BMS_1806E5F4() {
@@ -34,7 +23,7 @@ void send_BMS_1806E5F4() {
   msg.buf[7] = 0x00;
 
   can3.write(msg);
-  Serial.println("Sent charging message");
+  // Serial.println("Sent charging message");
 }
 
 void send_BMS_500() {
@@ -53,11 +42,11 @@ void send_BMS_500() {
   msg.buf[6] = BMS_packSOC.can_value();
   msg.buf[7] = BMS_packSOC.can_value() >> 8;
 
-  Serial.println("Sent BMS message");
+  // Serial.println("Sent BMS message");
   can2.write(msg);
 }
-// send message definitions
 
+// send message definitions
 
 void send_can2(){
 
@@ -68,5 +57,13 @@ void send_can2(){
 
 }
 
+void send_can3(){
+
+  static EasyTimer BMS_1806E5F4_timer(2); // 2Hz, 500ms
+  if (BMS_1806E5F4_timer.isup()){
+    send_BMS_1806E5F4();
+  }
+
+}
 
 #endif
