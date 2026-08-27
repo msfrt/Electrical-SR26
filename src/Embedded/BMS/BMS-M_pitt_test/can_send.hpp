@@ -42,7 +42,8 @@ void send_BMS_500() {
   msg.buf[6] = BMS_packSOC.can_value();
   msg.buf[7] = BMS_packSOC.can_value() >> 8;
 
-  // Serial.println("Sent BMS message");
+  Serial.println("Sent BMS message");
+  Serial.println(BMS_packSOC.can_value());
   can2.write(msg);
 }
 

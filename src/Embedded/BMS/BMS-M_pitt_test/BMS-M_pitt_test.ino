@@ -8,6 +8,9 @@
 #include "CAN/SR26_CAN2.hpp"
 #include "CAN/elcon.hpp"
 
+// BENCH TEST MODE
+#include "BMS_CAN_TEST_MODE.h"
+
 #include "ReadADC.h"
 #include <SPI.h>
 
@@ -40,81 +43,164 @@ ADCSensor sens1(1, 0, 1);
 ADCSensor sens2(2, 0, 1);
 ADCSensor sens3(3, 0, 1);
 
-void setup(){
-  // Initialize serial communication
+void setup() {
+
     disableAllCont();
     Serial.begin(112500);
 
-    // initialize SPI communication
     SPI.begin();
 
-    // initialize ADCs
     adc1.begin();
 
-    //initialize the CAN Busses
     can1.begin();
     can1.setBaudRate(500000);
+
     can2.begin();
     can2.setBaudRate(1000000);
+
     can3.begin();
     can3.setBaudRate(250000);
+
     set_mailboxes();
 
-    // BMS status should update with battery voltage and temperature
-    digitalWrite(BMS_STATUS_SWITCH, HIGH); // set BMS status good
+    pinMode(BMS_STATUS_SWITCH, OUTPUT);
+    digitalWrite(BMS_STATUS_SWITCH, HIGH);
 
+#ifdef BMS_CAN_TEST_MODE
+    bmsTestBegin();
+#endif
 }
 
-void loop(){
+void loop() {
 
-    adc1.sample(sens0, sens1, sens2, sens3); // read TS current sensor 
+    adc1.sample(sens0, sens1, sens2, sens3);
+    Serial.println("running");
+
+
+#ifdef BMS_CAN_TEST_MODE
+
+    bmsTestUpdate();
+
+    checkAllBatterySafetyLimits();
+
+    Serial.print("Pin 9 state: ");
+    Serial.println(digitalRead(BMS_STATUS_SWITCH));
+
+#else
+
+    // ------------------------------------------------------------
+    // NORMAL VEHICLE OPERATION
+    // ------------------------------------------------------------
 
     read_CAN();
 
     checkAllBatterySafetyLimits();
 
+
     /////////////// CHARGING FLAG /////////////////
-    if (OutputVoltage.value() <= PACK_VOLTAGE_UPPER_LIMIT && 
-        OutputVoltage.value() >= PACK_VOLTAGE_LOWER_LIMIT){
-        
+
+    if (
+        OutputVoltage.value() <= PACK_VOLTAGE_UPPER_LIMIT &&
+        OutputVoltage.value() >= PACK_VOLTAGE_LOWER_LIMIT
+    ) {
+
         VALID_VOLTAGE_RANGE = true;
+
     } else {
+
         VALID_VOLTAGE_RANGE = false;
     }
 
-    if (VCU_vehicleState.can_value() == 0 && VALID_VOLTAGE_RANGE){
+
+    if (
+        VCU_vehicleState.can_value() == 0 &&
+        VALID_VOLTAGE_RANGE
+    ) {
+
         CHARGING = true;
+
     } else {
+
         CHARGING = false;
     }
+
     /////////////// CHARGING FLAG /////////////////
 
-    ///////////// CONTACTOR STATES ///////////////
-    if (VCU_vehicleState.can_value() == 0) {
-        if (CHARGING){
+
+
+    /////////////// CONTACTOR STATES ///////////////
+
+    if (
+        VCU_vehicleState.can_value() == 0
+    ) {
+
+        if (
+            CHARGING
+        ) {
+
             runOperational();
+
         } else {
+
             runDischarge();
         }
-    } else if(VCU_vehicleState.can_value() == 1){
+
+    } else if (
+        VCU_vehicleState.can_value() == 1
+    ) {
+
         runPrecharge();
-    } else if(VCU_vehicleState.can_value() == 2){
+
+    } else if (
+        VCU_vehicleState.can_value() == 2
+    ) {
+
         runOperational();
-    } else if(VCU_vehicleState.can_value() == 3){
+
+    } else if (
+        VCU_vehicleState.can_value() == 3
+    ) {
+
         runOperational();
-    } else if(VCU_vehicleState.can_value() == 4){
+
+    } else if (
+        VCU_vehicleState.can_value() == 4
+    ) {
+
         runDischarge();
-    } else if(VCU_vehicleState.can_value() == 5){
+
+    } else if (
+        VCU_vehicleState.can_value() == 5
+    ) {
+
         runDischarge();
-    } else if(VCU_vehicleState.can_value() == 6){
+
+    } else if (
+        VCU_vehicleState.can_value() == 6
+    ) {
+
         runDischarge();
     }
-    ///////////// CONTACTOR STATES ///////////////
+
+    /////////////// CONTACTOR STATES ///////////////
+
 
     sumPackVoltage();
+
     send_can2(); // summed info CANbus
+
     send_can3(); // charger CANbus
-    
+
+
+#endif
+
+
+#ifdef BMS_CAN_TEST_MODE
+
+    // Slow bench test loop down so Serial Monitor is easy to use
+    delay(2000);
+
+#endif
 }
 
 void set_mailboxes() {
@@ -154,25 +240,31 @@ void set_mailboxes() {
 
 void read_CAN() {
     int count = 0;
-    count = 0;
 
-    while (can1.read(rxmsg) && count < MAX_CAN_FRAME_READ_PER_CYCLE) {
+    // CAN1
+    count = 0;
+    while (count < MAX_CAN_FRAME_READ_PER_CYCLE && can1.read(rxmsg)) {
         decode_raptor_CAN1(rxmsg);
         count++;
     }
 
-    while (can2.read(rxmsg) && count < MAX_CAN_FRAME_READ_PER_CYCLE) {
+    // CAN2
+    count = 0;
+    while (count < MAX_CAN_FRAME_READ_PER_CYCLE && can2.read(rxmsg)) {
         decode_SR26_CAN2(rxmsg);
         count++;
     }
-    
-    while (can3.read(rxmsg) && count < MAX_CAN_FRAME_READ_PER_CYCLE) {
+
+    // CAN3
+    count = 0;
+    while (count < MAX_CAN_FRAME_READ_PER_CYCLE && can3.read(rxmsg)) {
         decode_elcon(rxmsg);
         count++;
     }
 }
 
-void sumPackVoltage(){
+void sumPackVoltage() {
+
     float module1Volt = 0;
     float module2Volt = 0;
     float module3Volt = 0;
@@ -180,19 +272,21 @@ void sumPackVoltage(){
     float module5Volt = 0;
     float PackVoltage = 0;
 
-    module1Volt = BMS_module1voltageBMSS.can_value();
-    module2Volt = BMS_module2voltageBMSS.can_value();
-    module3Volt = BMS_module3voltageBMSS.can_value();
-    module4Volt = BMS_module4voltageBMSS.can_value();
-    module5Volt = BMS_module5voltageBMSS.can_value();
+    module1Volt = BMS_module1voltageBMSS.value();
+    module2Volt = BMS_module2voltageBMSS.value();
+    module3Volt = BMS_module3voltageBMSS.value();
+    module4Volt = BMS_module4voltageBMSS.value();
+    module5Volt = BMS_module5voltageBMSS.value();
 
-    PackVoltage = module1Volt + module2Volt + module3Volt + module4Volt + module5Volt;
+    PackVoltage =
+        module1Volt +
+        module2Volt +
+        module3Volt +
+        module4Volt +
+        module5Volt;
 
-    //set pack voltage for CAN
+    // Set pack voltage for CAN
     BMS_packmVoltage = PackVoltage;
-    //set pack SOC for CAN
-    BMS_packSOC = get_battery_percentage(PackVoltage);
-
 }
 
 float get_battery_percentage(float voltage) {
@@ -255,1274 +349,217 @@ float get_battery_percentage(float voltage) {
 void checkAllBatterySafetyLimits() {
     bool faultDetected = false;
 
-    // Array of all 90 cell voltage signals
-    StateSignal* allCellVolts[] = {
+    // Read all 90 cell voltages directly from their CAN values.
+    // This avoids using StateSignal* arrays.
+    float allCellVolts[] = {
         // Module 1
-        &BMS_module1Cell1Volt, &BMS_module1Cell2Volt, &BMS_module1Cell3Volt, &BMS_module1Cell4Volt, &BMS_module1Cell5Volt, &BMS_module1Cell6Volt,
-        &BMS_module1Cell7Volt, &BMS_module1Cell8Volt, &BMS_module1Cell9Volt, &BMS_module1Cell10Volt, &BMS_module1Cell11Volt, &BMS_module1Cell12Volt,
-        &BMS_module1Cell13Volt, &BMS_module1Cell14Volt, &BMS_module1Cell15Volt, &BMS_module1Cell16Volt, &BMS_module1Cell17Volt, &BMS_module1Cell18Volt,
+        BMS_module1Cell1Volt.value(), BMS_module1Cell2Volt.value(), BMS_module1Cell3Volt.value(), BMS_module1Cell4Volt.value(), BMS_module1Cell5Volt.value(), BMS_module1Cell6Volt.value(),
+        BMS_module1Cell7Volt.value(), BMS_module1Cell8Volt.value(), BMS_module1Cell9Volt.value(), BMS_module1Cell10Volt.value(), BMS_module1Cell11Volt.value(), BMS_module1Cell12Volt.value(),
+        BMS_module1Cell13Volt.value(), BMS_module1Cell14Volt.value(), BMS_module1Cell15Volt.value(), BMS_module1Cell16Volt.value(), BMS_module1Cell17Volt.value(), BMS_module1Cell18Volt.value(),
+
         // Module 2
-        &BMS_module2Cell1Volt, &BMS_module2Cell2Volt, &BMS_module2Cell3Volt, &BMS_module2Cell4Volt, &BMS_module2Cell5Volt, &BMS_module2Cell6Volt,
-        &BMS_module2Cell7Volt, &BMS_module2Cell8Volt, &BMS_module2Cell9Volt, &BMS_module2Cell10Volt, &BMS_module2Cell11Volt, &BMS_module2Cell12Volt,
-        &BMS_module2Cell13Volt, &BMS_module2Cell14Volt, &BMS_module2Cell15Volt, &BMS_module2Cell16Volt, &BMS_module2Cell17Volt, &BMS_module2Cell18Volt,
+        BMS_module2Cell1Volt.value(), BMS_module2Cell2Volt.value(), BMS_module2Cell3Volt.value(), BMS_module2Cell4Volt.value(), BMS_module2Cell5Volt.value(), BMS_module2Cell6Volt.value(),
+        BMS_module2Cell7Volt.value(), BMS_module2Cell8Volt.value(), BMS_module2Cell9Volt.value(), BMS_module2Cell10Volt.value(), BMS_module2Cell11Volt.value(), BMS_module2Cell12Volt.value(),
+        BMS_module2Cell13Volt.value(), BMS_module2Cell14Volt.value(), BMS_module2Cell15Volt.value(), BMS_module2Cell16Volt.value(), BMS_module2Cell17Volt.value(), BMS_module2Cell18Volt.value(),
+
         // Module 3
-        &BMS_module3Cell1Volt, &BMS_module3Cell2Volt, &BMS_module3Cell3Volt, &BMS_module3Cell4Volt, &BMS_module3Cell5Volt, &BMS_module3Cell6Volt,
-        &BMS_module3Cell7Volt, &BMS_module3Cell8Volt, &BMS_module3Cell9Volt, &BMS_module3Cell10Volt, &BMS_module3Cell11Volt, &BMS_module3Cell12Volt,
-        &BMS_module3Cell13Volt, &BMS_module3Cell14Volt, &BMS_module3Cell15Volt, &BMS_module3Cell16Volt, &BMS_module3Cell17Volt, &BMS_module3Cell18Volt,
+        BMS_module3Cell1Volt.value(), BMS_module3Cell2Volt.value(), BMS_module3Cell3Volt.value(), BMS_module3Cell4Volt.value(), BMS_module3Cell5Volt.value(), BMS_module3Cell6Volt.value(),
+        BMS_module3Cell7Volt.value(), BMS_module3Cell8Volt.value(), BMS_module3Cell9Volt.value(), BMS_module3Cell10Volt.value(), BMS_module3Cell11Volt.value(), BMS_module3Cell12Volt.value(),
+        BMS_module3Cell13Volt.value(), BMS_module3Cell14Volt.value(), BMS_module3Cell15Volt.value(), BMS_module3Cell16Volt.value(), BMS_module3Cell17Volt.value(), BMS_module3Cell18Volt.value(),
+
         // Module 4
-        &BMS_module4Cell1Volt, &BMS_module4Cell2Volt, &BMS_module4Cell3Volt, &BMS_module4Cell4Volt, &BMS_module4Cell5Volt, &BMS_module4Cell6Volt,
-        &BMS_module4Cell7Volt, &BMS_module4Cell8Volt, &BMS_module4cCell9Volt, &BMS_module4Cell10Volt, &BMS_module4Cell11Volt, &BMS_module4Cell12Volt,
-        &BMS_module4Cell13Volt, &BMS_module4Cell14Volt, &BMS_module4Cell15Volt, &BMS_module4Cell16Volt, &BMS_module4Cell17Volt, &BMS_module4Cell18Volt,
+        BMS_module4Cell1Volt.value(), BMS_module4Cell2Volt.value(), BMS_module4Cell3Volt.value(), BMS_module4Cell4Volt.value(), BMS_module4Cell5Volt.value(), BMS_module4Cell6Volt.value(),
+        BMS_module4Cell7Volt.value(), BMS_module4Cell8Volt.value(), BMS_module4Cell9Volt.value(), BMS_module4Cell10Volt.value(), BMS_module4Cell11Volt.value(), BMS_module4Cell12Volt.value(),
+        BMS_module4Cell13Volt.value(), BMS_module4Cell14Volt.value(), BMS_module4Cell15Volt.value(), BMS_module4Cell16Volt.value(), BMS_module4Cell17Volt.value(), BMS_module4Cell18Volt.value(),
+
         // Module 5
-        &BMS_module5Cell1Volt, &BMS_module5Cell2Volt, &BMS_module5Cell3Volt, &BMS_module5Cell4Volt, &BMS_module5Cell5Volt, &BMS_module5Cell6Volt,
-        &BMS_module5Cell7Volt, &BMS_module5Cell8Volt, &BMS_module5Cell9Volt, &BMS_module5Cell10Volt, &BMS_module5Cell11Volt, &BMS_module5Cell12Volt,
-        &BMS_module5Cell13Volt, &BMS_module5Cell14Volt, &BMS_module5Cell15Volt, &BMS_module5Cell16Volt, &BMS_module5Cell17Volt, &BMS_module5Cell18Volt
+        BMS_module5Cell1Volt.value(), BMS_module5Cell2Volt.value(), BMS_module5Cell3Volt.value(), BMS_module5Cell4Volt.value(), BMS_module5Cell5Volt.value(), BMS_module5Cell6Volt.value(),
+        BMS_module5Cell7Volt.value(), BMS_module5Cell8Volt.value(), BMS_module5Cell9Volt.value(), BMS_module5Cell10Volt.value(), BMS_module5Cell11Volt.value(), BMS_module5Cell12Volt.value(),
+        BMS_module5Cell13Volt.value(), BMS_module5Cell14Volt.value(), BMS_module5Cell15Volt.value(), BMS_module5Cell16Volt.value(), BMS_module5Cell17Volt.value(), BMS_module5Cell18Volt.value()
     };
 
-    // Array of all 90 cell temperature signals
-    StateSignal* allCellTemps[] = {
+    // Read all 90 cell temperatures directly from their CAN values.
+    float allCellTemps[] = {
         // Module 1
-        &BMS_module1Cell1Temp, &BMS_module1Cell2Temp, &BMS_module1Cell3Temp, &BMS_module1Cell4Temp, &BMS_module1Cell5Temp, &BMS_module1Cell6Temp,
-        &BMS_module1Cell7Temp, &BMS_module1Cell8Temp, &BMS_module1Cell9Temp, &BMS_module1Cell10Temp, &BMS_module1Cell11Temp, &BMS_module1Cell12Temp,
-        &BMS_module1Cell13Temp, &BMS_module1Cell14Temp, &BMS_module1Cell15Temp, &BMS_module1Cell16Temp, &BMS_module1Cell17Temp, &BMS_module1Cell18Temp,
+        BMS_module1Cell1Temp.value(), BMS_module1Cell2Temp.value(), BMS_module1Cell3Temp.value(), BMS_module1Cell4Temp.value(), BMS_module1Cell5Temp.value(), BMS_module1Cell6Temp.value(),
+        BMS_module1Cell7Temp.value(), BMS_module1Cell8Temp.value(), BMS_module1Cell9Temp.value(), BMS_module1Cell10Temp.value(), BMS_module1Cell11Temp.value(), BMS_module1Cell12Temp.value(),
+        BMS_module1Cell13Temp.value(), BMS_module1Cell14Temp.value(), BMS_module1Cell15Temp.value(), BMS_module1Cell16Temp.value(), BMS_module1Cell17Temp.value(), BMS_module1Cell18Temp.value(),
+
         // Module 2
-        &BMS_module2Cell1Temp, &BMS_module2Cell2Temp, &BMS_module2Cell3Temp, &BMS_module2Cell4Temp, &BMS_module2Cell5Temp, &BMS_module2Cell6Temp,
-        &BMS_module2Cell7Temp, &BMS_module2Cell8Temp, &BMS_module2Cell9Temp, &BMS_module2Cell10Temp, &BMS_module2Cell11Temp, &BMS_module2Cell12Temp,
-        &BMS_Module2Cell13Temp, &BMS_module2Cell14Temp, &BMS_module2Cell15Temp, &BMS_module2Cell16Temp, &BMS_module2Cell17Temp, &BMS_module2Cell18Temp,
+        BMS_module2Cell1Temp.value(), BMS_module2Cell2Temp.value(), BMS_module2Cell3Temp.value(), BMS_module2Cell4Temp.value(), BMS_module2Cell5Temp.value(), BMS_module2Cell6Temp.value(),
+        BMS_module2Cell7Temp.value(), BMS_module2Cell8Temp.value(), BMS_module2Cell9Temp.value(), BMS_module2Cell10Temp.value(), BMS_module2Cell11Temp.value(), BMS_module2Cell12Temp.value(),
+        BMS_Module2Cell13Temp.value(), BMS_module2Cell14Temp.value(), BMS_module2Cell15Temp.value(), BMS_module2Cell16Temp.value(), BMS_module2Cell17Temp.value(), BMS_module2Cell18Temp.value(),
+
         // Module 3
-        &BMS_module3Cell1Temp, &BMS_module3Cell2Temp, &BMS_module3Cell3Temp, &BMS_module3Cell4Temp, &BMS_module3Cell5Temp, &BMS_module3Cell6Temp,
-        &BMS_module3Cell7Temp, &BMS_module3Cell8Temp, &BMS_module3Cell9Temp, &BMS_module3Cell10Temp, &BMS_module3Cell11Temp, &BMS_module3Cell12Temp,
-        &BMS_module3Cell13Temp, &BMS_module3Cell14Temp, &BMS_module3Cell15Temp, &BMS_module3Cell16Temp, &BMS_module3Cell17Temp, &BMS_module3Cell18Temp,
+        BMS_module3Cell1Temp.value(), BMS_module3Cell2Temp.value(), BMS_module3Cell3Temp.value(), BMS_module3Cell4Temp.value(), BMS_module3Cell5Temp.value(), BMS_module3Cell6Temp.value(),
+        BMS_module3Cell7Temp.value(), BMS_module3Cell8Temp.value(), BMS_module3Cell9Temp.value(), BMS_module3Cell10Temp.value(), BMS_module3Cell11Temp.value(), BMS_module3Cell12Temp.value(),
+        BMS_module3Cell13Temp.value(), BMS_module3Cell14Temp.value(), BMS_module3Cell15Temp.value(), BMS_module3Cell16Temp.value(), BMS_module3Cell17Temp.value(), BMS_module3Cell18Temp.value(),
+
         // Module 4
-        &BMS_module4Cell1Temp, &BMS_module4Cell2Temp, &BMS_module4Cell3Temp, &BMS_module4Cell4Temp, &BMS_module4Cell5Temp, &BMS_module4Cell6Temp,
-        &BMS_module4Cell7Temp, &BMS_module4Cell8Temp, &BMS_module4Cell9Temp, &BMS_module4Cell10Temp, &BMS_module4Cell11Temp, &BMS_module4Cell12Temp,
-        &BMS_module4Cell13Temp, &BMS_module4Cell14Temp, &BMS_module4Cell15Temp, &BMS_module4Cell16Temp, &BMS_module4Cell17Temp, &BMS_module4Cell18Temp,
+        BMS_module4Cell1Temp.value(), BMS_module4Cell2Temp.value(), BMS_module4Cell3Temp.value(), BMS_module4Cell4Temp.value(), BMS_module4Cell5Temp.value(), BMS_module4Cell6Temp.value(),
+        BMS_module4Cell7Temp.value(), BMS_module4Cell8Temp.value(), BMS_module4Cell9Temp.value(), BMS_module4Cell10Temp.value(), BMS_module4Cell11Temp.value(), BMS_module4Cell12Temp.value(),
+        BMS_module4Cell13Temp.value(), BMS_module4Cell14Temp.value(), BMS_module4Cell15Temp.value(), BMS_module4Cell16Temp.value(), BMS_module4Cell17Temp.value(), BMS_module4Cell18Temp.value(),
+
         // Module 5
-        &BMS_module5Cell1Temp, &BMS_module5Cell2Temp, &BMS_module5Cell3Temp, &BMS_module5Cell4Temp, &BMS_module5Cell5Temp, &BMS_module5Cell6Temp,
-        &BMS_module5Cell7Temp, &BMS_module5Cell8Temp, &BMS_module5Cell9Temp, &BMS_module5Cell10Temp, &BMS_module5Cell11Temp, &BMS_module5Cell12Temp,
-        &BMS_module5Cell13Temp, &BMS_module5Cell14Temp, &BMS_module5Cell15Temp, &BMS_module5Cell16Temp, &BMS_module5Cell17Temp, &BMS_module5Cell18Temp
+        BMS_module5Cell1Temp.value(), BMS_module5Cell2Temp.value(), BMS_module5Cell3Temp.value(), BMS_module5Cell4Temp.value(), BMS_module5Cell5Temp.value(), BMS_module5Cell6Temp.value(),
+        BMS_module5Cell7Temp.value(), BMS_module5Cell8Temp.value(), BMS_module5Cell9Temp.value(), BMS_module5Cell10Temp.value(), BMS_module5Cell11Temp.value(), BMS_module5Cell12Temp.value(),
+        BMS_module5Cell13Temp.value(), BMS_module5Cell14Temp.value(), BMS_module5Cell15Temp.value(), BMS_module5Cell16Temp.value(), BMS_module5Cell17Temp.value(), BMS_module5Cell18Temp.value()
     };
 
-    int totalCells = 90; // 5 modules * 18 cells
+    const int totalCells = 90;
 
-    // 1. Check all Voltages
+// Default = healthy / no fault
+BMS_packSOC = 1;
+
+
+// ============================================================
+// VOLTAGE CHECKS
+// ============================================================
+
+for (int i = 0; i < totalCells; i++) {
+
+    float v = allCellVolts[i];
+
+    // Array index is 0-89.
+    // Fault-code cell number is 1-90.
+    int cellNumber = i + 1;
+
+
+    // ---------------- UNDERVOLTAGE ----------------
+
+    if (v < 2.5) {
+
+        faultDetected = true;
+
+        // 101-190
+        BMS_packSOC =
+            100 + cellNumber;
+
+        Serial.print("Undervoltage fault on cell ");
+        Serial.print(cellNumber);
+
+        Serial.print(": ");
+        Serial.print(v);
+
+        Serial.print("  Fault code: ");
+        Serial.println(
+            100 + cellNumber
+        );
+
+        break;
+    }
+
+
+    // ---------------- OVERVOLTAGE ----------------
+
+    if (0 == 1) {
+
+        faultDetected = true;
+
+        // 201-290
+        BMS_packSOC =
+            200 + cellNumber;
+
+        Serial.print("Overvoltage fault on cell ");
+        Serial.print(cellNumber);
+
+        Serial.print(": ");
+        Serial.print(v);
+
+        Serial.print("  Fault code: ");
+        Serial.println(
+            200 + cellNumber
+        );
+
+        break;
+    }
+}
+
+
+// ============================================================
+// TEMPERATURE CHECKS
+// ============================================================
+
+if (!faultDetected) {
+
     for (int i = 0; i < totalCells; i++) {
-        float v = allCellVolts[i]->can_value();
-        if (v < 2.5 || v > 4.2) {
+
+        float t = allCellTemps[i];
+
+        int cellNumber = i + 1;
+
+
+        // ---------------- LOW TEMPERATURE ----------------
+
+        if (t < 1.0) {
+
             faultDetected = true;
-            break; // Stop checking voltages if a fault is already found
+
+            // 301-390
+            BMS_packSOC =
+                300 + cellNumber;
+
+            Serial.print("Low temperature fault on cell ");
+            Serial.print(cellNumber);
+
+            Serial.print(": ");
+            Serial.print(t);
+
+            Serial.print("  Fault code: ");
+            Serial.println(
+                300 + cellNumber
+            );
+
+            break;
+        }
+
+
+        // ---------------- HIGH TEMPERATURE ----------------
+
+        if (t > 40.0 && t <= 200.0) {
+
+            faultDetected = true;
+
+            // 401-490
+            BMS_packSOC =
+                400 + cellNumber;
+
+            Serial.print("High temperature fault on cell ");
+            Serial.print(cellNumber);
+
+            Serial.print(": ");
+            Serial.print(t);
+
+            Serial.print("  Fault code: ");
+            Serial.println(
+                400 + cellNumber
+            );
+
+            break;
         }
     }
-
-    // 2. Check all Temperatures (only if a voltage fault hasn't already tripped it)
-    if (!faultDetected) {
-        for (int i = 0; i < totalCells; i++) {
-            float t = allCellTemps[i]->can_value();
-            
-            // Fault if < 1C, OR if it's > 40C (but strictly <= 600C to ignore disconnected sensors)
-            if (t < 1.0 || (t > 40.0 && t <= 600.0)) {
-                faultDetected = true;
-                break; // Stop checking temps if a fault is found
-            }
-        }
-    }
-
-    // 3. Trigger the hardware switch if any fault was detected
-    if (faultDetected) {
-        digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault 
-    }
 }
 
 
+// ============================================================
+// BMS STATUS OUTPUT
+// ============================================================
 
-// void checkVoltFault(){
+if (faultDetected) {
 
-//   Serial.print("Mod1cell1 value: ");
-//   Serial.println(BMS_module1Cell1Volt.can_value());
-//     // MODULE 1 VOLTAGES
-//     if (BMS_module1Cell1Volt.can_value() > 4.2) {
-//         digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-//         Serial.print("Module1Cell1V > 4.2\n");
-//     } else if (BMS_module1Cell1Volt.can_value() < 2.5) {
-//         digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-//         Serial.print("Module1Cell1V < 2.5\n");
-//     }
+    digitalWrite(
+        BMS_STATUS_SWITCH,
+        LOW
+    );
 
-//     if (BMS_module1Cell2Volt.can_value() > 4.2) {
-//         digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-//         Serial.print("Module1Cell2V > 4.2\n");
-//     } else if (BMS_module1Cell2Volt.can_value() < 2.5) {
-//         digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-//         Serial.print("Module1Cell2V < 2.5\n");
-//     }
+} else {
 
-//     if (BMS_module1Cell3Volt.can_value() > 4.2) {
-//         digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-//         Serial.print("Module1Cell3V > 4.2\n");
-//     } else if (BMS_module1Cell3Volt.can_value() < 2.5) {
-//         digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-//         Serial.print("Module1Cell3V < 2.5\n");
-//     }
+    // 1 = no fault
+    BMS_packSOC = 1;
 
-    // if (BMS_module1Cell4Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell4V > 4.2\n");
-    // } else if (BMS_module1Cell4Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell4V < 2.5\n");
-    // }
-
-    // if (BMS_module1Cell5Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell5V > 4.2\n");
-    // } else if (BMS_module1Cell5Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell5V < 2.5\n");
-    // }
-
-    // if (BMS_module1Cell6Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell6V > 4.2\n");
-    // } else if (BMS_module1Cell6Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell6V < 2.5\n");
-    // }
-
-    // if (BMS_module1Cell7Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell7V > 4.2\n");
-    // } else if (BMS_module1Cell7Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell7V < 2.5\n");
-    // }
-
-    // if (BMS_module1Cell8Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell8V > 4.2\n");
-    // } else if (BMS_module1Cell8Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell8V < 2.5\n");
-    // }
-
-    // if (BMS_module1Cell9Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell9V > 4.2\n");
-    // } else if (BMS_module1Cell9Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell9V < 2.5\n");
-    // }
-
-    // if (BMS_module1Cell10Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell10V > 4.2\n");
-    // } else if (BMS_module1Cell10Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell10V < 2.5\n");
-    // }
-
-    // if (BMS_module1Cell11Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell11V > 4.2\n");
-    // } else if (BMS_module1Cell11Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell11V < 2.5\n");
-    // }
-
-    // if (BMS_module1Cell12Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell12V > 4.2\n");
-    // } else if (BMS_module1Cell12Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell12V < 2.5\n");
-    // }
-
-    // if (BMS_module1Cell13Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell13V > 4.2\n");
-    // } else if (BMS_module1Cell13Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell13V < 2.5\n");
-    // }
-
-    // if (BMS_module1Cell14Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell14V > 4.2\n");
-    // } else if (BMS_module1Cell14Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell14V < 2.5\n");
-    // }
-
-    // if (BMS_module1Cell15Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell15V > 4.2\n");
-    // } else if (BMS_module1Cell15Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell15V < 2.5\n");
-    // }
-
-    // if (BMS_module1Cell16Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module16Cell1V > 4.2\n");
-    // } else if (BMS_module1Cell16Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell16V < 2.5\n");
-    // }
-
-    // if (BMS_module1Cell17Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell17V > 4.2\n");
-    // } else if (BMS_module1Cell17Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell17V < 2.5\n");
-    // }
-
-    // if (BMS_module1Cell18Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell18V > 4.2\n");
-    // } else if (BMS_module1Cell18Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module1Cell18V < 2.5\n");
-    // }
-
-    //     // MODULE 2 VOLTAGES
-    // if (BMS_module2Cell1Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module12Cell1V > 4.2\n");
-    // } else if (BMS_module2Cell1Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell1V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell2Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell2V > 4.2\n");
-    // } else if (BMS_module2Cell2Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell2V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell3Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell3V > 4.2\n");
-    // } else if (BMS_module2Cell3Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell3V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell4Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell4V > 4.2\n");
-    // } else if (BMS_module2Cell4Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell4V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell5Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell5V > 4.2\n");
-    // } else if (BMS_module2Cell5Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell5V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell6Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell6V > 4.2\n");
-    // } else if (BMS_module2Cell6Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell6V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell7Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell7V > 4.2\n");
-    // } else if (BMS_module2Cell7Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell7V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell8Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell8V > 4.2\n");
-    // } else if (BMS_module2Cell8Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell8V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell9Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell9V > 4.2\n");
-    // } else if (BMS_module2Cell9Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell9V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell10Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell10V > 4.2\n");
-    // } else if (BMS_module2Cell10Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell10V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell11Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell11V > 4.2\n");
-    // } else if (BMS_module2Cell11Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell11V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell12Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell12V > 4.2\n");
-    // } else if (BMS_module2Cell11Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell11V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell13Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell13V > 4.2\n");
-    // } else if (BMS_module2Cell13Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell13V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell14Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell14V > 4.2\n");
-    // } else if (BMS_module2Cell14Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell14V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell15Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell15V > 4.2\n");
-    // } else if (BMS_module2Cell15Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell14V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell16Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell16V > 4.2\n");
-    // } else if (BMS_module2Cell16Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell16V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell17Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell17V > 4.2\n");
-    // } else if (BMS_module2Cell17Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell17V < 2.5\n");
-    // }
-
-    // if (BMS_module2Cell18Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell18V > 4.2\n");
-    // } else if (BMS_module2Cell18Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module2Cell18V < 2.5\n");
-    // }
-
-    // // MODULE 3 VOLTAGES
-    // if (BMS_module3Cell1Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell1V > 4.2\n");
-    // } else if (BMS_module3Cell1Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell1V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell2Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell2V > 4.2\n");
-    // } else if (BMS_module3Cell2Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell2V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell3Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell3V > 4.2\n");
-    // } else if (BMS_module3Cell3Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell3V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell4Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell4V > 4.2\n");
-    // } else if (BMS_module3Cell4Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell4V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell5Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell5V > 4.2\n");
-    // } else if (BMS_module3Cell5Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell5V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell6Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell6V > 4.2\n");
-    // } else if (BMS_module3Cell6Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell6V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell7Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell7V > 4.2\n");
-    // } else if (BMS_module3Cell7Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell7V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell8Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell8V > 4.2\n");
-    // } else if (BMS_module3Cell8Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell8V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell9Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell9V > 4.2\n");
-    // } else if (BMS_module3Cell9Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell9V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell10Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell10V > 4.2\n");
-    // } else if (BMS_module3Cell10Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell10V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell11Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell11V > 4.2\n");
-    // } else if (BMS_module3Cell11Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell11V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell12Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell12V > 4.2\n");
-    // } else if (BMS_module3Cell12Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell12V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell13Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell13V > 4.2\n");
-    // } else if (BMS_module3Cell13Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell13V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell14Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell14V > 4.2\n");
-    // } else if (BMS_module3Cell14Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell14V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell15Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell15V > 4.2\n");
-    // } else if (BMS_module3Cell15Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell15V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell16Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell16V > 4.2\n");
-    // } else if (BMS_module3Cell16Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell16V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell17Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell17V > 4.2\n");
-    // } else if (BMS_module3Cell17Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell17V < 2.5\n");
-    // }
-
-    // if (BMS_module3Cell18Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell18V > 4.2\n");
-    // } else if (BMS_module3Cell18Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module3Cell18V < 2.5\n");
-    // }
-
-    // // MODULE 4 VOLTAGES
-    // if (BMS_module4Cell1Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell1V > 4.2\n");
-    // } else if (BMS_module4Cell1Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell1V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell2Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell2V > 4.2\n");
-    // } else if (BMS_module4Cell2Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell2V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell3Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell3V > 4.2\n");
-    // } else if (BMS_module4Cell3Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell3V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell4Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell4V > 4.2\n");
-    // } else if (BMS_module4Cell4Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell4V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell5Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell5V > 4.2\n");
-    // } else if (BMS_module4Cell5Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell5V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell6Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell6V > 4.2\n");
-    // } else if (BMS_module4Cell6Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell6V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell7Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell7V > 4.2\n");
-    // } else if (BMS_module4Cell7Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell7V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell8Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell8V > 4.2\n");
-    // } else if (BMS_module4Cell8Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell8V < 2.5\n");
-    // }
-
-    // if (BMS_module4cCell9Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell9V > 4.2\n");
-    // } else if (BMS_module4cCell9Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell9V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell10Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell10V > 4.2\n");
-    // } else if (BMS_module4Cell10Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell10V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell11Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell11V > 4.2\n");
-    // } else if (BMS_module4Cell11Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell11V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell12Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell12V > 4.2\n");
-    // } else if (BMS_module4Cell12Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell12V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell13Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell13V > 4.2\n");
-    // } else if (BMS_module4Cell13Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell13V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell14Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell14V > 4.2\n");
-    // } else if (BMS_module4Cell14Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell14V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell15Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell15V > 4.2\n");
-    // } else if (BMS_module4Cell15Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell15V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell16Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell16V > 4.2\n");
-    // } else if (BMS_module4Cell16Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell16V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell17Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell17V > 4.2\n");
-    // } else if (BMS_module4Cell17Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell17V < 2.5\n");
-    // }
-
-    // if (BMS_module4Cell18Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell18V > 4.2\n");
-    // } else if (BMS_module4Cell18Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module4Cell18V < 2.5\n");
-    // }
-
-    // // MODULE 5 VOLTAGES
-    // if (BMS_module5Cell1Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell1V > 4.2\n");
-    // } else if (BMS_module5Cell1Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell1V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell2Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell2V > 4.2\n");
-    // } else if (BMS_module5Cell2Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell2V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell3Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell3V > 4.2\n");
-    // } else if (BMS_module5Cell3Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell3V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell4Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell4V > 4.2\n");
-    // } else if (BMS_module5Cell4Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell4V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell5Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell5V > 4.2\n");
-    // } else if (BMS_module5Cell5Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell5V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell6Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell6V > 4.2\n");
-    // } else if (BMS_module5Cell6Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell6V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell7Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell7V > 4.2\n");
-    // } else if (BMS_module5Cell7Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell7V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell8Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell8V > 4.2\n");
-    // } else if (BMS_module5Cell8Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell8V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell9Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell9V > 4.2\n");
-    // } else if (BMS_module5Cell9Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell9V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell10Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell10V > 4.2\n");
-    // } else if (BMS_module5Cell10Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell10V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell11Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module6Cell11V > 4.2\n");
-    // } else if (BMS_module5Cell11Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell11V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell12Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell12V > 4.2\n");
-    // } else if (BMS_module5Cell11Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module6Cell12V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell13Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell13V > 4.2\n");
-    // } else if (BMS_module5Cell13Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell13V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell14Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell14V > 4.2\n");
-    // } else if (BMS_module5Cell14Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell4V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell15Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell15V > 4.2\n");
-    // } else if (BMS_module5Cell15Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell15V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell16Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell16V > 4.2\n");
-    // } else if (BMS_module5Cell16Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell16V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell17Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell17V > 4.2\n");
-    // } else if (BMS_module5Cell17Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell17V < 2.5\n");
-    // }
-
-    // if (BMS_module5Cell18Volt.can_value() > 4.2) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell18V > 4.2\n");
-    // } else if (BMS_module5Cell18Volt.can_value() < 2.5) {
-    //     digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    //     Serial.print("Module5Cell18V < 2.5\n");
-    // }
-
+    digitalWrite(
+        BMS_STATUS_SWITCH,
+        HIGH
+    );
 }
-
-void checkTempFault(){
-
-  // MODULE 1 TEMPS
-  if (BMS_module1Cell1Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell1Temp > 60");
-  }
-
-  if (BMS_module1Cell2Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell2Temp > 60");
-  }
-
-  if (BMS_module1Cell3Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell3Temp > 60");
-  }
-
-  if (BMS_module1Cell4Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell4Temp > 60");
-  }
-
-  if (BMS_module1Cell5Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell5Temp > 60");
-  }
-
-  if (BMS_module1Cell6Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell6Temp > 60");
-  }
-
-  if (BMS_module1Cell7Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell7Temp > 60");
-  }
-
-  if (BMS_module1Cell8Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell8Temp > 60");
-  }
-
-  if (BMS_module1Cell9Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell9Temp > 60");
-  }
-
-  if (BMS_module1Cell10Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell10Temp > 60");
-  }
-
-  if (BMS_module1Cell11Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell11Temp > 60");
-  }
-
-  if (BMS_module1Cell12Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell12Temp > 60");
-  }
-
-  if (BMS_module1Cell13Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell13Temp > 60");
-  }
-
-  if (BMS_module1Cell14Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell14Temp > 60");
-  }
-
-  if (BMS_module1Cell15Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell15Temp > 60");
-  }
-
-  if (BMS_module1Cell16Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell16Temp > 60");
-  }
-
-  if (BMS_module1Cell17Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell17Temp > 60");
-  }
-
-  if (BMS_module1Cell18Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module1Cell18Temp > 60");
-  }
-
-    // MODULE 2 TEMPS
-  if (BMS_module2Cell1Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell1Temp > 60");
-  }
-
-  if (BMS_module2Cell2Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell2Temp > 60");
-  }
-
-  if (BMS_module2Cell3Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell3Temp > 60");
-  }
-
-  if (BMS_module2Cell4Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell4Temp > 60");
-  }
-
-  if (BMS_module2Cell5Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell5Temp > 60");
-  }
-
-  if (BMS_module2Cell6Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell6Temp > 60");
-  }
-
-  if (BMS_module2Cell7Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell7Temp > 60");
-  }
-
-  if (BMS_module2Cell8Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell8Temp > 60");
-  }
-
-  if (BMS_module2Cell9Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell9Temp > 60");
-  }
-
-  if (BMS_module2Cell10Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell10Temp > 60");
-  }
-
-  if (BMS_module2Cell11Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell11Temp > 60");
-  }
-
-  if (BMS_module2Cell12Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell12Temp > 60");
-  }
-
-  if (BMS_Module2Cell13Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell13Temp > 60");
-  }
-
-  if (BMS_module2Cell14Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell14Temp > 60");
-  }
-
-  if (BMS_module2Cell15Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell15Temp > 60");
-  }
-
-  if (BMS_module2Cell16Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell16Temp > 60");
-  }
-
-  if (BMS_module2Cell17Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell17Temp > 60");
-  }
-
-  if (BMS_module2Cell18Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module2Cell18Temp > 60");
-  }
-
-  // MODULE 3 TEMPS
-  if (BMS_module3Cell1Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell1Temp > 60");
-  }
-
-  if (BMS_module3Cell2Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell2Temp > 60");
-  }
-
-  if (BMS_module3Cell3Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell3Temp > 60");
-  }
-
-  if (BMS_module3Cell4Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell4Temp > 60");
-  }
-
-  if (BMS_module3Cell5Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell5Temp > 60");
-  }
-
-  if (BMS_module3Cell6Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell6Temp > 60");
-  }
-
-  if (BMS_module3Cell7Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell7Temp > 60");
-  }
-
-  if (BMS_module3Cell8Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell8Temp > 60");
-  }
-
-  if (BMS_module3Cell9Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell9Temp > 60");
-  }
-
-  if (BMS_module3Cell10Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell10Temp > 60");
-  }
-
-  if (BMS_module3Cell11Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell11Temp > 60");
-  }
-
-  if (BMS_module3Cell12Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell12Temp > 60");
-  }
-
-  if (BMS_module3Cell13Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell13Temp > 60");
-  }
-
-  if (BMS_module3Cell14Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell14Temp > 60");
-  }
-
-  if (BMS_module3Cell15Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell15Temp > 60");
-  }
-
-  if (BMS_module3Cell16Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell16Temp > 60");
-  }
-
-  if (BMS_module3Cell17Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell17Temp > 60");
-  }
-
-  if (BMS_module3Cell18Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module3Cell18Temp > 60");
-  }
-
-    // MODULE 4 TEMPS
-  if (BMS_module4Cell1Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell1Temp > 60");
-  }
-
-  if (BMS_module4Cell2Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell2Temp > 60");
-  }
-
-  if (BMS_module4Cell3Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell3Temp > 60");
-  }
-
-  if (BMS_module4Cell4Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell4Temp > 60");
-  }
-
-  if (BMS_module4Cell5Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell5Temp > 60");
-  }
-
-  if (BMS_module4Cell6Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell6Temp > 60");
-  }
-
-  if (BMS_module4Cell7Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell7Temp > 60");
-  }
-
-  if (BMS_module4Cell8Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell8Temp > 60");
-  }
-
-  if (BMS_module4Cell9Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell9Temp > 60");
-  }
-
-  if (BMS_module4Cell10Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell10Temp > 60");
-  }
-
-  if (BMS_module4Cell11Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell11Temp > 60");
-  }
-
-  if (BMS_module4Cell12Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell12Temp > 60");
-  }
-
-  if (BMS_module4Cell13Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell13Temp > 60");
-  }
-
-  if (BMS_module4Cell14Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell14Temp > 60");
-  }
-
-  if (BMS_module4Cell15Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell15Temp > 60");
-  }
-
-  if (BMS_module4Cell16Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell16Temp > 60");
-  }
-
-  if (BMS_module4Cell17Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell17Temp > 60");
-  }
-
-  if (BMS_module4Cell18Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module4Cell18Temp > 60");
-  }
-
-  // MODULE 5 TEMPS
-  if (BMS_module5Cell1Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell1Temp > 60");
-  }
-
-  if (BMS_module5Cell2Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell2Temp > 60");
-  }
-
-  if (BMS_module5Cell3Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell3Temp > 60");
-  }
-
-  if (BMS_module5Cell4Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell4Temp > 60");
-  }
-
-  if (BMS_module5Cell5Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell5Temp > 60");
-  }
-
-  if (BMS_module5Cell6Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell6Temp > 60");
-  }
-
-  if (BMS_module5Cell7Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell7Temp > 60");
-  }
-
-  if (BMS_module5Cell8Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell8Temp > 60");
-  }
-
-  if (BMS_module5Cell9Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell9Temp > 60");
-  }
-
-  if (BMS_module5Cell10Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell10Temp > 60");
-  }
-
-  if (BMS_module5Cell11Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell11Temp > 60");
-  }
-
-  if (BMS_module5Cell12Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell12Temp > 60");
-  }
-
-  if (BMS_module5Cell13Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell13Temp > 60");
-  }
-
-  if (BMS_module5Cell14Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell14Temp > 60");
-  }
-
-  if (BMS_module5Cell15Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell15Temp > 60");
-  }
-
-  if (BMS_module5Cell16Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell16Temp > 60");
-  }
-
-  if (BMS_module5Cell17Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell17Temp > 60");
-  }
-
-  if (BMS_module5Cell18Temp.can_value() > 60){
-    digitalWrite(BMS_STATUS_SWITCH, LOW); // set BMS status fault
-    Serial.print("Module5Cell18Temp > 60");
-  }
-
 }
-
-
