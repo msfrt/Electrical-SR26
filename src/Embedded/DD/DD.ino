@@ -387,7 +387,7 @@ void set_mailboxes() {
   can2.setMBFilter(MB1, PDM_pdmVoltAvg.get_msg_id());
   can2.setMBFilter(MB2, VCU_driveSpeed.get_msg_id());
   can2.setMBFilter(MB3, PDM_fanLeftDutyCycle.get_msg_id()); 
-  can2.setMBFilter(MB4, 0);
+  can2.setMBFilter(MB4, BMS_packSOC.get_msg_id());
   can2.setMBFilter(MB5, 0);
   can2.setMBFilter(MB6, 0);
   can2.setMBFilter(MB7, 0);
