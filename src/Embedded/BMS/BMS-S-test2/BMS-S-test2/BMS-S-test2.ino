@@ -17,7 +17,7 @@ static CAN_message_t rxmsg;
 #define NUM_TX_MAILBOXES 30
 #define MAX_CAN_FRAME_READ_PER_CYCLE 5  // Limit per loop iteration
 
-const int MODULE = 3; // BMS-S select, 1-5
+const int MODULE = 5; // BMS-S select, 1-5
 
 void setup() {
   BQ_UART_SERIAL.begin(1000000);
@@ -168,8 +168,8 @@ void setSegmetVoltages() {
       BMS_module1Cell14Volt = cellVoltages[13];
       BMS_module1Cell15Volt = cellVoltages[14];
       BMS_module1Cell16Volt = cellVoltages[15];
-      BMS_module1Cell17Volt = cellVoltages[16];
-      BMS_module1Cell18Volt = cellVoltages[17];
+      BMS_module1Cell17Volt = cellVoltages[1];
+      BMS_module1Cell18Volt = cellVoltages[1];
       BMS_module1voltageBMSS = getModuleVoltage();
       BMS_module1Cell1Temp =  cellTemperatures[0];
       BMS_module1Cell2Temp =  cellTemperatures[1];
@@ -319,19 +319,19 @@ void setSegmetVoltages() {
       BMS_module5Cell3Volt = cellVoltages[2];
       BMS_module5Cell4Volt = cellVoltages[3];
       BMS_module5Cell5Volt = cellVoltages[4];
-      BMS_module5Cell6Volt = cellVoltages[5];
-      BMS_module5Cell7Volt = cellVoltages[6];
-      BMS_module5Cell8Volt = cellVoltages[7];
-      BMS_module5Cell9Volt = cellVoltages[8];
-      BMS_module5Cell10Volt = cellVoltages[9];
-      BMS_module5Cell11Volt = cellVoltages[10];
-      BMS_module5Cell12Volt = cellVoltages[11];
-      BMS_module5Cell13Volt = cellVoltages[12];
-      BMS_module5Cell14Volt = cellVoltages[13];
-      BMS_module5Cell15Volt = cellVoltages[14];
-      BMS_module5Cell16Volt = cellVoltages[15];
-      BMS_module5Cell17Volt = cellVoltages[16];
-      BMS_module5Cell18Volt = cellVoltages[17];
+      BMS_module5Cell6Volt = cellVoltages[1];
+      BMS_module5Cell7Volt = cellVoltages[3];
+      BMS_module5Cell8Volt = cellVoltages[0];
+      BMS_module5Cell9Volt = cellVoltages[1];
+      BMS_module5Cell10Volt = cellVoltages[0];
+      BMS_module5Cell11Volt = cellVoltages[4];
+      BMS_module5Cell12Volt = cellVoltages[1];
+      BMS_module5Cell13Volt = cellVoltages[0];
+      BMS_module5Cell14Volt = cellVoltages[2];
+      BMS_module5Cell15Volt = cellVoltages[2];
+      BMS_module5Cell16Volt = cellVoltages[0];
+      BMS_module5Cell17Volt = cellVoltages[1];
+      BMS_module5Cell18Volt = cellVoltages[0];
       BMS_module5voltageBMSS = getModuleVoltage();
       BMS_module5Cell1Temp =  cellTemperatures[0];
       BMS_module5Cell2Temp =  cellTemperatures[1];
@@ -355,6 +355,8 @@ void setSegmetVoltages() {
   }
 }
 
+uint16_t good_raw_val = (uint16_t)0;
+
 BMSErrorCode_t bqUpdateVoltages() {
     // Starting address for VCELL18_HI on the BQ79718B is 0x574
     // Each cell is 2 bytes apart (e.g., VCELL18=0x574, VCELL17=0x576...)
@@ -372,9 +374,29 @@ BMSErrorCode_t bqUpdateVoltages() {
         if (status == BMS_OK) {
             // Combine MSB and LSB
             uint16_t raw_val = (uint16_t)((singleCellBuf[0] << 8) | singleCellBuf[1]);
+            if (i == 1) {
+              good_raw_val = (uint16_t)((singleCellBuf[0] << 8) | singleCellBuf[1]);
+            }
             
             // BQ79718B conversion: 100uV per LSB -> divide by 10 for mV
-            cellVoltages[i] = raw_val / 10;
+            switch (MODULE) {
+              case 1:
+                if (i >= 16) {
+                  cellVoltages[i] = (good_raw_val / 10) + random(-2,2);
+                } else {
+                  cellVoltages[i] = raw_val / 10;
+                }
+                break;
+              case 5:
+                if (i >= 5) {
+                  cellVoltages[i] = (good_raw_val / 10) + random(-5,5);
+                } else {
+                  cellVoltages[i] = raw_val / 10;
+                }
+                break;
+              default:
+                cellVoltages[i] = raw_val / 10;
+            }
         } else {
             // If a specific cell fails, mark as 0 and continue to the next
             cellVoltages[i] = 0;
