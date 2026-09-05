@@ -17,7 +17,7 @@ static CAN_message_t rxmsg;
 #define NUM_TX_MAILBOXES 30
 #define MAX_CAN_FRAME_READ_PER_CYCLE 5  // Limit per loop iteration
 
-const int MODULE = 5; // BMS-S select, 1-5
+const int MODULE = 1; // BMS-S select, 1-5
 
 void setup() {
   BQ_UART_SERIAL.begin(1000000);
