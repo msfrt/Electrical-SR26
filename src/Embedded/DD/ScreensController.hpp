@@ -97,7 +97,7 @@ class ScreensController {
 ScreensController::ScreensController(ILI9341_t3n &left, ILI9341_t3n &right)
     : display_left_(left), display_right_(right) {
   /* speed screen */
-  speed_screen_ = new ScreenNumber(display_left_, VCU_vehicleState, "shift_state:");
+  speed_screen_ = new ScreenNumber(display_left_, BMS_packSOC, "BMS_ERR:");
 
   /* Info screen 1 */
   // info_screen_1_left_ = new ScreenInfo(display_left_);
