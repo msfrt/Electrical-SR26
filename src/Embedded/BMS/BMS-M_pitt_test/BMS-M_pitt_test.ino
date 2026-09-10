@@ -128,6 +128,7 @@ void loop() {
         Serial.println("not chargin because");
         Serial.println(VCU_vehicleState.can_value());
         Serial.println(VALID_VOLTAGE_RANGE);
+        Serial.println(OutputVoltage.value());
         CHARGING = false;
     }
 
