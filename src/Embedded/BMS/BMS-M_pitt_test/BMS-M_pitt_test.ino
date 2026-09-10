@@ -25,6 +25,7 @@
 
 bool CHARGING = false;
 bool VALID_VOLTAGE_RANGE = false;
+unsigned long undervoltageFaultDetectedTime = 0;
 
 // CAN Bus Declaration
 FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
@@ -70,6 +71,9 @@ void setup() {
     bmsTestBegin();
 #endif
 }
+
+int currentTime = millis();
+int undevoltageFaultDetectedTime = millis();
 
 void loop() {
 
@@ -121,6 +125,9 @@ void loop() {
 
     } else {
 
+        Serial.println("not chargin because");
+        Serial.println(VCU_vehicleState.can_value());
+        Serial.println(VALID_VOLTAGE_RANGE);
         CHARGING = false;
     }
 
@@ -138,10 +145,12 @@ void loop() {
             CHARGING
         ) {
 
+            Serial.println("CHARGING");
             runOperational();
 
         } else {
 
+            Serial.println("NOT CHARGING");
             runDischarge();
         }
 
@@ -348,6 +357,7 @@ float get_battery_percentage(float voltage) {
 
 void checkAllBatterySafetyLimits() {
     bool faultDetected = false;
+    currentTime = millis();
 
     // Read all 90 cell voltages directly from their CAN values.
     // This avoids using StateSignal* arrays.
@@ -416,63 +426,46 @@ BMS_packSOC = 1;
 // VOLTAGE CHECKS
 // ============================================================
 
+bool undervoltageDetected = false;
+int undervoltageCell = 0;
+
 for (int i = 0; i < totalCells; i++) {
 
     float v = allCellVolts[i];
-
-    // Array index is 0-89.
-    // Fault-code cell number is 1-90.
     int cellNumber = i + 1;
 
-
-    // ---------------- UNDERVOLTAGE ----------------
-
     if (v < 2.5) {
+        undervoltageDetected = true;
+        undervoltageCell = cellNumber;
+        break;
+    }
+}
+
+if (undervoltageDetected) {
+
+    // Start timer when undervoltage is first detected
+    if (undervoltageFaultDetectedTime == 0) {
+        undervoltageFaultDetectedTime = millis();
+    }
+
+    // Only fault if undervoltage has continuously existed for 2 seconds
+    if (millis() - undervoltageFaultDetectedTime >= 2000) {
 
         faultDetected = true;
 
-        // 101-190
-        BMS_packSOC =
-            100 + cellNumber;
+        BMS_packSOC = 100 + undervoltageCell;
 
         Serial.print("Undervoltage fault on cell ");
-        Serial.print(cellNumber);
-
-        Serial.print(": ");
-        Serial.print(v);
+        Serial.print(undervoltageCell);
 
         Serial.print("  Fault code: ");
-        Serial.println(
-            100 + cellNumber
-        );
-
-        break;
+        Serial.println(100 + undervoltageCell);
     }
 
+} else {
 
-    // ---------------- OVERVOLTAGE ----------------
-
-    if (0 == 1) {
-
-        faultDetected = true;
-
-        // 201-290
-        BMS_packSOC =
-            200 + cellNumber;
-
-        Serial.print("Overvoltage fault on cell ");
-        Serial.print(cellNumber);
-
-        Serial.print(": ");
-        Serial.print(v);
-
-        Serial.print("  Fault code: ");
-        Serial.println(
-            200 + cellNumber
-        );
-
-        break;
-    }
+    // Every cell is healthy again, so reset timer
+    undervoltageFaultDetectedTime = 0;
 }
 
 
@@ -516,7 +509,7 @@ if (!faultDetected) {
 
         // ---------------- HIGH TEMPERATURE ----------------
 
-        if (t > 40.0 && t <= 200.0) {
+        if (t > 60.0 && t <= 200.0) {
 
             faultDetected = true;
 

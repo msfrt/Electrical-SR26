@@ -7,6 +7,7 @@
 
 
 void contactorInit(){
+  Serial.println("contactorInit");
   pinMode(DIA_EN1, OUTPUT);
   pinMode(DIA_EN2, OUTPUT);
   pinMode(EN1_1, OUTPUT);
@@ -20,6 +21,7 @@ void contactorInit(){
 }
 
 void disableAllCont(){
+  Serial.println("disableAllCont");
   digitalWrite(EN1_1, LOW);
   digitalWrite(EN2_1, LOW);
   digitalWrite(EN1_2, LOW);
@@ -27,6 +29,7 @@ void disableAllCont(){
 }
 
 void enableDischarge(){
+  Serial.println("enableDischarge");
   //set all enable inputs low
   disableAllCont();
   //set driver 2 EN2 high
@@ -34,10 +37,12 @@ void enableDischarge(){
 }
 
 void disableDischarge(){
+  Serial.println("disableDischarge");
   digitalWrite(EN2_2, LOW);
 }
 
 void enablePrecharge(){
+  Serial.println("enablePrecharge");
   //set all enable inputs low
   disableAllCont();
   //set driver 1 EN2 high
@@ -45,6 +50,7 @@ void enablePrecharge(){
 }
 
 void runPrecharge(){
+  Serial.println("runPrecharge");
   digitalWrite(EN2_1, HIGH);// precharge
   digitalWrite(EN1_1, LOW);//air+
   digitalWrite(EN1_2, HIGH);//air-
@@ -52,6 +58,7 @@ void runPrecharge(){
 }
 
 void runDischarge(){
+  Serial.println("runDischarge");
   digitalWrite(EN2_2, LOW);
   digitalWrite(EN1_1, LOW);
   digitalWrite(EN2_1, LOW);
@@ -59,6 +66,7 @@ void runDischarge(){
 }
 
 void runOperational(){
+  Serial.println("runOperational");
   digitalWrite(EN2_2, HIGH);
   digitalWrite(EN1_1, HIGH);
   digitalWrite(EN2_1, LOW);
@@ -67,10 +75,12 @@ void runOperational(){
 
 
 void disablePrecharge(){
+  Serial.println("disablePrecharge");
   digitalWrite(EN2_1, LOW);
 }
 
 void enableAirPlus(){
+  Serial.println("enableAirPlus");
   //set all enable inputs low
   disableAllCont();
   //set driver 1 EN1 high
@@ -78,16 +88,19 @@ void enableAirPlus(){
 }
 
 void disableAirPlus(){
+  Serial.println("disableAirPlus");
   digitalWrite(EN1_1, LOW);
 }
 
 void enableAirMinus(){
+  Serial.println("enableAirMinus");
   //set all enable inputs low
   disableAllCont();
   //set driver 1 EN1 high
   digitalWrite(EN1_2, HIGH);
 }
 void disableAirMinus(){
+  Serial.println("disableAirMinus");
   digitalWrite(EN1_2, LOW);
 }
 
