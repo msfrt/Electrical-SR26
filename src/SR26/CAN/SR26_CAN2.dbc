@@ -1,34 +1,35 @@
 VERSION ""
 
+
 NS_ : 
-    NS_DESC_
-    CM_
-    BA_DEF_
-    BA_
-    VAL_
-    CAT_DEF_
-    CAT_
-    FILTER
-    BA_DEF_DEF_
-    EV_DATA_
-    ENVVAR_DATA_
-    SGTYPE_
-    SGTYPE_VAL_
-    BA_DEF_SGTYPE_
-    BA_SGTYPE_
-    SIG_TYPE_REF_
-    VAL_TABLE_
-    SIG_GROUP_
-    SIG_VALTYPE_
-    SIGTYPE_VALTYPE_
-    BO_TX_BU_
-    BA_DEF_REL_
-    BA_REL_
-    BA_DEF_DEF_REL_
-    BU_SG_REL_
-    BU_EV_REL_
-    BU_BO_REL_
-    SG_MUL_VAL_
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
 
 BS_:
 
@@ -150,7 +151,7 @@ BO_ 154 VCU_154: 8 VCU
 
 BO_ 155 VCU_155: 8 VCU
  SG_ VCU_contactorFault : 48|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ VCU_assistedTorque : 32|16@1- (0.1,0) [-300|300] "Nm" Vector__XXX
+ SG_ VCU_regenMode : 32|8@1+ (0.1,0) [0|25.5] "" Vector__XXX
  SG_ VCU_driveSpeed : 16|16@1- (0.1,0) [-20|3276.7] "mph" Vector__XXX
  SG_ VCU_counterMsg155 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
@@ -789,7 +790,7 @@ CM_ SG_ 154 VCU_tCEnable "Enumeration";
 CM_ SG_ 154 VCU_tCActive "0 = off, 1 = on Enumeration";
 CM_ SG_ 154 VCU_counterMsg154 "Counter Message 154";
 CM_ SG_ 155 VCU_contactorFault "Signal to fire contactors to BMS (enumerated)";
-CM_ SG_ 155 VCU_assistedTorque "Torque after brake regen and TC";
+CM_ SG_ 155 VCU_regenMode "Torque after brake regen and TC";
 CM_ SG_ 155 VCU_driveSpeed "Front wheel speed";
 CM_ SG_ 155 VCU_counterMsg155 "Counter Message 155";
 CM_ SG_ 156 VCU_counterMsg156 "Counter Message 156";
@@ -1161,3 +1162,4 @@ BA_DEF_  "MultiplexExtEnabled" ENUM  "No","Yes";
 BA_DEF_  "BusType" STRING ;
 BA_DEF_DEF_  "MultiplexExtEnabled" "No";
 BA_DEF_DEF_  "BusType" "CAN";
+
