@@ -33,7 +33,7 @@ NS_ :
 
 BS_:
 
-BU_: ATCCF ATCCR VCU BMS DD MM5 MM52 PDM RAND RF_CT3 TrueSlip
+BU_: ATCCF ATCCR VCU BMS DD MM5 MM52 PDM RAND LF_CT3 RF_CT3 TrueSlip
 
 
 BO_ 300 ATCCF_300: 8 ATCCF
@@ -716,6 +716,23 @@ BO_ 421 PDM_421: 8 PDM
 BO_ 422 PDM_422: 8 PDM
  SG_ PDM_uptime : 0|32@1+ (1,0) [0|4294967295] "ms" Vector__XXX
 
+BO_ 17 LF_A: 8 LF_CT3
+ SG_ LF_X_Force : 0|16@1- (1.220703125,0) [-40000|40000] "N" Vector__XXX
+ SG_ LF_Y_Force : 16|16@1- (0.6103515625,0) [-20000|20000] "N" Vector__XXX
+ SG_ LF_Z_Force : 32|16@1- (1.220703125,0) [-40000|40000] "N" Vector__XXX
+ SG_ LF_MX_Moment : 48|16@1- (0.18310546875,0) [-6000|6000] "Nm" Vector__XXX
+
+BO_ 18 LF_B: 8 LF_CT3
+ SG_ LF_MY_Moment : 0|16@1- (0.18310546875,0) [-6000|6000] "Nm" Vector__XXX
+ SG_ LF_MZ_Moment : 16|16@1- (0.18310546875,0) [-6000|6000] "Nm" Vector__XXX
+ SG_ LF_Velocity : 32|16@1- (0.06103515625,0) [-2000|2000] "rpm" Vector__XXX
+ SG_ LF_Position : 48|16@1- (0.010986328125,0) [0|360] "degrees" Vector__XXX
+
+BO_ 19 LF_C: 8 LF_CT3
+ SG_ LF_X_Acceleration : 0|16@1- (0.0030517578125,0) [-100|100] "g" Vector__XXX
+ SG_ LF_Y_Acceleration : 16|16@1- (0.0030517578125,0) [-100|100] "g" Vector__XXX
+ SG_ LF_Z_Acceleration : 32|16@1- (0.0030517578125,0) [-100|100] "g" Vector__XXX
+
 BO_ 33 RF_A: 8 RF_CT3
  SG_ RF_X_Force : 0|16@1- (0.30517578125,0) [-10000|10000] "N" Vector__XXX
  SG_ RF_Y_Force : 16|16@1- (0.30517578125,0) [-10000|10000] "N" Vector__XXX
@@ -1203,6 +1220,17 @@ CM_ SG_ 34 RF_Position "RF Wheel Position";
 CM_ SG_ 35 RF_X_Acceleration "RF X Acceleration";
 CM_ SG_ 35 RF_Y_Acceleration "RF Y Acceleration";
 CM_ SG_ 35 RF_Z_Acceleration "RF Z Acceleration";
+CM_ SG_ 17 LF_X_Force "LF X Force";
+CM_ SG_ 17 LF_Y_Force "LF Y Force";
+CM_ SG_ 17 LF_Z_Force "LF Z Force";
+CM_ SG_ 17 LF_MX_Moment "LF MX Moment";
+CM_ SG_ 18 LF_MY_Moment "LF MY Moment";
+CM_ SG_ 18 LF_MZ_Moment "LF MZ Moment";
+CM_ SG_ 18 LF_Velocity "LF Wheel Velocity";
+CM_ SG_ 18 LF_Position "LF Wheel Position";
+CM_ SG_ 19 LF_X_Acceleration "LF X Acceleration";
+CM_ SG_ 19 LF_Y_Acceleration "LF Y Acceleration";
+CM_ SG_ 19 LF_Z_Acceleration "LF Z Acceleration";
 CM_ SG_ 1 Pos1_SlipAngle_20Hz "Pos1 Slip Angle 20Hz";
 CM_ SG_ 2 Pos2_SlipAngle_20Hz "Pos2 Slip Angle 20Hz";
 CM_ SG_ 3 Pos3_SlipAngle_20Hz "Pos3 Slip Angle 20Hz";
