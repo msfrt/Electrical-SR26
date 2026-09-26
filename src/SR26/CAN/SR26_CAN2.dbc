@@ -33,7 +33,7 @@ NS_ :
 
 BS_:
 
-BU_: ATCCF ATCCR VCU BMS DD MM5 MM52 PDM RAND
+BU_: ATCCF ATCCR VCU BMS DD MM5 MM52 PDM RAND RF_CT3 TrueSlip
 
 
 BO_ 300 ATCCF_300: 8 ATCCF
@@ -716,6 +716,40 @@ BO_ 421 PDM_421: 8 PDM
 BO_ 422 PDM_422: 8 PDM
  SG_ PDM_uptime : 0|32@1+ (1,0) [0|4294967295] "ms" Vector__XXX
 
+BO_ 33 RF_A: 8 RF_CT3
+ SG_ RF_X_Force : 0|16@1- (0.30517578125,0) [-10000|10000] "N" Vector__XXX
+ SG_ RF_Y_Force : 16|16@1- (0.30517578125,0) [-10000|10000] "N" Vector__XXX
+ SG_ RF_Z_Force : 32|16@1- (0.30517578125,0) [-10000|10000] "N" Vector__XXX
+ SG_ RF_MX_Moment : 48|16@1- (0.30517578125,0) [-10000|10000] "Nm" Vector__XXX
+
+BO_ 34 RF_B: 8 RF_CT3
+ SG_ RF_MY_Moment : 0|16@1- (0.30517578125,0) [-10000|10000] "Nm" Vector__XXX
+ SG_ RF_MZ_Moment : 16|16@1- (0.30517578125,0) [-10000|10000] "Nm" Vector__XXX
+ SG_ RF_Velocity : 32|16@1- (0.06103515625,0) [-2000|2000] "rpm" Vector__XXX
+ SG_ RF_Position : 48|16@1- (0.010986328125,0) [0|360] "degrees" Vector__XXX
+
+BO_ 35 RF_C: 8 RF_CT3
+ SG_ RF_X_Acceleration : 0|16@1- (0.0030517578125,0) [-100|100] "g" Vector__XXX
+ SG_ RF_Y_Acceleration : 16|16@1- (0.0030517578125,0) [-100|100] "g" Vector__XXX
+ SG_ RF_Z_Acceleration : 32|16@1- (0.0030517578125,0) [-100|100] "g" Vector__XXX
+
+BO_ 1 Pos1_SlipAngle_Signals: 8 TrueSlip
+ SG_ Pos1_SlipAngle_20Hz : 0|16@1- (0.0013733329264,0) [-45|44.9986] "Degrees" Vector__XXX
+
+BO_ 2 Pos2_SlipAngle_Signals: 8 TrueSlip
+ SG_ Pos2_SlipAngle_20Hz : 0|16@1- (0.0013733329264,0) [-45|44.9986] "Degrees" Vector__XXX
+
+BO_ 3 Pos3_SlipAngle_Signals: 8 TrueSlip
+ SG_ Pos3_SlipAngle_20Hz : 0|16@1- (0.0013733329264,0) [-45|44.9986] "Degrees" Vector__XXX
+
+BO_ 4 Pos4_SlipAngle_Signals: 8 TrueSlip
+ SG_ Pos4_SlipAngle_20Hz : 0|16@1- (0.0013733329264,0) [-45|44.9986] "Degrees" Vector__XXX
+
+BO_ 5 Pos5_SlipAngle_Signals: 8 TrueSlip
+ SG_ Pos5_SlipAngle_20Hz : 0|16@1- (0.0013733329264,0) [-45|44.9986] "Degrees" Vector__XXX
+
+BO_ 6 Pos6_SlipAngle_Signals: 8 TrueSlip
+ SG_ Pos6_SlipAngle_20Hz : 0|16@1- (0.0013733329264,0) [-45|44.9986] "Degrees" Vector__XXX
 
 
 CM_ SG_ 300 ATCCF_teensyTemp "Teensy Board Temp";
@@ -1158,6 +1192,23 @@ CM_ SG_ 421 PDM_fanRightDutyCycle "Right Fan Duty Cycle";
 CM_ SG_ 421 PDM_fanLeftDutyCycle "Left Fan Duty Cycle";
 CM_ SG_ 421 PDM_counterMsg421 "Counter Message 421";
 CM_ SG_ 422 PDM_uptime "PDM Teensy Uptime";
+CM_ SG_ 33 RF_X_Force "RF X Force";
+CM_ SG_ 33 RF_Y_Force "RF Y Force";
+CM_ SG_ 33 RF_Z_Force "RF Z Force";
+CM_ SG_ 33 RF_MX_Moment "RF MX Moment";
+CM_ SG_ 34 RF_MY_Moment "RF MY Moment";
+CM_ SG_ 34 RF_MZ_Moment "RF MZ Moment";
+CM_ SG_ 34 RF_Velocity "RF Wheel Velocity";
+CM_ SG_ 34 RF_Position "RF Wheel Position";
+CM_ SG_ 35 RF_X_Acceleration "RF X Acceleration";
+CM_ SG_ 35 RF_Y_Acceleration "RF Y Acceleration";
+CM_ SG_ 35 RF_Z_Acceleration "RF Z Acceleration";
+CM_ SG_ 1 Pos1_SlipAngle_20Hz "Pos1 Slip Angle 20Hz";
+CM_ SG_ 2 Pos2_SlipAngle_20Hz "Pos2 Slip Angle 20Hz";
+CM_ SG_ 3 Pos3_SlipAngle_20Hz "Pos3 Slip Angle 20Hz";
+CM_ SG_ 4 Pos4_SlipAngle_20Hz "Pos4 Slip Angle 20Hz";
+CM_ SG_ 5 Pos5_SlipAngle_20Hz "Pos5 Slip Angle 20Hz";
+CM_ SG_ 6 Pos6_SlipAngle_20Hz "Pos6 Slip Angle 20Hz";
 BA_DEF_  "MultiplexExtEnabled" ENUM  "No","Yes";
 BA_DEF_  "BusType" STRING ;
 BA_DEF_DEF_  "MultiplexExtEnabled" "No";
