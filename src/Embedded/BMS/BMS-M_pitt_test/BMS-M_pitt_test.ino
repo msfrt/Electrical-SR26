@@ -435,7 +435,7 @@ for (int i = 0; i < totalCells; i++) {
     float v = allCellVolts[i];
     int cellNumber = i + 1;
 
-    if (v < 2.5) {
+    if (v < 1) {
         undervoltageDetected = true;
         undervoltageCell = cellNumber;
         break;
